@@ -1,5 +1,12 @@
+import { Fragment } from "react";
+import Login from "./components/login";
+
 function App() {
-  return <p></p>;
+  return (
+    <Fragment>
+      <Login />
+    </Fragment>
+  );
 }
 
 export default App;
