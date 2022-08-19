@@ -1,5 +1,5 @@
 function App() {
-  return <p></p>;
+  return <p>{/* minor change in app */}</p>;
 }
 
 export default App;
