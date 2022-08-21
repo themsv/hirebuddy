@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { removeUser } from "../../store/user/userSlice";
 
+import { removeUser } from "../../store/user/userSlice";
 import { NavBarContainer } from "./styles";
 
 const NavBar = () => {
@@ -11,17 +11,22 @@ const NavBar = () => {
   return (
     <>
       <NavBarContainer>
-        <Link to="/">Logo</Link>
         {user.value.email ? (
           <>
+            <Link to="/landing">Logo</Link>
             <p>Conduct Interview</p>
-            <p>Welcome {user.value.email}</p>
-            <Link to="/login" onClick={logOutUser}>
+            <p>
+              Welcome {user.value.firstName} {user.value.lastName}
+            </p>
+            <Link to="/" onClick={logOutUser}>
               Logout
             </Link>
           </>
         ) : (
-          <Link to="/login">Login</Link>
+          <>
+            <Link to="/">Logo</Link>
+            <Link to="/">Login</Link>
+          </>
         )}
       </NavBarContainer>
       <Outlet />

@@ -6,8 +6,9 @@ import { validateEmail, validateOTP } from "../../utils/validation";
 import { fetchUsers } from "../../store/user/userAction";
 
 import { LoginContainer, FormBox } from "./styles";
-import FormInput from "../../components/form-input/index";
-import BaseButton from "../../components/button/index";
+import FormInput from "../form-input/index";
+import BaseButton from "../button/index";
+import Spinner from "../spinner";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -33,15 +34,16 @@ const Login = () => {
     });
   };
 
-  const loginClickHandler = () => {
+  const loginClickHandler = async () => {
     const errorValue = { email: validateEmail(email), otp: validateOTP(otp) };
     setErrorMsg({
       errorMsgEmail: errorValue.email,
       errorMsgOTP: errorValue.otp,
     });
     if (!errorValue.email && !errorValue.otp) {
-      dispatch(fetchUsers({ email, otp }));
+      await dispatch(fetchUsers({ email, otp }));
       typeof user.value === "object" && validUser();
+
       navigate("/landing");
     }
   };
@@ -71,7 +73,7 @@ const Login = () => {
           })}
         />
         <BaseButton variant="contained" onClick={loginClickHandler}>
-          {user.loading ? "Validating" : "Login"}
+          {user.loading ? <Spinner /> : "Login"}
         </BaseButton>
       </FormBox>
     </LoginContainer>

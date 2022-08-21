@@ -5,7 +5,6 @@ export const LoginContainer = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
 `;
 
 export const FormBox = styled(Box)`

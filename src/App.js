@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Login from "./pages/login/index";
+import Authenticate from "./pages/authenticate/index";
 import NavBar from "./components/navbar";
 import LandingPage from "./pages/landing";
 import { Routes, Route } from "react-router-dom";
@@ -9,8 +9,8 @@ function App() {
     <Fragment>
       <Routes>
         <Route path="/" element={<NavBar />}>
+          <Route index element={<Authenticate />} />
           <Route path="landing" element={<LandingPage />} />
-          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </Fragment>
