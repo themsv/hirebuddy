@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logout, VideoCall } from "@mui/icons-material";
 import { CONDUCT_INTERVIEW, HOME } from "../../constants/routes";
 
@@ -45,12 +45,15 @@ const Header = () => {
     <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src="/assets/images/logo.png"
-            alt="Hire buddy logo"
-            height={35}
-            onClick={() => navigate(HOME)}
-          />
+          <Link to="/">
+            <img
+              src="/assets/images/logo.png"
+              alt="Hire buddy logo"
+              style={{ display: "flex" }}
+              height={35}
+            />
+          </Link>
+
           <Box
             sx={{
               flexGrow: 1,
