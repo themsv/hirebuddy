@@ -2,3 +2,10 @@ body {
   margin: 0;
   font-family: "Hind", sans-serif;
 }
+
+.nav-list {
+  list-style-type: none;
+}
+.align-right {
+  text-align: right;
+}

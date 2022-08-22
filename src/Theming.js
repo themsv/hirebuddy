@@ -9,6 +9,9 @@ export const themeOptions = createTheme({
     secondary: {
       main: "#f50057",
     },
+    background: {
+      main: "#ccc",
+    },
     text: {
       primary: "#000000",
       secondary: "#000000",
@@ -17,7 +20,7 @@ export const themeOptions = createTheme({
   },
   typography: {
     button: {
-      fontSize: "2.9rem",
+      fontSize: "1rem",
     },
   },
 });

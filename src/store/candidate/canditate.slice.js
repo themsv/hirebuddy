@@ -3,11 +3,11 @@ import { fetchCandidates } from "./candidate.action";
 
 export const initialState = Object.freeze({
   status: "idle",
-  candidates: ["sachin"],
+  candidates: [],
 });
 
 const candidatesSlice = createSlice({
-  name: "users",
+  name: "candidates",
   initialState,
   reducers: {},
 
@@ -18,7 +18,8 @@ const candidatesSlice = createSlice({
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
       state.status = "resolved";
-      state.candidates = payload;
+      console.log(payload);
+      state.candidates.push(payload);
     });
 
     builder.addCase(fetchCandidates.rejected, (state) => {
