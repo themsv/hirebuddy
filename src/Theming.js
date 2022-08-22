@@ -20,7 +20,7 @@ export const themeOptions = createTheme({
   },
   typography: {
     button: {
-      fontSize: "2.9rem",
+      fontSize: "1rem",
     },
   },
 });

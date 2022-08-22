@@ -1,13 +1,16 @@
 import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 import { themeOptions } from "./Theming";
-import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
