@@ -63,7 +63,7 @@ const Login = () => {
           })}
         />
         <FormInput
-          type="password"
+          type="text"
           label="OTP"
           value={otp}
           onChange={otpHandler}

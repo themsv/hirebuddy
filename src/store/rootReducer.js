@@ -3,7 +3,7 @@ import candidatesReducer from "./candidate/canditate.slice";
 import userReducer from "./user/userSlice";
 
 const rootReducer = combineReducers({
-  candidate: candidatesReducer,
+  candidates: candidatesReducer,
   user: userReducer,
 });
 
