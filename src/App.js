@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Header />}>
           <Route index element={<Authenticate />} />
           <Route path="landing" element={<LandingPage />} />
-          <Route path="step1" element={<ConductInterview />} />
+          <Route path="conduct-interview" element={<ConductInterview />} />
         </Route>
       </Routes>
     </Fragment>

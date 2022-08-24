@@ -7,8 +7,7 @@ import BasicSelect from "../../components/dropdown";
 import BasicDatePicker from "../../components/date-picker";
 import { Header, ShadowBox } from "./style";
 import BaseButton from "../../components/button";
-
-import { Divider } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import { Stack } from "@mui/system";
 
 const InterviewDetail = () => {
@@ -197,11 +196,11 @@ const InterviewDetail = () => {
           </Grid>
           <Divider />
         </ShadowBox>
-        <Stack alignItems="flex-end">
+        {/* <Stack alignItems="flex-end">
           <br></br>
           <BaseButton variant="contained">Submit</BaseButton>
           <br></br>
-        </Stack>
+        </Stack> */}
       </Container>
     </React.Fragment>
   );

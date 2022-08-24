@@ -24,7 +24,11 @@ export default function BasicSelect({ items, label }) {
           onChange={handleChange}
         >
           {items?.map((item) => {
-            return <MenuItem value={item.key}>{item.value}</MenuItem>;
+            return (
+              <MenuItem key={item.key} value={item.key}>
+                {item.value}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

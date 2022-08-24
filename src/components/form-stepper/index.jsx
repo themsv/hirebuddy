@@ -5,8 +5,12 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-import InterviewDetail from "../../pages/interviewInformation/index";
+import InterviewDetail from "../interviewInformation/index";
+import FinalFeedback from "../final-feedback/index";
+import BaseButton from "../button";
 
 const steps = [
   "Step - 1 (Interview Information)",
@@ -14,7 +18,7 @@ const steps = [
   "Step - 3 (Final Feedback)",
 ];
 
-export default function HorizontalLinearStepper() {
+const FormStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -60,9 +64,12 @@ export default function HorizontalLinearStepper() {
     setActiveStep(0);
   };
   const handleSteps = (step) => {
+    // TODO:Move <FinalFeedback /> to case2 once case1 is ready
     switch (step) {
       case 0:
         return <InterviewDetail />;
+      case 1:
+        return <FinalFeedback />;
       default:
         throw new Error("Unknown step");
     }
@@ -103,14 +110,20 @@ export default function HorizontalLinearStepper() {
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           {handleSteps(activeStep)}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 2,
+            }}
+          >
             <Button
-              color="inherit"
+              backgroundColor="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
+              sx={{ mr: 1, borderRadius: "50%" }}
             >
-              Back
+              <ArrowBackIosIcon />
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
             {isStepOptional(activeStep) && (
@@ -120,11 +133,17 @@ export default function HorizontalLinearStepper() {
             )}
 
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              {activeStep === steps.length - 1 ? (
+                "Finish"
+              ) : (
+                <ArrowForwardIosIcon />
+              )}
             </Button>
           </Box>
         </React.Fragment>
       )}
     </Box>
   );
-}
+};
+
+export default FormStepper;
