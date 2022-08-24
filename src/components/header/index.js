@@ -63,13 +63,13 @@ const Header = () => {
               />
             </Link>
 
-            {user.value.email ? (
+            {user?.value?.email ? (
               <>
                 <Box
                   sx={{
                     flexGrow: 1,
                     flexDirection: "row-reverse",
-                    display: { xs: "none", md: "flex" },
+                    display: { md: "flex" },
                   }}
                 >
                   <nav>

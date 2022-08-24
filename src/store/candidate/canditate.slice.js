@@ -18,7 +18,6 @@ const candidatesSlice = createSlice({
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
       state.status = "resolved";
-      console.log(payload);
       state.candidates.push(payload);
     });
 
