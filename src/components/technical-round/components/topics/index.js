@@ -51,60 +51,14 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const TopicsList = ({ selectedCategory, onScoreChange }) => {
   const [expanded, setExpanded] = React.useState(0);
   const [selected, setSelected] = React.useState(null);
-  console.log(selectedCategory);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
   React.useEffect(() => {
-    setSelected(selectedCategory);
-    // addScoreToTheObject(selectedCategory);
+    setSelected({ ...selectedCategory });
   }, [selectedCategory]);
-
-  // const addScoreToTheObject = (topic) => {
-  //   let newTopic = Object.assign({}, topic);
-  //   if (topic) {
-  //     newTopic = Object.assign({}, topic, { score: 0 });
-
-  //     // newTopic.assign({}, ...topic, { score: 0 });
-  //     newTopic.topics.forEach((element, index) => {
-  //       debugger;
-  //       newTopic.topics[index] = Object.assign({}, element, { score: 0 });
-  //       let questionsSet = [];
-  //       if (element.questions && element.questions.length > 0) {
-  //         element.questions.map((item) => {
-  //           let obj = { title: item, score: 0 };
-  //           questionsSet.push(obj);
-  //         });
-  //         // element["questions"] = [...questionsSet];
-  //         element.questions = Object.assign([], questionsSet);
-  //       }
-  //     });
-  //     debugger;
-  //     setSelected(newTopic);
-  //   }
-  // };
-
-  // const addScoreToTheObject = (topic) => {
-  //   let newTopic = JSON.parse(JSON.stringify(topic));
-  //   if (topic) {
-  //     newTopic.score = 0;
-  //     debugger;
-  //     newTopic.topics.forEach((element, index) => {
-  //       newTopic.topics[index]["score"] = 0;
-  //       let questionsSet = [];
-  //       if (element.questions && element.questions.length > 0) {
-  //         element.questions.map((item) => {
-  //           let obj = { title: item, score: "" };
-  //           questionsSet.push(obj);
-  //         });
-  //         element.questions = questionsSet;
-  //       }
-  //     });
-  //     setSelected(newTopic);
-  //   }
-  // };
 
   const handleSelectChange = (topicIndex, qindex, e) => {
     let newTopic = { ...selected };
@@ -121,28 +75,25 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
   const getTopicScore = (topic) => {
     let newSingleTopic = { ...topic };
     let counter = 0;
-    const res = topic.questions.reduce((acc, item) => {
+    const res = topic?.questions?.reduce((acc, item) => {
       if (item.score) {
         counter++;
         return acc + item.score;
       }
       return acc;
     }, 0);
-    newSingleTopic.score = (res / counter).toFixed(2);
+    newSingleTopic.score = (res == 0 ? res : res / counter).toFixed(2);
     return newSingleTopic;
   };
 
   const getAreaScore = (area) => {
     let newSingleArea = { ...area };
-    let counter = 0;
-    const res = area.topics.reduce((acc, item) => {
-      if (item.score) {
-        counter++;
-        return acc + item.score;
-      }
-      return acc;
+    const res = area?.topics?.reduce((acc, item) => {
+      return acc + item.score;
     }, 0);
-    newSingleArea.score = (res / area.topics.length).toFixed(2);
+    if (res > 0) {
+      newSingleArea.score = (res / area.topics.length).toFixed(2);
+    }
     return newSingleArea;
   };
 
@@ -184,16 +135,10 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
                               className="questions-actions"
                               style={{ flex: "1" }}
                             >
-                              {/* <BasicSelect items={RATINGS} label="Rating" /> */}
-                              {/* <span className="feedback-action">
-                                <AddCircle fontSize="10px" />
-                                Add Rating
-                              </span> */}
-
                               <CustomSelect
                                 items={RATINGS}
                                 label={"Rating"}
-                                value={question.score ? question.score : ""}
+                                value={question.score}
                                 onChange={(e) =>
                                   handleSelectChange(index, i, e)
                                 }

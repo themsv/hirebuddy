@@ -14,6 +14,10 @@ export const Topics = styled("div")(({ theme }) => ({
         margin: 0,
       },
     },
+    "& .MuiFormLabel-root": {
+      fontSize: "14px",
+      top: "-8px",
+    },
     "& .questions-actions": {
       display: "flex",
       maxWidth: "25%",

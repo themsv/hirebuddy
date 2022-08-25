@@ -31,21 +31,22 @@ const TechnicalRound = ({ type, onScoreChange }) => {
     let newAreas = JSON.parse(JSON.stringify(areas));
     if (newAreas && newAreas.length > 0) {
       newAreas.forEach((newTopic, aindex) => {
-        newAreas[aindex]["score"] = "";
-        // let newTopic = JSON.parse(JSON.stringify(topic));
+        // newAreas[aindex]["score"] = "";
         if (newTopic) {
           newTopic.score = 0;
-          newTopic.topics.forEach((element, index) => {
-            newTopic.topics[index]["score"] = 0;
-            let questionsSet = [];
-            if (element.questions && element.questions.length > 0) {
-              element.questions.map((item) => {
-                let obj = { title: item, score: "" };
-                questionsSet.push(obj);
-              });
-              element.questions = questionsSet;
-            }
-          });
+          if (newTopic.topics && newTopic.topics.length > 0) {
+            newTopic.topics.forEach((element, index) => {
+              newTopic.topics[index]["score"] = 0;
+              let questionsSet = [];
+              if (element.questions && element.questions.length > 0) {
+                element.questions.forEach((item) => {
+                  let obj = { title: item, score: "" };
+                  questionsSet.push(obj);
+                });
+                element.questions = questionsSet;
+              }
+            });
+          }
           // setSelected(newTopic);
           newAreas[aindex] = newTopic;
         }
@@ -68,6 +69,7 @@ const TechnicalRound = ({ type, onScoreChange }) => {
     data[currentIndex] = topic;
     setSelectedCategory(data[currentIndex]);
     setDataList(data);
+    // TODO : while saving data
     // onScoreChange(data);
   };
 

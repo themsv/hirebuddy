@@ -8,14 +8,19 @@ import { CustomSelectBox } from "./style";
 
 export default function CustomSelect({ items, label, value, onChange }) {
   const [val, setVal] = React.useState("");
+  console.log("value", label + " " + value);
 
   React.useEffect(() => {
-    setVal(value);
+    if (value || value === 0) {
+      setVal(value + 1);
+    } else {
+      setVal(value);
+    }
   }, [value]);
 
   const handleChange = (event) => {
     setVal(event.target.value);
-    onChange(event.target.value);
+    onChange(event.target.value - 1);
   };
   return (
     <CustomSelectBox sx={{ width: "100%" }}>
@@ -24,13 +29,17 @@ export default function CustomSelect({ items, label, value, onChange }) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={value}
+          value={val}
           label={"Rating"}
           onChange={handleChange}
         >
           {items?.map((item) => {
             return (
-              <MenuItem value={item.key} className="rating-select-option">
+              <MenuItem
+                value={item.key + 1}
+                key={item.key}
+                className="rating-select-option"
+              >
                 <div>
                   <CircleOutlined
                     sx={{

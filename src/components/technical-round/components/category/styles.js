@@ -16,6 +16,7 @@ export const Aside = styled("aside")(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
     margin: "0px 5px",
+    alignItems: "center",
   },
   "& li.active-nav": {
     color: theme.palette.primary.main,

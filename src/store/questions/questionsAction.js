@@ -1,14 +1,10 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-// TODO: Need to add the APIUrl in env
-const REACT_APP_URL = "http://localhost:4000/";
-
 export const fetchQuestions = createAsyncThunk(
   "questions/fetchQuestions",
   async (type, thunkAPI) => {
     try {
-      const res = await axios(`${REACT_APP_URL}questions`);
+      const res = await axios(`${process.env.REACT_APP_SERVER_URL}questions`);
       let data = await res.data;
       if (data) {
         data = data[type];

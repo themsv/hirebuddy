@@ -3,10 +3,7 @@ import Chip from "@mui/material/Chip";
 import { Aside } from "./styles";
 
 const Category = ({ title, categoryList, onCategoryChange, selected }) => {
-  console.log("in category comp selected category prop is", selected);
   const [selectedCategory, setSelectedCategory] = useState(0);
-  console.log("categoryList", categoryList);
-  console.log("selectedCategory", selectedCategory);
 
   const handleSelectedCategory = (category, index) => {
     setSelectedCategory(index);
