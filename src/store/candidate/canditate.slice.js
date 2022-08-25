@@ -4,12 +4,17 @@ import { fetchCandidates, submitCandidate } from "./candidate.action";
 export const initialState = Object.freeze({
   status: "idle",
   candidates: [],
+  submitted: false,
 });
 
 const candidatesSlice = createSlice({
   name: "candidates",
   initialState,
-  reducers: {},
+  reducers: {
+    resetIsSubmitted: (state) => {
+      state.submitted = false;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchCandidates.pending, (state) => {
@@ -26,21 +31,19 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(submitCandidate.pending, (state) => {
-      debugger;
-      state.status = "pending";
+      state.submitted = false;
     });
 
     builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
-      debugger;
-      state.status = "resolved";
+      state.submitted = true;
       state.candidates.push(payload);
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {
-      debugger;
-      state.status = "rejected";
+      state.status = false;
     });
   },
 });
+export const { resetIsSubmitted } = candidatesSlice.actions;
 
 export default candidatesSlice.reducer;

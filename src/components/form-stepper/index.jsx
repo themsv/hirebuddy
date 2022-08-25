@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -10,9 +10,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import InterviewDetail from "../interviewInformation/index";
 import FinalFeedback from "../final-feedback/index";
-import BaseButton from "../button";
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
+import { CheckCircleOutline } from "@mui/icons-material";
+import { CANDIDATE_DETAILS } from "../../constants/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { resetIsSubmitted } from "../../store/candidate/canditate.slice";
 
 const steps = [
   "Interview Information",
@@ -24,6 +28,16 @@ const FormStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [candidateData, setCandidateData] = useState({});
+  const [counter, setCounter] = useState(5);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isSubmitted = useSelector((state) => state.candidates.submitted);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      redirectToCandidatePage();
+    }
+  }, [isSubmitted]);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -34,7 +48,6 @@ const FormStepper = () => {
   };
 
   const handleNext = () => {
-    debugger;
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -53,14 +66,25 @@ const FormStepper = () => {
     // submitCandidateDetails();
   };
 
-  const submitCandidateDetails = async () => {
-    debugger;
+  const submitCandidateDetails = () => {
     if (true) {
-      const res = await submitCandidate(candidateData);
-      debugger;
+      dispatch(submitCandidate(candidateData));
     }
   };
 
+  const redirectToCandidatePage = () => {
+    let count = 5;
+    const timer = setInterval(() => {
+      if (count > 0) {
+        setCounter(count - 1);
+        count--;
+      } else {
+        clearInterval(timer);
+        dispatch(resetIsSubmitted());
+        navigate(CANDIDATE_DETAILS);
+      }
+    }, 1000);
+  };
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -132,17 +156,28 @@ const FormStepper = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
+          {/* <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleReset}>Reset</Button>
+          </Box> */}
+          <Box sx={{ textAlign: "center", mt: 4 }}>
+            <CheckCircleOutline width="30" color="success" />
+            <Typography variant="h6" color={"siccess"}>
+              Feedback Submitted Successfully !
+            </Typography>
+            <Typography variant="body-2" type="body">
+              It will redirected to candidate details page in {counter} seconds.
+            </Typography>
           </Box>
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+            {/* Step {activeStep + 1} */}
+          </Typography>
           {handleSteps(activeStep)}
           <Box
             sx={{
