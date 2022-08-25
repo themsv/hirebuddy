@@ -9,3 +9,13 @@ body {
 .align-right {
   text-align: right;
 }
+
+.rating-select-option > div {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.rating-select-option > div svg {
+  font-size: 14px;
+  margin-right: 3px;
+}
