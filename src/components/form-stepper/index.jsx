@@ -10,7 +10,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import InterviewDetail from "../interviewInformation/index";
 import FinalFeedback from "../final-feedback/index";
-import BaseButton from "../button";
 
 const steps = [
   "Step - 1 (Interview Information)",
@@ -118,19 +117,20 @@ const FormStepper = () => {
             }}
           >
             <Button
-              backgroundColor="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1, borderRadius: "50%" }}
+              sx={{ mr: 1 }}
             >
               <ArrowBackIosIcon />
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
+            {/* {isStepOptional(activeStep) 
+            && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
+            )
+            } */}
 
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? (

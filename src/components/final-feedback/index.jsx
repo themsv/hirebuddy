@@ -23,7 +23,7 @@ const FinalFeedback = () => {
   ];
   const outcomeValues = [
     { key: "81", value: "selected" },
-    { value: "81", value: "rejected" },
+    { key: "82", value: "rejected" },
   ];
   const isTrainable = [
     { key: "91", value: "Yes" },
@@ -31,10 +31,10 @@ const FinalFeedback = () => {
   ];
   const trainings = [
     { key: "101", value: "HTML" },
-    { key: "101", value: "CSS" },
-    { key: "101", value: "OOJS - Advanced" },
-    { key: "101", value: "Functional JS - Advanced" },
-    { key: "101", value: "ReactJS - Advanced" },
+    { key: "102", value: "CSS" },
+    { key: "103", value: "OOJS - Advanced" },
+    { key: "104", value: "Functional JS - Advanced" },
+    { key: "105", value: "ReactJS - Advanced" },
   ];
   return (
     <React.Fragment>
@@ -88,7 +88,11 @@ const FinalFeedback = () => {
               <p>Trainings</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect label="Trainings" items={trainings} multiple />
+              <BasicSelect
+                label="Trainings"
+                items={trainings}
+                isMultiple={true}
+              />
             </Grid>
           </Grid>
           <Grid container spacing={2}>

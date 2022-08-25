@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -5,13 +7,19 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
 const FormRadioBtn = ({ radioValues, label }) => {
+  const [value, setValue] = useState();
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
     <FormControl>
-      {/* <FormLabel id="demo-row-radio-buttons-group-label">{label}</FormLabel> */}
       <RadioGroup
         row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
+        name={label}
+        value={value}
+        onChange={handleChange}
+        required
       >
         {radioValues.map((radioValue) => (
           <FormControlLabel
