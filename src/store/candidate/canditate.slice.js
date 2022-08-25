@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCandidates } from "./candidate.action";
+import { fetchCandidates, submitCandidate } from "./candidate.action";
 
 export const initialState = Object.freeze({
   status: "idle",
@@ -22,6 +22,22 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(fetchCandidates.rejected, (state) => {
+      state.status = "rejected";
+    });
+
+    builder.addCase(submitCandidate.pending, (state) => {
+      debugger;
+      state.status = "pending";
+    });
+
+    builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
+      debugger;
+      state.status = "resolved";
+      state.candidates.push(payload);
+    });
+
+    builder.addCase(submitCandidate.rejected, (state) => {
+      debugger;
       state.status = "rejected";
     });
   },

@@ -8,7 +8,6 @@ import { CustomSelectBox } from "./style";
 
 export default function CustomSelect({ items, label, value, onChange }) {
   const [val, setVal] = React.useState("");
-  console.log("value", label + " " + value);
 
   React.useEffect(() => {
     if (value || value === 0) {

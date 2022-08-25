@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -11,16 +11,19 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import InterviewDetail from "../interviewInformation/index";
 import FinalFeedback from "../final-feedback/index";
 import BaseButton from "../button";
+import TechnicalRound from "../technical-round";
+import { submitCandidate } from "../../store/candidate/candidate.action";
 
 const steps = [
-  "Step - 1 (Interview Information)",
-  "Step - 2 (Technical Round Data)",
-  "Step - 3 (Final Feedback)",
+  "Interview Information",
+  "Technical Round Data",
+  "Final Feedback",
 ];
 
 const FormStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [candidateData, setCandidateData] = useState({});
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -31,14 +34,31 @@ const FormStepper = () => {
   };
 
   const handleNext = () => {
+    debugger;
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => {
+      if (prevActiveStep + 1 == 3) {
+        submitCandidateDetails();
+      }
+      return prevActiveStep + 1;
+    });
     setSkipped(newSkipped);
+
+    //TODO : submit the details
+    // submitCandidateDetails();
+  };
+
+  const submitCandidateDetails = async () => {
+    debugger;
+    if (true) {
+      const res = await submitCandidate(candidateData);
+      debugger;
+    }
   };
 
   const handleBack = () => {
@@ -69,10 +89,24 @@ const FormStepper = () => {
       case 0:
         return <InterviewDetail />;
       case 1:
+        return (
+          <TechnicalRound
+            type={"core-xt"}
+            score={candidateData?.score}
+            onScoreChange={handleScoreChange}
+          />
+        );
+      case 2:
         return <FinalFeedback />;
       default:
         throw new Error("Unknown step");
     }
+  };
+
+  const handleScoreChange = (score) => {
+    const data = { ...candidateData };
+    data.score = score;
+    setCandidateData(data);
   };
 
   return (

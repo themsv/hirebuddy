@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchQuestions } from "../../store/questions/questionsAction";
 import Spinner from "../spinner";
 
-const TechnicalRound = ({ type, onScoreChange }) => {
+const TechnicalRound = ({ type, score, onScoreChange }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [dataList, setDataList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,10 +22,15 @@ const TechnicalRound = ({ type, onScoreChange }) => {
   }, []);
 
   useEffect(() => {
-    if (result?.data?.areas?.length > 0) {
-      addScoreToTheObject(result?.data?.areas);
+    if (score && score.length > 0) {
+      setDataList(score);
+      setSelectedCategory(score[0]);
+    } else {
+      if (result?.data?.areas?.length > 0) {
+        addScoreToTheObject(result?.data?.areas);
+      }
     }
-  }, [result]);
+  }, [result, score]);
 
   const addScoreToTheObject = (areas) => {
     let newAreas = JSON.parse(JSON.stringify(areas));
@@ -70,7 +75,7 @@ const TechnicalRound = ({ type, onScoreChange }) => {
     setSelectedCategory(data[currentIndex]);
     setDataList(data);
     // TODO : while saving data
-    // onScoreChange(data);
+    onScoreChange(data);
   };
 
   return (
