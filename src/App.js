@@ -3,6 +3,7 @@ import Authenticate from "./pages/authenticate/index";
 import LandingPage from "./pages/landing";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
+import { CANDIDATE_DETAILS, CONDUCT_INTERVIEW } from "./constants/routes";
 import ConductInterview from "./pages/conduct-interview/index";
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Route path="/" element={<Header />}>
           <Route index element={<Authenticate />} />
           <Route path="landing" element={<LandingPage />} />
-          <Route path="conduct-interview" element={<ConductInterview />} />
+          <Route path={CONDUCT_INTERVIEW} element={<ConductInterview />} />
+          <Route path={CANDIDATE_DETAILS} element={<LandingPage />} />
         </Route>
       </Routes>
     </Fragment>
