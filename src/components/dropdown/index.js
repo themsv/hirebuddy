@@ -20,6 +20,7 @@ export default function BasicSelect({ items, label, isMultiple }) {
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
+          data-testid="select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={isMultiple ? multiOptions : age}
