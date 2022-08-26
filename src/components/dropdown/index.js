@@ -17,6 +17,7 @@ export default function BasicSelect({ items, label }) {
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
+          data-testid="select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={age}
