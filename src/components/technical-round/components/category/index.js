@@ -1,13 +1,9 @@
-import styled from "@emotion/styled";
 import { useState } from "react";
-import "./style.css";
+import Chip from "@mui/material/Chip";
+import { Aside } from "./styles";
 
-const Aside = styled("ul")(({ theme }) => ({
-  backgroundColor: theme.palette.background.main,
-}));
-
-const Category = ({ categoryList, onCategoryChange }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const Category = ({ title, categoryList, onCategoryChange, selected }) => {
+  const [selectedCategory, setSelectedCategory] = useState(0);
 
   const handleSelectedCategory = (category, index) => {
     setSelectedCategory(index);
@@ -15,6 +11,7 @@ const Category = ({ categoryList, onCategoryChange }) => {
   };
   return (
     <Aside>
+      <h2 style={{ marginLeft: "10px" }}>{title}</h2>
       <ul>
         {categoryList &&
           categoryList.length > 0 &&
@@ -22,9 +19,15 @@ const Category = ({ categoryList, onCategoryChange }) => {
             return (
               <li
                 key={category.title}
+                className={index === selectedCategory ? "active-nav" : ""}
                 onClick={() => handleSelectedCategory(category, index)}
               >
                 {category.title}
+                <Chip
+                  label={`Score ${category.score}`}
+                  sx={{ ml: "10px", fontSize: "13px" }}
+                  color={index === selectedCategory ? "primary" : "default"}
+                />
               </li>
             );
           })}

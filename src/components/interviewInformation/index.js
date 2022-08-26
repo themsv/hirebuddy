@@ -9,6 +9,7 @@ import { Header, ShadowBox } from "./style";
 import BaseButton from "../../components/button";
 import Divider from "@mui/material/Divider";
 import { Stack } from "@mui/system";
+import FormInput from "../form-input";
 
 const InterviewDetail = () => {
   return (
