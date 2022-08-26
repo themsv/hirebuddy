@@ -40,7 +40,7 @@ function createData(
 	};
 }
 
-const rows = [
+const originalData = [
 	createData(
 		'Justin Case',
 		'johnsmith@gmail.com',
@@ -118,6 +118,7 @@ function getComparator(order, orderBy) {
 
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
+	// console.log(stabilizedThis);
 	stabilizedThis.sort((a, b) => {
 		const order = comparator(a[0], b[0]);
 		if (order !== 0) {
@@ -129,6 +130,9 @@ function stableSort(array, comparator) {
 }
 
 export default function LandingPage() {
+	const [rows, setRows] = useState(originalData);
+	const [isFilterOpen, setIsFilterOpen] = useState(false);
+	const [isSearchOpen, setIsSearchOpen] = useState(false);
 	const [order, setOrder] = useState('asc');
 	const [orderBy, setOrderBy] = useState('');
 	const [page, setPage] = useState(0);
@@ -150,12 +154,14 @@ export default function LandingPage() {
 	// 	getCandidates();
 	// }, []);
 
+	// Sorting
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
 
+	//Pagination
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 	};
@@ -163,6 +169,35 @@ export default function LandingPage() {
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);
+	};
+
+	const handleSortAndPagination = () => {
+		return stableSort(rows, getComparator(order, orderBy)).slice(
+			page * rowsPerPage,
+			page * rowsPerPage + rowsPerPage
+		);
+	};
+
+	//Searching
+
+	const clickSearchHandler = (event) => {
+		setIsSearchOpen(!isSearchOpen);
+	};
+
+	//Filtering
+
+	const clickFilterHandler = (event, property) => {
+		setIsFilterOpen(!isFilterOpen);
+		console.log(property);
+	};
+
+	const handleRequestFilter = (event) => {
+		const filteredData = rows.filter(
+			(item) => item.outcome === event.target.value
+		);
+		setRows(filteredData);
+		setIsFilterOpen(!isFilterOpen);
+		// setRows(originalData);
 	};
 
 	return (
@@ -174,46 +209,55 @@ export default function LandingPage() {
 							order={order}
 							orderBy={orderBy}
 							onRequestSort={handleRequestSort}
+							clickSearchHandler={clickSearchHandler}
+							clickFilterHandler={clickFilterHandler}
 							rowCount={rows.length}
 						/>
+						{/* {isFilterOpen && (
+							<>
+								<input
+									type="checkbox"
+									value="selected"
+									onClick={handleRequestFilter}
+								/>
+								Selected
+								<input
+									type="checkbox"
+									value="rejected"
+									onClick={handleRequestFilter}
+								/>
+								Rejected
+							</>
+						)} */}
 						<TableBody>
-							{stableSort(rows, getComparator(order, orderBy))
-								.slice(
-									page * rowsPerPage,
-									page * rowsPerPage + rowsPerPage
-								)
-								.map((row, index) => {
-									return (
-										<StyledTableRow hover key={row.name}>
-											<StyledTableCell component="th" scope="row">
-												{row.name}
-											</StyledTableCell>
-											<StyledTableCell>{row.email}</StyledTableCell>
-											<StyledTableCell>{row.phone}</StyledTableCell>
-											<StyledTableCell>
-												{row.experience}
-											</StyledTableCell>
-											<StyledTableCell>{row.date}</StyledTableCell>
-											<StyledTableCell>
-												{row.careerApplied}
-											</StyledTableCell>
-											<StyledTableCell>
-												{row.outcome}
-											</StyledTableCell>
-											<StyledTableCell>
-												{row.careerSelected}
-											</StyledTableCell>
-											<StyledTableCell>{row.iname}</StyledTableCell>
-											<StyledTableCell>
-												{row.oracleId}
-											</StyledTableCell>
-											<StyledTableCell>{row.iemail}</StyledTableCell>
-											<StyledTableCell>
-												{row.careerStage}
-											</StyledTableCell>
-										</StyledTableRow>
-									);
-								})}
+							{handleSortAndPagination().map((row, index) => {
+								return (
+									<StyledTableRow hover key={row.name}>
+										<StyledTableCell component="th" scope="row">
+											{row.name}
+										</StyledTableCell>
+										<StyledTableCell>{row.email}</StyledTableCell>
+										<StyledTableCell>{row.phone}</StyledTableCell>
+										<StyledTableCell>
+											{row.experience}
+										</StyledTableCell>
+										<StyledTableCell>{row.date}</StyledTableCell>
+										<StyledTableCell>
+											{row.careerApplied}
+										</StyledTableCell>
+										<StyledTableCell>{row.outcome}</StyledTableCell>
+										<StyledTableCell>
+											{row.careerSelected}
+										</StyledTableCell>
+										<StyledTableCell>{row.iname}</StyledTableCell>
+										<StyledTableCell>{row.oracleId}</StyledTableCell>
+										<StyledTableCell>{row.iemail}</StyledTableCell>
+										<StyledTableCell>
+											{row.careerStage}
+										</StyledTableCell>
+									</StyledTableRow>
+								);
+							})}
 						</TableBody>
 					</Table>
 				</TableContainer>

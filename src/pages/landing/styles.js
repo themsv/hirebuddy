@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { TableSortLabel } from '@mui/material';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -8,12 +9,14 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		color: '#fff',
 		fontSize: 14,
 		fontWeight: 300,
-		padding: '12px',
+		padding: '8px',
+		lineHeight: '1.4',
 	},
 	[`&.${tableCellClasses.body}`]: {
 		fontSize: 14,
 		fontWeight: 300,
 		padding: '12px',
+		lineHeight: '1.2',
 		textAlign: 'left',
 	},
 }));
@@ -27,3 +30,5 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	// 	border: 0,
 	// },
 }));
+
+export const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({}));
