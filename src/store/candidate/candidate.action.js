@@ -20,7 +20,6 @@ export const submitCandidate = createAsyncThunk(
   async (candidateData, thunkAPI) => {
     try {
       const url = `${process.env.REACT_APP_SERVER_URL}candidates`;
-      const json = JSON.stringify(candidateData);
       const { data } = await axios.post(url, candidateData);
 
       return data;
