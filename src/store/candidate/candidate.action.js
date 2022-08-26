@@ -2,10 +2,10 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchCandidates = createAsyncThunk(
-  "users/fetchCandidates",
+  "candidates/fetchCandidates",
   async (_, thunkAPI) => {
     try {
-      const url = "http://localhost:4000/candidates";
+      const url = `${process.env.REACT_APP_SERVER_URL}candidates`;
       const { data } = await axios.get(url);
 
       return data;
@@ -16,10 +16,9 @@ export const fetchCandidates = createAsyncThunk(
 );
 
 export const submitCandidate = createAsyncThunk(
-  "users/submitCandidate",
+  "candidates/submitCandidate",
   async (candidateData, thunkAPI) => {
     try {
-      debugger;
       const url = `${process.env.REACT_APP_SERVER_URL}candidates`;
       const json = JSON.stringify(candidateData);
       const { data } = await axios.post(url, candidateData);

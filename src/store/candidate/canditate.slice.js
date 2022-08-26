@@ -26,18 +26,15 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(submitCandidate.pending, (state) => {
-      debugger;
       state.status = "pending";
     });
 
     builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
-      debugger;
       state.status = "resolved";
       state.candidates.push(payload);
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {
-      debugger;
       state.status = "rejected";
     });
   },

@@ -1,18 +1,17 @@
-import React from "react";
+import { Fragment } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import BasicSelect from "../../components/dropdown";
+import FormInput from "../form-input/index";
+import FormSelect from "../form-select/index";
 import BasicDatePicker from "../../components/date-picker";
 import { Header, ShadowBox } from "./style";
-import BaseButton from "../../components/button";
 import Divider from "@mui/material/Divider";
-import { Stack } from "@mui/system";
+import { CAREERSTAGES } from "../../constants/common";
 
-const InterviewDetail = () => {
+const InterviewDetail = ({ candidateData, setCandidateData }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <br></br>
       <Container maxWidth="md">
@@ -22,31 +21,64 @@ const InterviewDetail = () => {
             <Grid item xs={6}>
               <p>Date</p>
             </Grid>
+            {/* TODO:Need to fix date style */}
             <Grid item xs={6}>
-              <BasicDatePicker />
+              <FormInput
+                type="date"
+                value={candidateData.interviewData.interviewDate}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewDate: e.target.value,
+                    },
+                  })
+                }
+              />
             </Grid>
             <Grid item xs={6}>
               <p>Mode</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect
+              <FormSelect
                 items={[
                   { key: "1", value: "In Person" },
                   { key: "2", value: "Teams Video" },
                 ]}
                 label="Mode"
+                value={candidateData.interviewData.interviewMode}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewMode: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Type</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect
+              <FormSelect
                 items={[
                   { key: "3", value: "Core XT" },
                   { key: "4", value: "React JS" },
                 ]}
                 label="Type"
+                value={candidateData.interviewData.interviewType}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewType: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
           </Grid>
@@ -57,84 +89,123 @@ const InterviewDetail = () => {
               <p>First Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
-                label="First Name"
-                variant="outlined"
+              <FormInput
                 type="text"
+                label="First Name"
+                value={candidateData.interviewData.candidateFirstName}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidateFirstName: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Last Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Last Name"
-                variant="outlined"
                 type="text"
+                value={candidateData.interviewData.candidateLastName}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidateLastName: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Phone</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Phone"
-                variant="outlined"
                 type="number"
+                value={candidateData.interviewData.candidatePhone}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidatePhone: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Email</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Email"
-                variant="outlined"
-                type="number"
+                type="email"
+                value={candidateData.interviewData.candidateEmail}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidateEmail: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Experience</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Experience"
-                variant="outlined"
                 type="number"
+                value={candidateData.interviewData.candidateExperience}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidateExperience: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Career Stage interviewed for</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect
-                items={[
-                  { key: "12", value: "Junior Associate" },
-                  { key: "13", value: "Associate L1" },
-                  { key: "14", value: "Associate L2" },
-                  { key: "15", value: "Sr. Associate L1" },
-                  { key: "16", value: "Sr. Associate L2" },
-                  { key: "17", value: "Manager" },
-                  { key: "18", value: "Sr. Manager" },
-                ]}
+              <FormSelect
+                items={CAREERSTAGES}
                 label="Career Stage interviewed for"
+                value={
+                  candidateData.interviewData.candidateCareerStageInterviewedFor
+                }
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      candidateCareerStageInterviewedFor: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Resume</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
-                label="Experience"
-                variant="standard"
-                type="file"
-              />
+              <FormInput label="Experience" variant="standard" type="file" />
             </Grid>
           </Grid>
 
@@ -146,63 +217,102 @@ const InterviewDetail = () => {
               <p>Oracle ID </p>
             </Grid>
             <Grid item xs={6}>
-              <BasicDatePicker />
+              <FormInput
+                label="Oracle ID"
+                type="text"
+                value={candidateData.interviewData.interviewerOracleId}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewerOracleId: e.target.value,
+                    },
+                  })
+                }
+              />
             </Grid>
             <Grid item xs={6}>
               <p>First Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="First Name"
-                variant="outlined"
                 type="text"
+                value={candidateData.interviewData.interviewerFirstName}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewerFirstName: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Last Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Last Name"
-                variant="outlined"
                 type="text"
+                value={candidateData.interviewData.interviewerLastName}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewerLastName: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Email</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="Email"
-                variant="outlined"
-                type="text"
+                type="email"
+                value={candidateData.interviewData.interviewerEmail}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewerEmail: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <p>Career Stage</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect
-                items={[
-                  { key: "31", value: "In Person" },
-                  { key: "32", value: "Teams Video" },
-                ]}
+              <FormSelect
+                items={CAREERSTAGES}
                 label="Career Stage"
+                value={candidateData.interviewData.interviewerCareerStage}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    interviewData: {
+                      ...candidateData.interviewData,
+                      interviewerCareerStage: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
           </Grid>
           <Divider />
         </ShadowBox>
-        {/* <Stack alignItems="flex-end">
-          <br></br>
-          <BaseButton variant="contained">Submit</BaseButton>
-          <br></br>
-        </Stack> */}
       </Container>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

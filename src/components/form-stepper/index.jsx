@@ -14,6 +14,7 @@ import FinalFeedback from "../final-feedback/index";
 import BaseButton from "../button";
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
+import { useDispatch } from "react-redux";
 
 const steps = [
   "Interview Information",
@@ -21,10 +22,40 @@ const steps = [
   "Final Feedback",
 ];
 
+const defaultState = {
+  interviewData: {
+    interviewDate: "",
+    interviewMode: "",
+    interviewType: "",
+    candidateFirstName: "",
+    candidateLastName: "",
+    candidatePhone: "",
+    candidateEmail: "",
+    candidateExperience: "",
+    candidateCareerStageInterviewedFor: "",
+    candidateResume: "",
+    interviewerOracleId: "",
+    interviewerFirstName: "",
+    interviewerLastName: "",
+    interviewerEmail: "",
+    interviewerCareerStage: "",
+  },
+  score: {},
+  finalFeedback: {
+    relaventExperience: "",
+    recommendedCareerStage: "",
+    outcome: "",
+    trainable: "",
+    trainings: [],
+    feedback: "",
+  },
+};
 const FormStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const [candidateData, setCandidateData] = useState({});
+  const [candidateData, setCandidateData] = useState(defaultState);
+
+  const dispatch = useDispatch();
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -35,7 +66,6 @@ const FormStepper = () => {
   };
 
   const handleNext = () => {
-    debugger;
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -49,16 +79,15 @@ const FormStepper = () => {
       return prevActiveStep + 1;
     });
     setSkipped(newSkipped);
-
+    // activeStep === 3 && submitCandidateDetails();
     //TODO : submit the details
     // submitCandidateDetails();
   };
 
   const submitCandidateDetails = async () => {
-    debugger;
     if (true) {
-      const res = await submitCandidate(candidateData);
-      debugger;
+      const res = await dispatch(submitCandidate(candidateData));
+      console.log(res);
     }
   };
 
@@ -83,12 +112,17 @@ const FormStepper = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+    setCandidateData(defaultState);
   };
   const handleSteps = (step) => {
-    // TODO:Move <FinalFeedback /> to case2 once case1 is ready
     switch (step) {
       case 0:
-        return <InterviewDetail />;
+        return (
+          <InterviewDetail
+            candidateData={candidateData}
+            setCandidateData={setCandidateData}
+          />
+        );
       case 1:
         return (
           <TechnicalRound
@@ -98,7 +132,12 @@ const FormStepper = () => {
           />
         );
       case 2:
-        return <FinalFeedback />;
+        return (
+          <FinalFeedback
+            candidateData={candidateData}
+            setCandidateData={setCandidateData}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
