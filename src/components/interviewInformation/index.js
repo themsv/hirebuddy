@@ -2,16 +2,24 @@ import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import BasicSelect from "../../components/dropdown";
 import BasicDatePicker from "../../components/date-picker";
 import { Header, ShadowBox } from "./style";
 import BaseButton from "../../components/button";
 import Divider from "@mui/material/Divider";
-import { Stack } from "@mui/system";
+import { useForm } from "react-hook-form";
 import FormInput from "../form-input";
+import { useFormControl } from "@mui/material";
 
 const InterviewDetail = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -24,7 +32,7 @@ const InterviewDetail = () => {
               <p>Date</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicDatePicker />
+              <BasicDatePicker size="small" />
             </Grid>
             <Grid item xs={6}>
               <p>Mode</p>
@@ -36,6 +44,7 @@ const InterviewDetail = () => {
                   { key: "2", value: "Teams Video" },
                 ]}
                 label="Mode"
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
@@ -47,6 +56,7 @@ const InterviewDetail = () => {
                   { key: "3", value: "Core XT" },
                   { key: "4", value: "React JS" },
                 ]}
+                size="small"
                 label="Type"
               />
             </Grid>
@@ -58,55 +68,61 @@ const InterviewDetail = () => {
               <p>First Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                id="outlined-basic"
+              <FormInput
                 label="First Name"
                 variant="outlined"
                 type="text"
+                size="small"
+                name="sachin"
+                {...register("sachin")}
               />
             </Grid>
             <Grid item xs={6}>
               <p>Last Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Last Name"
                 variant="outlined"
                 type="text"
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <p>Phone</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Phone"
                 variant="outlined"
                 type="number"
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <p>Email</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Email"
                 variant="outlined"
                 type="number"
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
               <p>Experience</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Experience"
                 variant="outlined"
                 type="number"
+                size="small"
               />
             </Grid>
             <Grid item xs={6}>
@@ -130,11 +146,12 @@ const InterviewDetail = () => {
               <p>Resume</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Experience"
                 variant="standard"
                 type="file"
+                size="small"
               />
             </Grid>
           </Grid>
@@ -153,7 +170,7 @@ const InterviewDetail = () => {
               <p>First Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="First Name"
                 variant="outlined"
@@ -164,7 +181,7 @@ const InterviewDetail = () => {
               <p>Last Name</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Last Name"
                 variant="outlined"
@@ -175,7 +192,7 @@ const InterviewDetail = () => {
               <p>Email</p>
             </Grid>
             <Grid item xs={6}>
-              <TextField
+              <FormInput
                 id="outlined-basic"
                 label="Email"
                 variant="outlined"
@@ -196,6 +213,13 @@ const InterviewDetail = () => {
             </Grid>
           </Grid>
           <Divider />
+          <BaseButton
+            onClick={() => {
+              onSubmit();
+            }}
+          >
+            Submit
+          </BaseButton>
         </ShadowBox>
         {/* <Stack alignItems="flex-end">
           <br></br>
