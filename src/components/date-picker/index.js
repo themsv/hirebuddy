@@ -16,6 +16,7 @@ export default function BasicDatePicker() {
           setValue(newValue);
         }}
         renderInput={(params) => <TextField {...params} />}
+        size="small"
       />
     </LocalizationProvider>
   );

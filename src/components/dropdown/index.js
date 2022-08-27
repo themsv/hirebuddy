@@ -7,14 +7,14 @@ import Select from "@mui/material/Select";
 
 export default function BasicSelect({ items, label }) {
   const [age, setAge] = React.useState("");
-  console.log(items);
+
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+    <Box>
+      <FormControl fullWidth sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           data-testid="select"
