@@ -12,9 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Authenticate />} />
-          <Route path="landing" element={<LandingPage />} />
           <Route path={CONDUCT_INTERVIEW} element={<ConductInterview />} />
-          <Route path={CANDIDATE_DETAILS} element={<LandingPage />} />
+          <Route path="/landing" element={<LandingPage />} />
         </Route>
       </Routes>
     </Fragment>
