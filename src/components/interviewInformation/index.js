@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -11,29 +11,73 @@ import { useForm } from "react-hook-form";
 import FormInput from "../form-input";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { max } from "date-fns";
+import AutoCompleteBox from "../autocomplete/autocomplete-dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../../store/user/userAction";
 
 const schema = yup.object().shape({
   firstName: yup.string().max(30).required(),
   lastName: yup.string().max(30).required(),
-  phone: yup.number().required(),
-  email: yup.string().email().required(),
-  experience: yup.number().min(1).max(100).required(),
-  resume: yup.string().min(10).required(),
+  phone: yup.number("Enter Phone number").required("Enter Phone number"),
+  email: yup.string().email("Enter email").required(),
+  experience: yup.number("Enter experince ").min(1).max(100).required(),
+  resume: yup.string("Pleae add file").min(10).required(),
+  date: yup.date().required(),
+  interviewerFirstName: yup.string().max(30).required(),
+  interviewerLastName: yup.string().max(30).required(),
+  interviewerEmail: yup.string().max(30).required(),
 });
 
 const InterviewDetail = () => {
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+  const user = useSelector((state) => {
+    return state.user.value;
+  });
+  const dispatch = useDispatch();
+  const [reqDate, setReqDate] = useState();
+  const [usersList, setUsersList] = React.useState([]);
+  const [autovalue, setAutoValue] = React.useState("Search Oracle ID");
+  const [mode, setMode] = React.useState("");
+  const [type, setType] = React.useState("");
 
   const onSubmit = (data) => {
     console.log(errors);
     console.log(data);
+
+    console.log({ ...data, type: type, mode: mode });
   };
-  console.log(errors);
+  React.useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+
+  React.useEffect(() => {
+    if (user.length > 0) {
+      let usersList = user.map((user) => {
+        return {
+          label: user.oracleId + "",
+        };
+      });
+      setUsersList(usersList);
+    }
+  }, [user]);
+
+  React.useEffect(() => {
+    if (autovalue !== undefined && user.length > 0) {
+      let selectedUserData = user.filter((user) => {
+        return user.oracleId == autovalue.label;
+      });
+
+      setValue("interviewerFirstName", selectedUserData[0].firstName);
+      setValue("interviewerLastName", selectedUserData[0].lastName);
+      setValue("interviewerEmail", selectedUserData[0].email);
+    }
+  }, [autovalue]);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -47,16 +91,26 @@ const InterviewDetail = () => {
                 <p>Date</p>
               </Grid>
               <Grid item xs={6}>
-                <BasicDatePicker size="small" />
+                <BasicDatePicker
+                  setreqDate={setReqDate}
+                  control={control}
+                  size="small"
+                  name="date"
+                  error={!!errors.date}
+                  helperText={errors?.date?.message}
+                />
+                <p>{!!errors.date && "Enter Date"}</p>
               </Grid>
               <Grid item xs={6}>
                 <p>Mode</p>
               </Grid>
               <Grid item xs={6}>
                 <BasicSelect
+                  item={mode}
+                  setItem={setMode}
                   items={[
-                    { key: "1", value: "In Person" },
-                    { key: "2", value: "Teams Video" },
+                    { value: "In Person", key: "1" },
+                    { value: "Teams Video", key: "2" },
                   ]}
                   label="Mode"
                 />
@@ -66,6 +120,8 @@ const InterviewDetail = () => {
               </Grid>
               <Grid item xs={6}>
                 <BasicSelect
+                  item={type}
+                  setItem={setType}
                   items={[
                     { key: "3", value: "Core XT" },
                     { key: "4", value: "React JS" },
@@ -155,20 +211,7 @@ const InterviewDetail = () => {
               <Grid item xs={6}>
                 <p>Career Stage interviewed for</p>
               </Grid>
-              <Grid item xs={6}>
-                <BasicSelect
-                  items={[
-                    { key: "12", value: "Junior Associate" },
-                    { key: "13", value: "Associate L1" },
-                    { key: "14", value: "Associate L2" },
-                    { key: "15", value: "Sr. Associate L1" },
-                    { key: "16", value: "Sr. Associate L2" },
-                    { key: "17", value: "Manager" },
-                    { key: "18", value: "Sr. Manager" },
-                  ]}
-                  label="Career Stage interviewed for"
-                />
-              </Grid>
+              <Grid item xs={6}></Grid>
               <Grid item xs={6}>
                 <p>Resume</p>
               </Grid>
@@ -194,17 +237,22 @@ const InterviewDetail = () => {
                 <p>Oracle ID </p>
               </Grid>
               <Grid item xs={6}>
-                <BasicDatePicker />
+                <AutoCompleteBox
+                  value={autovalue}
+                  setValue={setAutoValue}
+                  usersList={usersList}
+                />
               </Grid>
               <Grid item xs={6}>
                 <p>First Name</p>
               </Grid>
               <Grid item xs={6}>
                 <FormInput
-                  label="First Name"
                   variant="outlined"
                   type="text"
                   size="small"
+                  {...register("interviewerFirstName", { required: true })}
+                  inputProps={{ readOnly: true }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -212,10 +260,11 @@ const InterviewDetail = () => {
               </Grid>
               <Grid item xs={6}>
                 <FormInput
-                  label="Last Name"
                   variant="outlined"
                   type="text"
                   size="small"
+                  {...register("interviewerLastName", { required: true })}
+                  inputProps={{ readOnly: true }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -223,10 +272,11 @@ const InterviewDetail = () => {
               </Grid>
               <Grid item xs={6}>
                 <FormInput
-                  label="Email"
                   variant="outlined"
                   type="text"
                   size="small"
+                  {...register("interviewerEmail", { required: true })}
+                  inputProps={{ readOnly: true }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -239,6 +289,8 @@ const InterviewDetail = () => {
                     { key: "32", value: "Teams Video" },
                   ]}
                   label="Career Stage"
+                  name="careerStage"
+                  inputProps={{ readOnly: true }}
                 />
               </Grid>
             </Grid>

@@ -7,7 +7,7 @@ export const fetchCandidates = createAsyncThunk(
     try {
       const url = "http://localhost:4000/candidates";
       const { data } = await axios.get(url);
-
+      console.log(data);
       return data;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data.message);
