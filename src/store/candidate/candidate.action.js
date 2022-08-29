@@ -8,6 +8,7 @@ export const fetchCandidates = createAsyncThunk(
       const url = `${process.env.REACT_APP_SERVER_URL}candidates`;
       const { data } = await axios.get(url);
 
+      // console.log(data);
       return data;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data.message);
