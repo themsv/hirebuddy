@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async (userData, thunkAPI) => {

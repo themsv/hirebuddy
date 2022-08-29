@@ -140,6 +140,7 @@ const FormStepper = () => {
   const handleSteps = (step) => {
     switch (step) {
       case 0:
+        // return <div></div>;
         return (
           <InterviewDetail
             candidateData={candidateData}

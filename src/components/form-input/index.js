@@ -1,15 +1,16 @@
 import TextField from "@mui/material/TextField";
+import { forwardRef } from "react";
 
-const FormInput = ({ ...props }) => {
+const FormInput = forwardRef((props, ref) => {
   return (
     <TextField
-      data-testid="FormInput"
       sx={{ width: "100%" }}
-      required
       variant="outlined"
+      fullWidth
+      inputRef={ref}
       {...props}
     />
   );
-};
+});
 
 export default FormInput;
