@@ -10,6 +10,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import InterviewDetail from "../interviewInformation/index";
 import FinalFeedback from "../final-feedback/index";
+
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
 import { CheckCircleOutline } from "@mui/icons-material";
@@ -24,11 +25,40 @@ const steps = [
   "Final Feedback",
 ];
 
+const defaultState = {
+  interviewData: {
+    interviewDate: "",
+    interviewMode: "",
+    interviewType: "",
+    candidateFirstName: "",
+    candidateLastName: "",
+    candidatePhone: "",
+    candidateEmail: "",
+    candidateExperience: "",
+    candidateCareerStageInterviewedFor: "",
+    candidateResume: "",
+    interviewerOracleId: "",
+    interviewerFirstName: "",
+    interviewerLastName: "",
+    interviewerEmail: "",
+    interviewerCareerStage: "",
+  },
+  score: {},
+  finalFeedback: {
+    relaventExperience: "",
+    recommendedCareerStage: "",
+    outcome: "",
+    trainable: "",
+    trainings: [],
+    feedback: "",
+  },
+};
 const FormStepper = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const [candidateData, setCandidateData] = useState({});
+  const [candidateData, setCandidateData] = useState(defaultState);
   const [counter, setCounter] = useState(5);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSubmitted = useSelector((state) => state.candidates.submitted);
@@ -61,15 +91,14 @@ const FormStepper = () => {
       return prevActiveStep + 1;
     });
     setSkipped(newSkipped);
-
+    // activeStep === 3 && submitCandidateDetails();
     //TODO : submit the details
     // submitCandidateDetails();
   };
 
-  const submitCandidateDetails = () => {
-    if (true) {
-      dispatch(submitCandidate(candidateData));
-    }
+  const submitCandidateDetails = async () => {
+    const res = await dispatch(submitCandidate(candidateData));
+    console.log(res);
   };
 
   const redirectToCandidatePage = () => {
@@ -106,12 +135,18 @@ const FormStepper = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+    setCandidateData(defaultState);
   };
   const handleSteps = (step) => {
-    // TODO:Move <FinalFeedback /> to case2 once case1 is ready
     switch (step) {
       case 0:
-        return <InterviewDetail />;
+        // return <div></div>;
+        return (
+          <InterviewDetail
+            candidateData={candidateData}
+            setCandidateData={setCandidateData}
+          />
+        );
       case 1:
         return (
           <TechnicalRound
@@ -121,7 +156,12 @@ const FormStepper = () => {
           />
         );
       case 2:
-        return <FinalFeedback />;
+        return (
+          <FinalFeedback
+            candidateData={candidateData}
+            setCandidateData={setCandidateData}
+          />
+        );
       default:
         throw new Error("Unknown step");
     }
@@ -156,13 +196,6 @@ const FormStepper = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          {/* <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box> */}
           <Box sx={{ textAlign: "center", mt: 4 }}>
             <CheckCircleOutline width="30" color="success" />
             <Typography variant="h6" color={"siccess"}>
@@ -187,19 +220,20 @@ const FormStepper = () => {
             }}
           >
             <Button
-              backgroundColor="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1, borderRadius: "50%" }}
+              sx={{ mr: 1 }}
             >
               <ArrowBackIosIcon />
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
+            {/* {isStepOptional(activeStep) 
+            && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
+            )
+            } */}
 
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? (

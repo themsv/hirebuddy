@@ -3,9 +3,14 @@ import TableRow from '@mui/material/TableRow';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import {
+	HEADERCELLS,
+	COLUMNCELLS,
+	CAREERSTAGES,
+	OUTCOMEVALUES,
+} from '../../constants/common';
 
 import { useState } from 'react';
 import {
@@ -22,111 +27,6 @@ import {
 	CareerStagePopover,
 	SearchPopover,
 } from './styles';
-
-const HEADERCELLS = [
-	{ id: 'candidate', label: 'Candidate' },
-	{ id: 'interview', label: 'Interview' },
-	{ id: 'interviewer', label: 'Interviewer' },
-];
-
-const COLUMNCELLS = [
-	//Candidate Fields
-	{
-		id: 'name',
-		label: 'Name',
-		numeric: false,
-		minWidth: 50,
-	},
-	{
-		id: 'email',
-		label: 'Email',
-		minWidth: 80,
-		disableSorting: true,
-	},
-	{
-		id: 'phone',
-		label: 'Phone',
-		minWidth: 50,
-		disableSorting: true,
-	},
-	{
-		id: 'experience',
-		label: 'Experience',
-		numeric: true,
-		minWidth: 80,
-	},
-
-	//Interview Fields
-	{
-		id: 'date',
-		label: 'Date',
-		numeric: true,
-		minWidth: 100,
-		requestSearch: true,
-	},
-	{
-		id: 'careerApplied',
-		label: 'CareerStage Applied',
-		minWidth: 180,
-		disableSorting: true,
-		requestFilter: true,
-	},
-	{
-		id: 'outcome',
-		label: 'Outcome',
-		minWidth: 100,
-		disableSorting: true,
-		requestFilter: true,
-	},
-	{
-		id: 'careerSelected',
-		label: 'CareerStage Selected',
-		minWidth: 180,
-		disableSorting: true,
-		requestFilter: true,
-	},
-
-	//Interviewer Fields
-	{
-		id: 'iname',
-		label: 'Name',
-		minWidth: 80,
-		numeric: false,
-	},
-	{
-		id: 'oracleId',
-		label: 'OracleID',
-		minWidth: 50,
-		numeric: true,
-	},
-	{
-		id: 'iemail',
-		label: 'Email',
-		minWidth: 50,
-		disableSorting: true,
-	},
-	{
-		id: 'careerStage',
-		label: 'CareerStage',
-		minWidth: 150,
-		disableSorting: true,
-	},
-];
-
-const CAREERSTAGES = [
-	{ key: '71', value: 'Junior Associate' },
-	{ key: '72', value: 'Associate L1' },
-	{ key: '73', value: 'Associate L2' },
-	{ key: '74', value: 'Sr. Associate L1' },
-	{ key: '75', value: 'Sr. Associate L2' },
-	{ key: '76', value: 'Manager' },
-	{ key: '78', value: 'Sr. Manager' },
-];
-
-const OUTCOMEVALUES = [
-	{ key: 'selected', value: 'selected' },
-	{ key: 'rejected', value: 'rejected' },
-];
 
 const TableHeader = (props) => {
 	const { order, orderBy, onRequestFilter, onRequestSearch, onRequestSort } =
@@ -162,8 +62,8 @@ const TableHeader = (props) => {
 
 	const createFilterHandler = (property) => (event) => {
 		onRequestFilter(event, property);
-
-		property === 'outcome' && handleClose();
+		handleClose();
+		// property === 'outcome' && handleClose();
 	};
 
 	const createSearchHandler = (event) => {
@@ -300,8 +200,8 @@ const TableHeader = (props) => {
 										id={columnCell.id}
 										open={openCareerApplied}
 										onClose={handleClose}
-										anchorReference="anchorPosition"
-										anchorPosition={{ top: 270, left: 680 }}
+										// anchorReference="anchorPosition"
+										// anchorPosition={{ top: 270, left: 680 }}
 										anchorOrigin={{
 											vertical: 'center',
 											horizontal: 'center',

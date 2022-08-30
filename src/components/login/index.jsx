@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { validateEmail, validateOTP } from "../../utils/validation";
-import { fetchUsers } from "../../store/user/userAction";
+import { fetchUser } from "../../store/user/userAction";
 
 import { LoginContainer, FormBox } from "./styles";
 import FormInput from "../form-input/index";
@@ -41,7 +41,7 @@ const Login = () => {
       errorMsgOTP: errorValue.otp,
     });
     if (!errorValue.email && !errorValue.otp) {
-      await dispatch(fetchUsers({ email, otp }));
+      await dispatch(fetchUser({ email, otp }));
       typeof user.value === "object" && validUser();
 
       navigate("/landing");

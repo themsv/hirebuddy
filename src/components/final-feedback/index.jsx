@@ -1,5 +1,6 @@
-import React from "react";
-import BasicSelect from "../dropdown/index";
+import { Fragment } from "react";
+import FormSelect from "../form-select/index";
+import FormSelectMultiple from "../form-select-multiple/index";
 import FormInput from "../form-input/index";
 import FormRadioBtn from "../form-radio/index";
 
@@ -11,33 +12,16 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 import { Header, ShadowBox } from "../interviewInformation/style";
 
-const FinalFeedback = () => {
-  const careerStages = [
-    { key: "71", value: "Junior Associate" },
-    { key: "71", value: "Associate L1" },
-    { key: "71", value: "Associate L2" },
-    { key: "71", value: "Sr. Associate L1" },
-    { key: "71", value: "Sr. Associate L2" },
-    { key: "71", value: "Manager" },
-    { key: "71", value: "Sr. Manager" },
-  ];
-  const outcomeValues = [
-    { key: "81", value: "selected" },
-    { value: "81", value: "rejected" },
-  ];
-  const isTrainable = [
-    { key: "91", value: "Yes" },
-    { key: "92", value: "No" },
-  ];
-  const trainings = [
-    { key: "101", value: "HTML" },
-    { key: "101", value: "CSS" },
-    { key: "101", value: "OOJS - Advanced" },
-    { key: "101", value: "Functional JS - Advanced" },
-    { key: "101", value: "ReactJS - Advanced" },
-  ];
+import {
+  CAREERSTAGES,
+  OUTCOMEVALUES,
+  ISTRAINABLE,
+  TRAININGS,
+} from "../../constants/common";
+
+const FinalFeedback = ({ candidateData, setCandidateData }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <br></br>
       <Container maxWidth="md">
@@ -53,6 +37,16 @@ const FinalFeedback = () => {
                 label="Relevant Experience (In yrs.)"
                 min="0"
                 max="40"
+                value={candidateData.finalFeedback.relaventExperience}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    finalFeedback: {
+                      ...candidateData.finalFeedback,
+                      relaventExperience: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
           </Grid>
@@ -61,9 +55,19 @@ const FinalFeedback = () => {
               <p>Recommended Career Stage</p>
             </Grid>
             <Grid item xs={6}>
-              <BasicSelect
-                items={careerStages}
+              <FormSelect
+                items={CAREERSTAGES}
                 label="Recommended Career Stage"
+                value={candidateData.finalFeedback.recommendedCareerStage}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    finalFeedback: {
+                      ...candidateData.finalFeedback,
+                      recommendedCareerStage: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
           </Grid>
@@ -72,25 +76,68 @@ const FinalFeedback = () => {
               <p>Outcome</p>
             </Grid>
             <Grid item xs={6}>
-              <FormRadioBtn label="Outcome" radioValues={outcomeValues} />
+              <FormRadioBtn
+                label="Outcome"
+                radioValues={OUTCOMEVALUES}
+                value={candidateData.finalFeedback.outcome}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    finalFeedback: {
+                      ...candidateData.finalFeedback,
+                      outcome: e.target.value,
+                    },
+                  })
+                }
+              />
             </Grid>
           </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Trainable</p>
-            </Grid>
-            <Grid item xs={6}>
-              <FormRadioBtn label="Trainable" radioValues={isTrainable} />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Trainings</p>
-            </Grid>
-            <Grid item xs={6}>
-              <BasicSelect label="Trainings" items={trainings} multiple />
-            </Grid>
-          </Grid>
+          {candidateData.finalFeedback.outcome === "selected" && (
+            <>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <p>Trainable</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormRadioBtn
+                    label="Trainable"
+                    radioValues={ISTRAINABLE}
+                    value={candidateData.finalFeedback.trainable}
+                    onChange={(e) =>
+                      setCandidateData({
+                        ...candidateData,
+                        finalFeedback: {
+                          ...candidateData.finalFeedback,
+                          trainable: e.target.value,
+                        },
+                      })
+                    }
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <p>Trainings</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormSelectMultiple
+                    label="Trainings"
+                    items={TRAININGS}
+                    value={candidateData.finalFeedback.trainings}
+                    onChange={(e) =>
+                      setCandidateData({
+                        ...candidateData,
+                        finalFeedback: {
+                          ...candidateData.finalFeedback,
+                          trainings: e.target.value,
+                        },
+                      })
+                    }
+                  />
+                </Grid>
+              </Grid>
+            </>
+          )}
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <p>Feedback</p>
@@ -102,13 +149,23 @@ const FinalFeedback = () => {
                 aria-label="maximum height"
                 placeholder="Minimum 400 words"
                 style={{ width: "100%" }}
+                value={candidateData.finalFeedback.feedback}
+                onChange={(e) =>
+                  setCandidateData({
+                    ...candidateData,
+                    finalFeedback: {
+                      ...candidateData.finalFeedback,
+                      feedback: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid>
           </Grid>
           <Divider />
         </ShadowBox>
       </Container>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
