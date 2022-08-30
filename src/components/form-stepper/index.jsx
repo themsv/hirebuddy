@@ -18,13 +18,59 @@ import { CANDIDATE_DETAILS } from "../../constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetIsSubmitted } from "../../store/candidate/canditate.slice";
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 const steps = [
   "Interview Information",
   "Technical Round Data",
   "Final Feedback",
 ];
-
+const schema = yup.object().shape({
+  interviewDate: yup.date().required(),
+  interviewMode: yup.string().typeError("Enter Mode"),
+  interviewType: yup.string(),
+  candidateFirstName: yup
+    .string()
+    .max(30, "Maximum 30 Character allowed")
+    .required("Enter First Name"),
+  candidateLastName: yup
+    .string()
+    .max(30, "Maximum 30 Character allowed")
+    .required("Enter Last Name"),
+  candidatePhone: yup
+    .number("Enter Phone number")
+    .typeError("Enter Phone Number")
+    .max(10, "Maximum 10 number allowed")
+    .required("Enter Phone number"),
+  candidateEmail: yup
+    .string()
+    .email("Enter email correct form")
+    .required("Enter email"),
+  candidateExperience: yup
+    .number("Enter expereince ")
+    .typeError("Enter experience")
+    .min(1)
+    .max(100)
+    .required("Enter Candidate experience"),
+  candidateResume: yup.string().required("Enter Resume"),
+  interviewerFirstName: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter First Name"),
+  interviewerLastName: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Last Name"),
+  interviewerEmail: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Resume"),
+  interviewerCareerStage: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Career Stage"),
+});
 const defaultState = {
   interviewData: {
     interviewDate: "",
@@ -54,6 +100,28 @@ const defaultState = {
   },
 };
 const FormStepper = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data) => {
+    alert();
+    let finalData = {
+      ...data,
+      interviewMode: "In Person",
+      interviewType: "core-xt",
+    };
+    console.log(errors);
+    // console.log({ ...candidateData, [candidateData.interviewData]: data });
+    setCandidateData({ ...candidateData, interviewData: finalData });
+  };
+
+  console.log(errors);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [candidateData, setCandidateData] = useState(defaultState);
@@ -62,7 +130,7 @@ const FormStepper = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSubmitted = useSelector((state) => state.candidates.submitted);
-
+  console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
       redirectToCandidatePage();
@@ -86,7 +154,7 @@ const FormStepper = () => {
 
     setActiveStep((prevActiveStep) => {
       if (prevActiveStep + 1 == 3) {
-        submitCandidateDetails();
+        submitCandidateDetails(candidateData);
       }
       return prevActiveStep + 1;
     });
@@ -145,12 +213,18 @@ const FormStepper = () => {
           <InterviewDetail
             candidateData={candidateData}
             setCandidateData={setCandidateData}
+            onSubmit={onSubmit}
+            setValue={setValue}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            control={control}
+            register={register}
           />
         );
       case 1:
         return (
           <TechnicalRound
-            type={"core-xt"}
+            type="core-xt"
             score={candidateData?.score}
             onScoreChange={handleScoreChange}
           />
@@ -239,7 +313,7 @@ const FormStepper = () => {
               {activeStep === steps.length - 1 ? (
                 "Finish"
               ) : (
-                <ArrowForwardIosIcon />
+                <ArrowForwardIosIcon onClick={() => handleSubmit(onSubmit)} />
               )}
             </Button>
           </Box>
