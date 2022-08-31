@@ -1,22 +1,29 @@
-import * as React from "react";
 import TextField from "@mui/material/TextField";
+import { Controller } from "react-hook-form";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export default function BasicDatePicker() {
-  const [value, setValue] = React.useState(null);
-
+export default function BasicDatePicker({ control, setreqDate, name }) {
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        label="Date"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-      />
-    </LocalizationProvider>
+    <Controller
+      name={name}
+      defaultValue=""
+      control={control}
+      rules={{ required: true }}
+      render={({ field: { onChange, ...restField } }) => (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            label="Request Date"
+            onChange={(event) => {
+              onChange(event);
+              setreqDate(event);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+            {...restField}
+          />
+        </LocalizationProvider>
+      )}
+    />
   );
 }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUsers } from "./userAction.js";
+import { fetchUser } from "./userAction.js";
 
 const initialState = {
   loading: false,
@@ -16,20 +16,21 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builders) => {
-    builders.addCase(fetchUsers.pending, (state) => {
+    builders.addCase(fetchUser.pending, (state) => {
       state.loading = true;
     });
-    builders.addCase(fetchUsers.fulfilled, (state, action) => {
+    builders.addCase(fetchUser.fulfilled, (state, action) => {
       state.loading = false;
       state.value = action.payload;
       state.error = "";
     });
-    builders.addCase(fetchUsers.rejected, (state, action) => {
+    builders.addCase(fetchUser.rejected, (state, action) => {
       state.loading = false;
       state.value = {};
       state.error = action.error.message;
     });
   },
 });
+
 export const { removeUser } = userSlice.actions;
 export default userSlice.reducer;

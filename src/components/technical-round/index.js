@@ -22,26 +22,27 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   }, []);
 
   useEffect(() => {
+    debugger;
     if (score && score.length > 0) {
       setDataList(score);
       setSelectedCategory(score[0]);
-    }
-    //  else {
-    //   if (result?.data?.areas?.length > 0) {
-    //     addScoreToTheObject(result?.data?.areas);
-    //   }
-    // }
-  }, [score]);
-
-  useEffect(() => {
-    if (!score) {
-      console.log("resilt", result);
-
+    } else {
       if (result?.data?.areas?.length > 0) {
         addScoreToTheObject(result?.data?.areas);
       }
     }
-  }, [result]);
+  }, [score, result]);
+
+  // useEffect(() => {
+  //   debugger;
+  //   if (!score) {
+  //     console.log("resilt", result);
+
+  //     if (result?.data?.areas?.length > 0) {
+  //       addScoreToTheObject(result?.data?.areas);
+  //     }
+  //   }
+  // }, [result]);
 
   const addScoreToTheObject = (areas) => {
     let newAreas = JSON.parse(JSON.stringify(areas));
