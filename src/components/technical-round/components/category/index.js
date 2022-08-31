@@ -10,7 +10,7 @@ const Category = ({ title, categoryList, onCategoryChange, selected }) => {
     onCategoryChange(index);
   };
   return (
-    <Aside>
+    <Aside data-testid="category-list">
       <h2 style={{ marginLeft: "10px" }}>{title}</h2>
       <ul>
         {categoryList &&
@@ -18,6 +18,7 @@ const Category = ({ title, categoryList, onCategoryChange, selected }) => {
           categoryList.map((category, index) => {
             return (
               <li
+                data-testid="listbox"
                 key={category.title}
                 className={index === selectedCategory ? "active-nav" : ""}
                 onClick={() => handleSelectedCategory(category, index)}

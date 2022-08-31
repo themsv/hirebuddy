@@ -25,12 +25,23 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
     if (score && score.length > 0) {
       setDataList(score);
       setSelectedCategory(score[0]);
-    } else {
+    }
+    //  else {
+    //   if (result?.data?.areas?.length > 0) {
+    //     addScoreToTheObject(result?.data?.areas);
+    //   }
+    // }
+  }, [score]);
+
+  useEffect(() => {
+    if (!score) {
+      console.log("resilt", result);
+
       if (result?.data?.areas?.length > 0) {
         addScoreToTheObject(result?.data?.areas);
       }
     }
-  }, [result, score]);
+  }, [result]);
 
   const addScoreToTheObject = (areas) => {
     let newAreas = JSON.parse(JSON.stringify(areas));
@@ -79,7 +90,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   };
 
   return (
-    <>
+    <div data-testid="step-2">
       {result.loading === true ? (
         <Spinner />
       ) : (
@@ -96,7 +107,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
           />
         </Box>
       )}
-    </>
+    </div>
   );
 };
 

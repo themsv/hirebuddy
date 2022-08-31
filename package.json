@@ -21,13 +21,15 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.4",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
+    "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
