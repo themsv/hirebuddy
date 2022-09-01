@@ -1,17 +1,15 @@
-import { Fragment } from "react";
-import FormSelect from "../form-select/index";
-import FormSelectMultiple from "../form-select-multiple/index";
-import FormInput from "../form-input/index";
-import FormRadioBtn from "../form-radio/index";
+import React, { Fragment, useEffect } from "react";
 
+import { useFormControls } from "./FormControls";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import FormRadioBtn from "../form-radio/index";
+import FormSelectMultiple from "../form-select-multiple/index";
 import Divider from "@mui/material/Divider";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-
 import { Header, ShadowBox } from "../interviewInformation/style";
-
 import {
   CAREERSTAGES,
   OUTCOMEVALUES,
@@ -20,101 +18,117 @@ import {
 } from "../../constants/common";
 
 const FinalFeedback = ({ candidateData, setCandidateData }) => {
+  const { handleInputValue, errors, values } = useFormControls();
+
+  useEffect(() => {
+    setCandidateData({ ...candidateData, finalFeedback: { ...values } });
+  }, [values]);
   return (
     <Fragment>
       <CssBaseline />
       <br></br>
       <Container maxWidth="md">
-        <ShadowBox>
-          <Header>Final Feedback</Header>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Relevant Experience (In yrs.)</p>
-            </Grid>
-            <Grid item xs={6}>
-              <FormInput
-                type="number"
-                label="Relevant Experience (In yrs.)"
-                min="0"
-                max="40"
-                value={candidateData.finalFeedback.relaventExperience}
-                onChange={(e) =>
-                  setCandidateData({
-                    ...candidateData,
-                    finalFeedback: {
-                      ...candidateData.finalFeedback,
-                      relaventExperience: e.target.value,
-                    },
-                  })
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Recommended Career Stage</p>
-            </Grid>
-            <Grid item xs={6}>
-              <FormSelect
-                items={CAREERSTAGES}
-                label="Recommended Career Stage"
-                value={candidateData.finalFeedback.recommendedCareerStage}
-                onChange={(e) =>
-                  setCandidateData({
-                    ...candidateData,
-                    finalFeedback: {
-                      ...candidateData.finalFeedback,
-                      recommendedCareerStage: e.target.value,
-                    },
-                  })
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Outcome</p>
-            </Grid>
-            <Grid item xs={6}>
-              <FormRadioBtn
-                label="Outcome"
-                radioValues={OUTCOMEVALUES}
-                value={candidateData.finalFeedback.outcome}
-                onChange={(e) =>
-                  setCandidateData({
-                    ...candidateData,
-                    finalFeedback: {
-                      ...candidateData.finalFeedback,
-                      outcome: e.target.value,
-                    },
-                  })
-                }
-              />
-            </Grid>
-          </Grid>
-          {candidateData.finalFeedback.outcome === "selected" && (
-            <>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <p>Trainable</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormRadioBtn
-                    label="Trainable"
-                    radioValues={ISTRAINABLE}
-                    value={candidateData.finalFeedback.trainable}
-                    onChange={(e) =>
-                      setCandidateData({
-                        ...candidateData,
-                        finalFeedback: {
-                          ...candidateData.finalFeedback,
-                          trainable: e.target.value,
-                        },
-                      })
-                    }
-                  />
-                </Grid>
+        <form autoComplete="off">
+          <ShadowBox>
+            <Header>Final Feedback</Header>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <p>Relevant Experience (In yrs.)</p>
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="number"
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  value={values.relaventExperience}
+                  name="relaventExperience"
+                  label="Relevant Experience"
+                  error={!!errors["relaventExperience"]}
+                  fullWidth
+                  {...(errors["relaventExperience"] && {
+                    error: true,
+                    helperText: errors["relaventExperience"],
+                  })}
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <p>Recommended Career Stage</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  required
+                  name="recommendedCareerStage"
+                  value={values.recommendedCareerStage}
+                  label="Recommended Career Stage"
+                  error={!!errors["recommendedCareerStage"]}
+                  fullWidth
+                  {...(errors["recommendedCareerStage"] && {
+                    error: true,
+                    helperText: errors["recommendedCareerStage"],
+                  })}
+                  select
+                >
+                  {CAREERSTAGES.map((option) => (
+                    <MenuItem key={option.key} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <p>Outcome</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  value={values.outcome}
+                  name="outcome"
+                  label="Outcome"
+                  error={!!errors["outcome"]}
+                  fullWidth
+                  {...(errors["outcome"] && {
+                    error: true,
+                    helperText: errors["outcome"],
+                  })}
+                  select
+                >
+                  {OUTCOMEVALUES.map((option) => (
+                    <MenuItem key={option.key} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            {values.outcome === "selected" && (
+              <>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <p>Trainable</p>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormRadioBtn
+                      label="Trainable"
+                      name="trainable"
+                      radioValues={ISTRAINABLE}
+                      value={values.trainable}
+                      onChange={handleInputValue}
+                      onBlur={handleInputValue}
+                    />
+                  </Grid>
+                </Grid>
+              </>
+            )}
+
+            {values.outcome === "selected" && values.trainable === "Yes" && (
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <p>Trainings</p>
@@ -123,47 +137,41 @@ const FinalFeedback = ({ candidateData, setCandidateData }) => {
                   <FormSelectMultiple
                     label="Trainings"
                     items={TRAININGS}
-                    value={candidateData.finalFeedback.trainings}
-                    onChange={(e) =>
-                      setCandidateData({
-                        ...candidateData,
-                        finalFeedback: {
-                          ...candidateData.finalFeedback,
-                          trainings: e.target.value,
-                        },
-                      })
-                    }
+                    name="trainings"
+                    value={values.trainings}
+                    onChange={handleInputValue}
+                    onBlur={handleInputValue}
                   />
                 </Grid>
               </Grid>
-            </>
-          )}
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <p>Feedback</p>
+            )}
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <p>Feedback</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  multiline
+                  fullWidth
+                  onChange={handleInputValue}
+                  onBlur={handleInputValue}
+                  label="Feedback"
+                  error={!!errors["feedback"]}
+                  {...(errors["feedback"] && {
+                    error: true,
+                    helperText: errors["feedback"],
+                  })}
+                  minRows={3}
+                  placeholder="Minimum 200 characters"
+                  value={values.feedback}
+                  name="feedback"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <TextareaAutosize
-                required
-                minRows={3}
-                aria-label="maximum height"
-                placeholder="Minimum 400 words"
-                style={{ width: "100%" }}
-                value={candidateData.finalFeedback.feedback}
-                onChange={(e) =>
-                  setCandidateData({
-                    ...candidateData,
-                    finalFeedback: {
-                      ...candidateData.finalFeedback,
-                      feedback: e.target.value,
-                    },
-                  })
-                }
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-        </ShadowBox>
+            <Divider />
+          </ShadowBox>
+        </form>
       </Container>
     </Fragment>
   );

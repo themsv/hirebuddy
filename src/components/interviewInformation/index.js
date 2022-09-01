@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AutoCompleteBox from "../autocomplete/autocomplete-dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../store/user/userAction";
+// import { fetchUser } from "../../store/user/userAction";
 
 const schema = yup.object().shape({
   firstName: yup.string().max(30).required(),
@@ -52,9 +52,9 @@ const InterviewDetail = () => {
 
     console.log({ ...data, type: type, mode: mode });
   };
-  React.useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
+  // React.useEffect(() => {
+  //   dispatch(fetchUser());
+  // }, []);
 
   React.useEffect(() => {
     if (user.length > 0) {

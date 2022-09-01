@@ -15,8 +15,8 @@ const Login = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [otp, setOTP] = useState("");
+  const [email, setEmail] = useState("joenerk@publissapient.com");
+  const [otp, setOTP] = useState("12345");
   const [errorMsg, setErrorMsg] = useState({
     errorMsgEmail: "",
     errorMsgOTP: "",
@@ -43,7 +43,6 @@ const Login = () => {
     if (!errorValue.email && !errorValue.otp) {
       await dispatch(fetchUser({ email, otp }));
       typeof user.value === "object" && validUser();
-
       navigate("/landing");
     }
   };
