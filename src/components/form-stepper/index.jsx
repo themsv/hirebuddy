@@ -218,7 +218,7 @@ const FormStepper = () => {
         relaventExperience.length > 0 &&
         recommendedCareerStage.length > 0 &&
         outcome.length > 0 &&
-        feedback.length > 0
+        feedback.length > 50
       ) {
         setDisableIcon(false);
       } else {

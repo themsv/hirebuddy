@@ -32,8 +32,8 @@ export const useFormControls = () => {
       if (fieldValues.relaventExperience) {
         temp.relaventExperience =
           fieldValues.relaventExperience < 0 ||
-          fieldValues.relaventExperience > 70
-            ? "Experience must be within 0 and 70"
+          fieldValues.relaventExperience > 99
+            ? "Experience must be within 0 and 99"
             : "";
       }
     }
@@ -49,8 +49,8 @@ export const useFormControls = () => {
       temp.feedback = fieldValues.feedback ? "" : "Please provide feedback";
       if (fieldValues.feedback) {
         temp.feedback =
-          fieldValues.feedback.length < 200
-            ? "Feedback must be minimum of 200 characters"
+          fieldValues.feedback.length < 50
+            ? "Feedback must be minimum of 50 characters"
             : "";
       }
     }
