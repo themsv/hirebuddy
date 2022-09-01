@@ -25,7 +25,7 @@ export default function BasicSelect({ items, label, item, setItem }) {
           onChange={handleChange}
         >
           {" "}
-          {items?.map((item) => {
+          {items?.map((el) => {
             return (
               <MenuItem key={item.key} value={item.value}>
                 {item.value}

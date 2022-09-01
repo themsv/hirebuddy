@@ -26,6 +26,7 @@ export default function CustomSelect({ items, label, value, onChange }) {
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
+          data-testid="custom-select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={val}
@@ -35,6 +36,7 @@ export default function CustomSelect({ items, label, value, onChange }) {
           {items?.map((item) => {
             return (
               <MenuItem
+                data-testid="menuitem"
                 value={item.key + 1}
                 key={item.key}
                 className="rating-select-option"
@@ -42,7 +44,7 @@ export default function CustomSelect({ items, label, value, onChange }) {
                 <div>
                   <CircleOutlined
                     sx={{
-                      color: `${item.iconColor}`,
+                      color: `${item?.iconColor}`,
                     }}
                   />
                   {item.value}

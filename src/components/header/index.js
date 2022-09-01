@@ -51,7 +51,7 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static" color="transparent" data-testid="page-header">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Link to={HOME}>
@@ -102,6 +102,7 @@ const Header = () => {
                   <Tooltip title="Open settings">
                     <IconButton
                       size="small"
+                      data-testid="menu-appbar"
                       onClick={handleOpenUserMenu}
                       sx={{ p: 0 }}
                     >

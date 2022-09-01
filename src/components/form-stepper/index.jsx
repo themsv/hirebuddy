@@ -18,13 +18,67 @@ import { CANDIDATE_DETAILS } from "../../constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetIsSubmitted } from "../../store/candidate/canditate.slice";
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 const steps = [
   "Interview Information",
   "Technical Round Data",
   "Final Feedback",
 ];
-
+const schema = yup.object().shape({
+  interviewDate: yup.date().required(),
+  interviewMode: yup.string().typeError("Enter Mode").required("Enter Mode"),
+  interviewType: yup.string().required("Enter Type"),
+  candidateFirstName: yup
+    .string()
+    .max(30, "Maximum 30 Character allowed")
+    .required("Enter First Name"),
+  candidateLastName: yup
+    .string()
+    .max(30, "Maximum 30 Character allowed")
+    .required("Enter Last Name"),
+  candidatePhone: yup
+    .number("Enter Phone number")
+    .typeError("Enter Phone Number")
+    .required("Enter Phone number")
+    .test(
+      "len",
+      "Enter 10 digit mobile number",
+      (val) => !val || (val && val.toString().length === 10)
+    ),
+  candidateEmail: yup
+    .string()
+    .email("Enter email correct form")
+    .required("Enter email"),
+  candidateExperience: yup
+    .number("Enter expereince ")
+    .typeError("Enter experience")
+    .min(1)
+    .max(100)
+    .required("Enter Candidate experience"),
+  candidateCareerStageInterviewedFor: yup
+    .string()
+    .typeError("Enter Career Stage")
+    .required("Enter Career Stage"),
+  candidateResume: yup.string().required("Enter Resume"),
+  interviewerFirstName: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter First Name"),
+  interviewerLastName: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Last Name"),
+  interviewerEmail: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Resume"),
+  interviewerCareerStage: yup
+    .string()
+    .max(30, "Maximum 30 character allowed")
+    .required("Enter Career Stage"),
+});
 const defaultState = {
   interviewData: {
     interviewDate: "",
@@ -54,6 +108,25 @@ const defaultState = {
   },
 };
 const FormStepper = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data) => {
+    alert();
+
+    console.log(errors);
+
+    setCandidateData({ ...candidateData, interviewData: { ...data } });
+    console.log(candidateData);
+  };
+
+  console.log(errors);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [candidateData, setCandidateData] = useState(defaultState);
@@ -62,7 +135,9 @@ const FormStepper = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSubmitted = useSelector((state) => state.candidates.submitted);
+  const activeid = useSelector((state) => state.candidates.activeId);
 
+  console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
       redirectToCandidatePage();
@@ -85,10 +160,22 @@ const FormStepper = () => {
     }
 
     setActiveStep((prevActiveStep) => {
+      console.log(errors);
       if (prevActiveStep + 1 == 3) {
-        submitCandidateDetails();
+        submitCandidateDetails(candidateData);
+        return prevActiveStep + 1;
       }
-      return prevActiveStep + 1;
+
+      if (prevActiveStep + 1 === 1 && Object.keys(errors).length === 0) {
+        console.log(Object.keys(errors).length);
+
+        return prevActiveStep + 1;
+      }
+      if (prevActiveStep + 1 === 2) {
+        return prevActiveStep + 1;
+      }
+
+      return prevActiveStep;
     });
     setSkipped(newSkipped);
     // activeStep === 3 && submitCandidateDetails();
@@ -110,7 +197,7 @@ const FormStepper = () => {
       } else {
         clearInterval(timer);
         dispatch(resetIsSubmitted());
-        navigate(CANDIDATE_DETAILS);
+        navigate(CANDIDATE_DETAILS + activeid);
       }
     }, 1000);
   };
@@ -140,20 +227,33 @@ const FormStepper = () => {
   const handleSteps = (step) => {
     switch (step) {
       case 0:
-        // return <div></div>;
         return (
           <InterviewDetail
             candidateData={candidateData}
             setCandidateData={setCandidateData}
+            onSubmit={onSubmit}
+            setValue={setValue}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            control={control}
+            register={register}
           />
         );
       case 1:
         return (
-          <TechnicalRound
-            type={"core-xt"}
-            score={candidateData?.score}
-            onScoreChange={handleScoreChange}
-          />
+          <>
+            {candidateData && candidateData.interviewData.interviewType && (
+              <TechnicalRound
+                type={
+                  candidateData.interviewData.interviewType === "React JS"
+                    ? "reactjs"
+                    : "core-xt"
+                }
+                score={candidateData?.score}
+                onScoreChange={handleScoreChange}
+              />
+            )}
+          </>
         );
       case 2:
         return (
@@ -235,7 +335,12 @@ const FormStepper = () => {
             )
             } */}
 
-            <Button onClick={handleNext}>
+            <Button
+              onClick={() => {
+                handleSubmit(onSubmit);
+                handleNext();
+              }}
+            >
               {activeStep === steps.length - 1 ? (
                 "Finish"
               ) : (

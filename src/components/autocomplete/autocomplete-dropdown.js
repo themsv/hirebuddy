@@ -9,6 +9,7 @@ export default function AutoCompleteBox({ value, setValue, usersList }) {
 
   return (
     <Autocomplete
+      fullWidth
       value={value}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       onChange={(event, newValue) => {
