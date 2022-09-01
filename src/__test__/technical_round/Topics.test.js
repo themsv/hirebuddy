@@ -88,7 +88,7 @@ describe("Topics List", () => {
     });
   });
 
-  test("Should open close the dialod box when feedback added", async () => {
+  test("Should  close the dialod box when feedback added", async () => {
     render(
       <ThemeProvider theme={themeOptions}>
         <TopicsList selectedCategory={selectedCategory} />
@@ -109,6 +109,32 @@ describe("Topics List", () => {
         screen.getByPlaceholderText("Enter the feedback")
       );
       // expect(hasInputValue(input, "123")).toBe(true)
+    });
+  });
+
+  test("Should  change score value", async () => {
+    render(
+      <ThemeProvider theme={themeOptions}>
+        <TopicsList
+          selectedCategory={selectedCategory}
+          onScoreChange={() => console.log("clicked score")}
+        />
+      </ThemeProvider>
+    );
+    const accordion = within(screen.getByTestId("step-0"));
+    const item = within(accordion.getAllByTestId("questions-list-item")[0]);
+    const myCustomSelect = within(item.getByTestId("custom-select"));
+
+    await act(async () => userEvent.click(myCustomSelect.getByRole("button")));
+    // await act(async () => {
+    const listbox = within(screen.getByRole("listbox"));
+    const input = listbox.getAllByRole("option")[3];
+    fireEvent.click(input);
+    // });
+    await waitFor(() => {
+      expect(accordion.getByTestId("topic-score")).toHaveTextContent(
+        "Score 2.00"
+      );
     });
   });
 });

@@ -140,7 +140,10 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
                 id={`${index}-header`}
               >
                 <Typography>{topic.title}</Typography>
-                <Chip label={`Score ${topic.score}`} />
+                <Chip
+                  data-testid="topic-score"
+                  label={`Score ${topic.score}`}
+                />
               </AccordionSummary>
               <AccordionDetails>
                 <ul className="questions-list" data-testid="questions-list">
