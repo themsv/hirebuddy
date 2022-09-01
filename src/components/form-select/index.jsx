@@ -1,42 +1,42 @@
 import Box from "@mui/material/Box";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
+import styled from "styled-components";
+
+const ErrorSpan = styled.span`
+  font-size: 12px;
+  color: #d32f2f;
+  margin: 3px 14px 0;
+`;
 
 const FormSelect = forwardRef(
-  ({ label, items, error, helperText, setItem, ...remaining }, ref) => {
-    const handleChange = (event) => {
-      setItem(event.target.value);
-    };
+  ({ label, value, onChange, items, error, helperText }, ref) => {
     return (
       <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id={`${label}-label`}>{label}</InputLabel>
+        <FormControl fullWidth error={!!error}>
+          <InputLabel id={`${label}-label`}>{`${label} *`}</InputLabel>
           <Select
+            size="small"
             labelId={`${label}-label`}
             id={label}
-            label={label}
-            {...remaining}
+            label={`${label}`}
+            value={value}
+            onChange={onChange}
             inputRef={ref}
-            onChange={handleChange}
           >
             {items?.map((item) => (
               <MenuItem key={item.key} value={item.value}>
                 {item.value}
               </MenuItem>
             ))}
-          </Select>{" "}
+          </Select>
         </FormControl>
 
-        {error && (
-          <span
-            style={{ color: "#d32f2f", fontSize: "12px", margin: "3px 14px 0" }}
-          >
-            {helperText}
-          </span>
-        )}
+        {error && <ErrorSpan>{helperText}</ErrorSpan>}
       </Box>
     );
   }
