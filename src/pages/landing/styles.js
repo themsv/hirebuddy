@@ -1,15 +1,13 @@
 import { styled } from '@mui/material/styles';
-import { TableSortLabel } from '@mui/material';
-import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import Popover from '@mui/material/Popover';
-import BaseButton from '../../components/button';
+import TableRow from '@mui/material/TableRow';
+import { TableSortLabel } from '@mui/material';
 import Input from '@mui/material/Input';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import Radio from '@mui/material/Radio';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	fontSize: '14px',
@@ -17,10 +15,14 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
 		backgroundColor: theme.palette.primary.main,
 		color: '#fff',
+		fontSize: 14,
+		fontWeight: 300,
 		padding: '8px',
 		lineHeight: '1.4',
 	},
 	[`&.${tableCellClasses.body}`]: {
+		fontSize: 14,
+		fontWeight: 300,
 		padding: '12px',
 		lineHeight: '1.2',
 		textAlign: 'left',
@@ -31,11 +33,11 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(even)': {
 		backgroundColor: '#F5FAFF',
 	},
-	// hide last border
-	// '&:last-child td, &:last-child th': {
-	// 	border: 0,
-	// },
 }));
+
+export const TableRowHeader = styled(TableRow)(({ theme }) => ({}));
+
+export const TableColumnHeader = styled(TableRow)(({ theme }) => ({}));
 
 export const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({
 	'&.MuiTableSortLabel-root': {
@@ -50,54 +52,26 @@ export const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({
 	},
 }));
 
-export const FilterIcon = styled(FilterListIcon)(({ theme }) => ({
-	fontSize: 'medium',
-	color: '#fff',
+export const StyledList = styled(List)(({ theme }) => ({
+	padding: '5px',
 }));
 
-export const FilterIconButton = styled(BaseButton)(({ theme }) => ({
+export const StyledListItem = styled(ListItem)(({ theme }) => ({}));
+
+export const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 	padding: '5px',
-	minWidth: '30px',
-	boxShadow: 'none',
-	borderRadius: '60%',
+}));
+
+export const StyledListItemText = styled(ListItemText)(({ theme }) => ({}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+	padding: '5px',
 }));
 
 export const TableText = styled('h3')(({ theme }) => ({
 	textAlign: 'center',
 }));
 
-export const Outcomes = styled(Radio)(({ theme }) => ({
-	'&.MuiButtonBase-root.MuiRadio-root.Mui-checked': {
-		color: '#079FFF',
-	},
-}));
-
-export const CareerStageMenu = styled(MenuItem)(({ theme }) => {
-	return {
-		padding: '4px 12px',
-		// backgroundColor: '#F5FAFF',
-	};
-});
-
-export const CareerStageCheckBox = styled(Checkbox)(({ theme }) => ({
-	borderRadius: 'none',
-	'&.MuiCheckbox-root.Mui-checked': {
-		color: '#079FFF',
-	},
-}));
-
-export const CareerStageText = styled(ListItemText)(({ theme }) => ({
-	fontSize: '12px',
-}));
-
 export const SearchInput = styled(Input)(({ theme }) => ({
 	width: '200px',
-}));
-
-export const OutcomePopover = styled(Popover)(({ theme }) => ({}));
-
-export const SearchPopover = styled(Popover)(({ theme }) => ({}));
-
-export const CareerStagePopover = styled(Popover)(({ theme }) => ({
-	top: '160px',
 }));

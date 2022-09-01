@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
@@ -8,12 +11,11 @@ import TableCell from '@mui/material/TableCell';
 
 import { StyledTableCell, StyledTableRow, TableText } from './styles';
 import { getComparator, stableSort, createData } from './sorting';
-import TableHeader from './header';
-
-import { useState } from 'react';
+import Header from './header';
 
 const originalData = [
 	createData(
+		1,
 		'Justin Case',
 		'johnsmith@gmail.com',
 		9876543210,
@@ -28,6 +30,7 @@ const originalData = [
 		'Sr. Manager'
 	),
 	createData(
+		2,
 		'Hugh Saturation',
 		'johnsmith@gmail.com',
 		9876543211,
@@ -42,6 +45,7 @@ const originalData = [
 		'Sr. Assocaite L1'
 	),
 	createData(
+		3,
 		'Phillip Anthropy',
 		'phillipanthropy@gmail.com',
 		9876543211,
@@ -56,6 +60,7 @@ const originalData = [
 		'Sr. Assocaite L2'
 	),
 	createData(
+		4,
 		'Hanson Deck',
 		'hansondeck@gmail.com',
 		9876543211,
@@ -72,6 +77,32 @@ const originalData = [
 ];
 
 const ListOfInterviews = (props) => {
+	// const originalData = props.candidateDetails.map((candidate) => {
+	// 	const { interviewData, finalFeedback } = candidate;
+	// 	const tempData = {
+	// 		...interviewData,
+	// 		...finalFeedback,
+	// 		candidateName: `${interviewData.candidateFirstName} ${interviewData.candidateLastName}`,
+	// 		interviewerName: `${interviewData.interviewerFirstName} ${interviewData.interviewerFirstName}`,
+	// 	};
+	// 	createData(
+	// 		tempData.candidateName,
+	// 		tempData.candidateEmail,
+	// 		tempData.candidatePhone,
+	// 		tempData.candidateExperience,
+	// 		tempData.interviewDate,
+	// 		tempData.candidateCareerStageInterviewedFor,
+	// 		tempData.outcome,
+	// 		tempData.recommendedCareerStage,
+	// 		tempData.interviewerName,
+	// 		tempData.interviewerOracleId,
+	// 		tempData.interviewerEmail,
+	// 		tempData.interviewerCareerStage
+	// 	);
+	// });
+
+	const navigate = useNavigate();
+
 	const [rows, setRows] = useState(originalData);
 	const [order, setOrder] = useState('asc');
 	const [orderBy, setOrderBy] = useState('');
@@ -111,46 +142,67 @@ const ListOfInterviews = (props) => {
 	};
 
 	//Filtering
-	const handleRequestFilter = (event, property) => {
-		var filteredData;
-		if (property === 'outcome') {
-			filteredData = originalData.filter(
-				(item) => item.outcome === event.target.value
-			);
-		} else if (property === 'careerApplied') {
-			filteredData = originalData.filter(
+
+	const handleOutcomeFilter = (event) => {
+		setRows(
+			originalData.filter(
+				(item) => item.outcome === event.currentTarget.dataset.myValue
+			)
+		);
+	};
+
+	const handleCareerAppliedFilter = (event) => {
+		setRows(
+			originalData.filter(
 				(item) => item.careerApplied === event.target.value
-			);
-		} else if (property === 'careerSelected') {
-			filteredData = originalData.filter(
+			)
+		);
+	};
+
+	const handleCareerSelectedFilter = (event) => {
+		setRows(
+			originalData.filter(
 				(item) => item.careerSelected === event.target.value
-			);
-		}
-		setRows(filteredData);
+			)
+		);
+	};
+
+	//Navigation
+
+	const handleCickHandler = (candidateId) => (event) => {
+		navigate('/candidate-details/' + candidateId);
 	};
 
 	return (
 		<Paper sx={{ width: '100%', pt: 4 }}>
 			<TableContainer sx={{ maxHeight: 500 }}>
 				<Table stickyHeader aria-label="sticky table">
-					<TableHeader
+					<Header
 						order={order}
 						orderBy={orderBy}
 						onRequestSort={handleRequestSort}
 						onRequestSearch={handleRequestSearch}
-						onRequestFilter={handleRequestFilter}
+						onOutcomeFilter={handleOutcomeFilter}
+						onCareerAppliedFilter={handleCareerAppliedFilter}
+						onCareerSelectedFilter={handleCareerSelectedFilter}
 						rowCount={rows.length}
 					/>
 
 					<TableBody>
 						{handleSortAndPagination().length > 0 ? (
-							handleSortAndPagination().map((row, index) => {
+							handleSortAndPagination().map((row) => {
 								return (
-									<StyledTableRow hover key={row.name}>
+									<StyledTableRow
+										hover
+										key={row.id}
+										onClick={handleCickHandler(row.id)}
+									>
 										<StyledTableCell component="th" scope="row">
-											{row.name}
+											{row.candidatename}
 										</StyledTableCell>
-										<StyledTableCell>{row.email}</StyledTableCell>
+										<StyledTableCell>
+											{row.candidateemail}
+										</StyledTableCell>
 										<StyledTableCell>{row.phone}</StyledTableCell>
 										<StyledTableCell>
 											{row.experience}
@@ -163,9 +215,13 @@ const ListOfInterviews = (props) => {
 										<StyledTableCell>
 											{row.careerSelected}
 										</StyledTableCell>
-										<StyledTableCell>{row.iname}</StyledTableCell>
+										<StyledTableCell>
+											{row.interviewername}
+										</StyledTableCell>
 										<StyledTableCell>{row.oracleId}</StyledTableCell>
-										<StyledTableCell>{row.iemail}</StyledTableCell>
+										<StyledTableCell>
+											{row.intervieweremail}
+										</StyledTableCell>
 										<StyledTableCell>
 											{row.careerStage}
 										</StyledTableCell>

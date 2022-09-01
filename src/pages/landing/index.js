@@ -1,27 +1,28 @@
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchCandidates } from '../../store/candidate/candidate.action';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { fetchCandidates } from '../../store/candidate/candidate.action';
+import ListOfInterviews from './listofInterviews';
 
-import ListOfInterviews from './table';
 const LandingPage = () => {
-	//TODO - fetch form data
+	const [candidateData, setCandidateData] = useState([]);
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user.value);
 
-	// const [candidateData, setCandidateData] = useState([]);
-	// const [userData, setUserData] = useState([]);
+	useEffect(() => {
+		const getCandidates = async () => {
+			const { payload } = await dispatch(fetchCandidates());
+			setCandidateData(payload);
+		};
+		getCandidates();
+	}, []);
 
-	// const dispatch = useDispatch();
-	// const users = useSelector((state) => state.user.value);
-
-	// useEffect(() => {
-	// 	const getCandidates = async () => {
-	// 		const { payload } = await dispatch(fetchCandidates());
-	// 		setCandidateData(payload);
-	// 	};
-	// 	getCandidates();
-	// }, []);
+	const filteredCandidate = user.isAdmin
+		? candidateData
+		: candidateData.filter((item) => item.interviewedBy === user.oracleId);
 
 	return (
 		<>
-			<ListOfInterviews />;
+			<ListOfInterviews candidateDetails={filteredCandidate} />;
 		</>
 	);
 };
