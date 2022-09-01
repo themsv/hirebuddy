@@ -135,6 +135,8 @@ const FormStepper = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSubmitted = useSelector((state) => state.candidates.submitted);
+  const activeid = useSelector((state) => state.candidates.activeId);
+
   console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
@@ -195,7 +197,7 @@ const FormStepper = () => {
       } else {
         clearInterval(timer);
         dispatch(resetIsSubmitted());
-        navigate(CANDIDATE_DETAILS);
+        navigate(CANDIDATE_DETAILS + activeid);
       }
     }, 1000);
   };
@@ -239,15 +241,19 @@ const FormStepper = () => {
         );
       case 1:
         return (
-          <TechnicalRound
-            type={
-              candidateData.interviewData.interviewType === "React JS"
-                ? "reactjs"
-                : "core-xt"
-            }
-            score={candidateData?.score}
-            onScoreChange={handleScoreChange}
-          />
+          <>
+            {candidateData && candidateData.interviewData.interviewType && (
+              <TechnicalRound
+                type={
+                  candidateData.interviewData.interviewType === "React JS"
+                    ? "reactjs"
+                    : "core-xt"
+                }
+                score={candidateData?.score}
+                onScoreChange={handleScoreChange}
+              />
+            )}
+          </>
         );
       case 2:
         return (

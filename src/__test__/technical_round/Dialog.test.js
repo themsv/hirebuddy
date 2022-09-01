@@ -1,10 +1,8 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material";
 import { themeOptions } from "../../Theming";
-import { MOCKED_QUESTIONS, MOCKED_SCORE } from "./mockData";
+import { MOCKED_QUESTIONS } from "./mockData";
 import FormDialog from "../../components/technical-round/components/dialog";
-
-const selectedCategory = MOCKED_QUESTIONS.data.areas[0];
 
 describe("Dialog ", () => {
   test("it should render correctly", () => {
