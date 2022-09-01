@@ -18,3 +18,16 @@ export const fetchUser = createAsyncThunk(
     }
   }
 );
+
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axios(`${process.env.REACT_APP_SERVER_URL}users`);
+      const users = await res.data;
+      return users;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
