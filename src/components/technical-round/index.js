@@ -26,7 +26,6 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
       setDataList(score);
       setSelectedCategory(score[0]);
     } else {
-      console.log(result);
       if (result?.data?.areas?.length > 0) {
         addScoreToTheObject(result?.data?.areas);
       }

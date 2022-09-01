@@ -28,8 +28,8 @@ const steps = [
 ];
 const schema = yup.object().shape({
   interviewDate: yup.date().required(),
-  interviewMode: yup.string().typeError("Enter Mode"),
-  interviewType: yup.string(),
+  interviewMode: yup.string().typeError("Enter Mode").required("Enter Mode"),
+  interviewType: yup.string().required("Enter Type"),
   candidateFirstName: yup
     .string()
     .max(30, "Maximum 30 Character allowed")
@@ -41,8 +41,12 @@ const schema = yup.object().shape({
   candidatePhone: yup
     .number("Enter Phone number")
     .typeError("Enter Phone Number")
-    .max(10, "Maximum 10 number allowed")
-    .required("Enter Phone number"),
+    .required("Enter Phone number")
+    .test(
+      "len",
+      "Enter 10 digit mobile number",
+      (val) => !val || (val && val.toString().length === 10)
+    ),
   candidateEmail: yup
     .string()
     .email("Enter email correct form")
@@ -53,6 +57,10 @@ const schema = yup.object().shape({
     .min(1)
     .max(100)
     .required("Enter Candidate experience"),
+  candidateCareerStageInterviewedFor: yup
+    .string()
+    .typeError("Enter Career Stage")
+    .required("Enter Career Stage"),
   candidateResume: yup.string().required("Enter Resume"),
   interviewerFirstName: yup
     .string()
@@ -110,14 +118,11 @@ const FormStepper = () => {
 
   const onSubmit = (data) => {
     alert();
-    let finalData = {
-      ...data,
-      interviewMode: "In Person",
-      interviewType: "core-xt",
-    };
+
     console.log(errors);
-    // console.log({ ...candidateData, [candidateData.interviewData]: data });
-    setCandidateData({ ...candidateData, interviewData: finalData });
+
+    setCandidateData({ ...candidateData, interviewData: { ...data } });
+    console.log(candidateData);
   };
 
   console.log(errors);
@@ -132,6 +137,7 @@ const FormStepper = () => {
   const isSubmitted = useSelector((state) => state.candidates.submitted);
   const activeid = useSelector((state) => state.candidates.activeId);
 
+  console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
       redirectToCandidatePage();
@@ -154,10 +160,22 @@ const FormStepper = () => {
     }
 
     setActiveStep((prevActiveStep) => {
+      console.log(errors);
       if (prevActiveStep + 1 == 3) {
         submitCandidateDetails(candidateData);
+        return prevActiveStep + 1;
       }
-      return prevActiveStep + 1;
+
+      if (prevActiveStep + 1 === 1 && Object.keys(errors).length === 0) {
+        console.log(Object.keys(errors).length);
+
+        return prevActiveStep + 1;
+      }
+      if (prevActiveStep + 1 === 2) {
+        return prevActiveStep + 1;
+      }
+
+      return prevActiveStep;
     });
     setSkipped(newSkipped);
     // activeStep === 3 && submitCandidateDetails();
@@ -179,7 +197,7 @@ const FormStepper = () => {
       } else {
         clearInterval(timer);
         dispatch(resetIsSubmitted());
-        navigate(`${CANDIDATE_DETAILS}${activeid}`);
+        navigate(CANDIDATE_DETAILS + activeid);
       }
     }, 1000);
   };
@@ -209,7 +227,6 @@ const FormStepper = () => {
   const handleSteps = (step) => {
     switch (step) {
       case 0:
-        // return <div></div>;
         return (
           <InterviewDetail
             candidateData={candidateData}
@@ -225,14 +242,16 @@ const FormStepper = () => {
       case 1:
         return (
           <>
-            {candidateData?.interviewData?.interviewType ? (
+            {candidateData && candidateData.interviewData.interviewType && (
               <TechnicalRound
-                type={candidateData?.interviewData?.interviewType}
+                type={
+                  candidateData.interviewData.interviewType === "React JS"
+                    ? "reactjs"
+                    : "core-xt"
+                }
                 score={candidateData?.score}
                 onScoreChange={handleScoreChange}
               />
-            ) : (
-              <p>No type is selected</p>
             )}
           </>
         );
@@ -316,11 +335,16 @@ const FormStepper = () => {
             )
             } */}
 
-            <Button onClick={handleNext}>
+            <Button
+              onClick={() => {
+                handleSubmit(onSubmit);
+                handleNext();
+              }}
+            >
               {activeStep === steps.length - 1 ? (
                 "Finish"
               ) : (
-                <ArrowForwardIosIcon onClick={() => handleSubmit(onSubmit)} />
+                <ArrowForwardIosIcon />
               )}
             </Button>
           </Box>
