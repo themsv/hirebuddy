@@ -7,7 +7,6 @@ import { fetchQuestions } from "../../store/questions/questionsAction";
 import Spinner from "../spinner";
 
 const TechnicalRound = ({ type, score, onScoreChange }) => {
-  console.log(type);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [dataList, setDataList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,11 +22,11 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   }, []);
 
   useEffect(() => {
-    debugger;
     if (score && score.length > 0) {
       setDataList(score);
       setSelectedCategory(score[0]);
     } else {
+      console.log(result);
       if (result?.data?.areas?.length > 0) {
         addScoreToTheObject(result?.data?.areas);
       }
