@@ -224,11 +224,17 @@ const FormStepper = () => {
         );
       case 1:
         return (
-          <TechnicalRound
-            type={candidateData?.interviewData?.interviewType}
-            score={candidateData?.score}
-            onScoreChange={handleScoreChange}
-          />
+          <>
+            {candidateData?.interviewData?.interviewType ? (
+              <TechnicalRound
+                type={candidateData?.interviewData?.interviewType}
+                score={candidateData?.score}
+                onScoreChange={handleScoreChange}
+              />
+            ) : (
+              <p>No type is selected</p>
+            )}
+          </>
         );
       case 2:
         return (
