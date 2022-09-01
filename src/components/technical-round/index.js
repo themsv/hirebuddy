@@ -7,6 +7,7 @@ import { fetchQuestions } from "../../store/questions/questionsAction";
 import Spinner from "../spinner";
 
 const TechnicalRound = ({ type, score, onScoreChange }) => {
+  console.log(type);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [dataList, setDataList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,6 +23,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   }, []);
 
   useEffect(() => {
+    debugger;
     if (score && score.length > 0) {
       setDataList(score);
       setSelectedCategory(score[0]);
@@ -30,7 +32,18 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
         addScoreToTheObject(result?.data?.areas);
       }
     }
-  }, [result, score]);
+  }, [score, result]);
+
+  // useEffect(() => {
+  //   debugger;
+  //   if (!score) {
+  //     console.log("resilt", result);
+
+  //     if (result?.data?.areas?.length > 0) {
+  //       addScoreToTheObject(result?.data?.areas);
+  //     }
+  //   }
+  // }, [result]);
 
   const addScoreToTheObject = (areas) => {
     let newAreas = JSON.parse(JSON.stringify(areas));
@@ -79,7 +92,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   };
 
   return (
-    <>
+    <div data-testid="step-2">
       {result.loading === true ? (
         <Spinner />
       ) : (
@@ -96,7 +109,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
           />
         </Box>
       )}
-    </>
+    </div>
   );
 };
 

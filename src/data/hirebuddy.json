@@ -57,10 +57,7 @@
         "recommendedCareerStage": "Associate L1",
         "outcome": "rejected",
         "trainable": true,
-        "trainings": [
-          "CSS",
-          "OOJS - Advanced"
-        ],
+        "trainings": ["CSS", "OOJS - Advanced"],
         "feedback": "lorem20"
       },
       "score": {
@@ -329,9 +326,7 @@
             },
             {
               "title": "Routing",
-              "questions": [
-                "POV on SPA and MPA., React Router, Next Router"
-              ]
+              "questions": ["POV on SPA and MPA., React Router, Next Router"]
             },
             {
               "title": "SSR and SSG",
@@ -347,9 +342,7 @@
             },
             {
               "title": "Testing ",
-              "questions": [
-                "Unit and Integration testing"
-              ]
+              "questions": ["Unit and Integration testing"]
             },
             {
               "title": "Tooling ",
@@ -359,22 +352,15 @@
             },
             {
               "title": "Error Handling ",
-              "questions": [
-                "Unit and Integration testing"
-              ]
+              "questions": ["Unit and Integration testing"]
             },
             {
               "title": "Code Splitting ",
-              "questions": [
-                "React Suspense and Lazy"
-              ]
+              "questions": ["React Suspense and Lazy"]
             },
             {
               "title": "Type Checking and handling props",
-              "questions": [
-                "Proptypes, Flow, TS",
-                "Default Props"
-              ]
+              "questions": ["Proptypes, Flow, TS", "Default Props"]
             },
             {
               "title": "React Component Performance ",

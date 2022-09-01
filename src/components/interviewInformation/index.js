@@ -7,37 +7,22 @@ import BasicDatePicker from "../../components/date-picker";
 import { Header, ShadowBox } from "./style";
 import BaseButton from "../../components/button";
 import Divider from "@mui/material/Divider";
-import { useForm } from "react-hook-form";
 import FormInput from "../form-input";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import AutoCompleteBox from "../autocomplete/autocomplete-dropdown";
 import { useDispatch, useSelector } from "react-redux";
-// import { fetchUser } from "../../store/user/userAction";
+import { fetchUsers } from "../../store/user/userAction";
+import FormSelect from "../form-select";
 
-const schema = yup.object().shape({
-  firstName: yup.string().max(30).required(),
-  lastName: yup.string().max(30).required(),
-  phone: yup.number("Enter Phone number").required("Enter Phone number"),
-  email: yup.string().email("Enter email").required(),
-  experience: yup.number("Enter experince ").min(1).max(100).required(),
-  resume: yup.string("Pleae add file").min(10).required(),
-  date: yup.date().required(),
-  interviewerFirstName: yup.string().max(30).required(),
-  interviewerLastName: yup.string().max(30).required(),
-  interviewerEmail: yup.string().max(30).required(),
-});
-
-const InterviewDetail = () => {
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+const InterviewDetail = ({
+  onSubmit,
+  setValue,
+  errors,
+  handleSubmit,
+  control,
+  register,
+}) => {
   const user = useSelector((state) => {
-    return state.user.value;
+    return state.user.users;
   });
   const dispatch = useDispatch();
   const [reqDate, setReqDate] = useState();
@@ -45,16 +30,11 @@ const InterviewDetail = () => {
   const [autovalue, setAutoValue] = React.useState("Search Oracle ID");
   const [mode, setMode] = React.useState("");
   const [type, setType] = React.useState("");
+  console.log(mode);
 
-  const onSubmit = (data) => {
-    console.log(errors);
-    console.log(data);
-
-    console.log({ ...data, type: type, mode: mode });
-  };
-  // React.useEffect(() => {
-  //   dispatch(fetchUser());
-  // }, []);
+  React.useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   React.useEffect(() => {
     if (user.length > 0) {
@@ -69,15 +49,20 @@ const InterviewDetail = () => {
 
   React.useEffect(() => {
     if (autovalue !== undefined && user.length > 0) {
-      let selectedUserData = user.filter((user) => {
-        return user.oracleId == autovalue.label;
+      let selectedUserData = user.filter((eachuser) => {
+        return eachuser.oracleId == autovalue.label;
       });
-
-      setValue("interviewerFirstName", selectedUserData[0].firstName);
-      setValue("interviewerLastName", selectedUserData[0].lastName);
-      setValue("interviewerEmail", selectedUserData[0].email);
+      console.log(selectedUserData);
+      if (selectedUserData.length > 0) {
+        setValue("interviewerOracleId", selectedUserData[0].oracleId);
+        setValue("interviewerFirstName", selectedUserData[0].firstName);
+        setValue("interviewerLastName", selectedUserData[0].lastName);
+        setValue("interviewerEmail", selectedUserData[0].email);
+        setValue("interviewerCareerStage", selectedUserData[0].carrerStage);
+      }
     }
   }, [autovalue]);
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -95,16 +80,24 @@ const InterviewDetail = () => {
                   setreqDate={setReqDate}
                   control={control}
                   size="small"
-                  name="date"
-                  error={!!errors.date}
-                  helperText={errors?.date?.message}
+                  name="interviewDate"
+                  error={!!errors.interviewDate}
+                  helperText={errors?.interviewDate?.message}
                 />
-                <p>{!!errors.date && "Enter Date"}</p>
+                <p>{!!errors.interviewDate && "Enter Date"}</p>
               </Grid>
               <Grid item xs={6}>
                 <p>Mode</p>
               </Grid>
               <Grid item xs={6}>
+                {/* <FormSelect
+                  items={[
+                    { value: "In Person", key: "1" },
+                    { value: "Teams Video", key: "2" },
+                  ]}
+                  label="Mode"
+                  setItem={setMode}
+                /> */}
                 {/* <BasicSelect
                   item={mode}
                   setItem={setMode}
@@ -142,10 +135,10 @@ const InterviewDetail = () => {
                   variant="outlined"
                   type="text"
                   size="small"
-                  name="firstName"
-                  {...register("firstName")}
-                  error={!!errors.firstName}
-                  helperText={errors?.firstName?.message}
+                  name="candidateFirstName"
+                  {...register("candidateFirstName")}
+                  error={!!errors.candidateFirstName}
+                  helperText={errors?.candidateFirstName?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -157,10 +150,10 @@ const InterviewDetail = () => {
                   variant="outlined"
                   type="text"
                   size="small"
-                  name="lastName"
-                  {...register("lastName", { required: true })}
-                  error={!!errors.lastName}
-                  helperText={errors?.lastName?.message}
+                  name="candidateLastName"
+                  {...register("candidateLastName", { required: true })}
+                  error={!!errors.candidateLastName}
+                  helperText={errors?.candidateLastName?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -172,10 +165,10 @@ const InterviewDetail = () => {
                   variant="outlined"
                   type="number"
                   size="small"
-                  name="phone"
-                  {...register("phone", { required: true })}
-                  error={!!errors.phone}
-                  helperText={errors?.phone?.message}
+                  name="candidatePhone"
+                  {...register("candidatePhone", { required: true })}
+                  error={!!errors.candidatePhone}
+                  helperText={errors?.candidatePhone?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -187,10 +180,10 @@ const InterviewDetail = () => {
                   variant="outlined"
                   type="email"
                   size="small"
-                  name="email"
-                  {...register("email", { required: true })}
-                  error={!!errors.email}
-                  helperText={errors?.email?.message}
+                  name="candidateEmail"
+                  {...register("candidateEmail", { required: true })}
+                  error={!!errors.candidateEmail}
+                  helperText={errors?.candidateEmail?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -202,10 +195,10 @@ const InterviewDetail = () => {
                   variant="outlined"
                   type="number"
                   size="small"
-                  name="experience"
-                  {...register("experience", { required: true })}
-                  error={!!errors.experience}
-                  helperText={errors?.experience?.message}
+                  name="candidateExperience"
+                  {...register("candidateExperience", { required: true })}
+                  error={!!errors.candidateExperience}
+                  helperText={errors?.candidateExperience?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -221,10 +214,10 @@ const InterviewDetail = () => {
                   variant="standard"
                   type="file"
                   size="small"
-                  name="resume"
-                  {...register("resume")}
-                  error={!!errors.resume}
-                  helperText={errors?.resume?.message}
+                  name="candidateResume"
+                  {...register("candidateResume")}
+                  error={!!errors.candidateResume}
+                  helperText={errors?.candidateResume?.message}
                 />
               </Grid>
             </Grid>
@@ -253,6 +246,8 @@ const InterviewDetail = () => {
                   size="small"
                   {...register("interviewerFirstName", { required: true })}
                   inputProps={{ readOnly: true }}
+                  error={!!errors.interviewerFirstName}
+                  helperText={errors?.interviewerFirstName?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -265,6 +260,8 @@ const InterviewDetail = () => {
                   size="small"
                   {...register("interviewerLastName", { required: true })}
                   inputProps={{ readOnly: true }}
+                  error={!!errors.interviewerLastName}
+                  helperText={errors?.interviewerLastName?.message}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -276,26 +273,29 @@ const InterviewDetail = () => {
                   type="text"
                   size="small"
                   {...register("interviewerEmail", { required: true })}
-                  inputProps={{ readOnly: true }}
+                  error={!!errors.interviewerEmail}
+                  helperText={errors?.interviewerEmail?.message}
                 />
               </Grid>
               <Grid item xs={6}>
                 <p>Career Stage</p>
               </Grid>
               <Grid item xs={6}>
-                {/* <BasicSelect
-                  items={[
-                    { key: "31", value: "In Person" },
-                    { key: "32", value: "Teams Video" },
-                  ]}
-                  label="Career Stage"
-                  name="careerStage"
+                <FormInput
+                  variant="outlined"
+                  type="text"
+                  size="small"
+                  {...register("interviewerCareerStage", { required: true })}
                   inputProps={{ readOnly: true }}
-                /> */}
+                  error={!!errors.interviewerCareerStage}
+                  helperText={errors?.interviewerCareerStage?.message}
+                />
               </Grid>
             </Grid>
             <Divider />
-            <BaseButton type="submit">Submit</BaseButton>
+            <BaseButton type="submit" onClick={() => handleSubmit(onSubmit)}>
+              Submit
+            </BaseButton>
           </ShadowBox>
           {/* <Stack alignItems="flex-end">
           <br></br>
