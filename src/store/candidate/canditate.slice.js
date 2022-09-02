@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  fetchCandidate,
   fetchCandidates,
   submitCandidate,
   fetchCandidateById,
@@ -9,7 +8,6 @@ import {
 export const initialState = Object.freeze({
   status: "idle",
   candidates: [],
-  candidate: "",
   submitted: false,
   activeId: "",
   loading: false,
@@ -31,25 +29,12 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
-      debugger;
+      // debugger;
       state.status = "resolved";
-      state.candidates.push(payload);
+      state.candidates = payload;
     });
 
     builder.addCase(fetchCandidates.rejected, (state) => {
-      state.status = "rejected";
-    });
-
-    builder.addCase(fetchCandidate.pending, (state) => {
-      state.status = "pending";
-    });
-
-    builder.addCase(fetchCandidate.fulfilled, (state, { payload }) => {
-      state.status = "resolved";
-      state.candidate = payload;
-    });
-
-    builder.addCase(fetchCandidate.rejected, (state) => {
       state.status = "rejected";
     });
 
@@ -57,10 +42,8 @@ const candidatesSlice = createSlice({
       state.submitted = false;
     });
 
-    builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
+    builder.addCase(submitCandidate.fulfilled, (state) => {
       state.submitted = true;
-      state.candidates.push(payload);
-      state.activeId = payload.id;
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {

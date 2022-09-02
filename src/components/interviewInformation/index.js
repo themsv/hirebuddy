@@ -32,6 +32,7 @@ const InterviewDetail = ({
   const [autovalue, setAutoValue] = React.useState("Search Oracle ID");
 
   React.useEffect(() => {
+    console.log("In useEffect");
     dispatch(fetchUsers());
   }, []);
 

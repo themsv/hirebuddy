@@ -31,7 +31,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/candidateinfo/:id" element={<CandidateDetails />} />
+          <Route path={CANDIDATE_DETAILS} element={<CandidateDetails />} />
         </Route>
       </Routes>
     </Fragment>

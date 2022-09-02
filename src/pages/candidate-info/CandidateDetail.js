@@ -13,9 +13,9 @@ import Spinner from "../../components/spinner";
 
 const CandidateDetails = () => {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { candidateId } = useParams();
   useEffect(() => {
-    if (id) dispatch(fetchCandidateById(id));
+    if (candidateId) dispatch(fetchCandidateById(candidateId));
     else {
       console.log("No id");
     }
@@ -55,7 +55,6 @@ const CandidateDetails = () => {
                     id="outlined-basic"
                     variant="standard"
                     type="text"
-                    fullwidth
                     value={candidateById?.interviewData?.interviewerOracleId}
                     disabled
                   />
