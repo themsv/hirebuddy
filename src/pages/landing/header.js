@@ -118,7 +118,7 @@ const Header = (props) => {
 					<StyledTableCell
 						key={columnCell.id}
 						align={columnCell.align}
-						style={{ minWidth: columnCell.minWidth }}
+						style={{ top: '30px', minWidth: columnCell.minWidth }}
 						sortDirection={orderBy === columnCell.id ? order : false}
 					>
 						{columnCell.disableSorting ? (
