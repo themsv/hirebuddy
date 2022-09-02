@@ -1,10 +1,11 @@
+import { useState } from 'react';
+
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import BasePopover from '../../components/popover/BasePopover';
+import Checkbox from '@mui/material/Checkbox';
+
 import {
 	HEADERCELLS,
 	COLUMNCELLS,
@@ -12,83 +13,107 @@ import {
 	OUTCOMEVALUES,
 } from '../../constants/common';
 
-import { useState } from 'react';
 import {
+	TableRowHeader,
+	TableColumnHeader,
 	StyledTableCell,
 	StyledTableSortLabel,
-	FilterIcon,
-	FilterIconButton,
-	Outcomes,
-	CareerStageMenu,
-	CareerStageCheckBox,
-	CareerStageText,
 	SearchInput,
-	OutcomePopover,
-	CareerStagePopover,
-	SearchPopover,
+	StyledList,
+	StyledListItem,
+	StyledListItemText,
+	StyledListItemButton,
+	StyledMenuItem,
 } from './styles';
 
-const TableHeader = (props) => {
-	const { order, orderBy, onRequestFilter, onRequestSearch, onRequestSort } =
-		props;
-
-	const [anchorOutcome, setAnchorOutcome] = useState(null);
-	const [anchorCareerSelected, setCareerSelected] = useState(null);
-	const [anchorCareerApplied, setCareerApplied] = useState(null);
-	const [anchorSearch, setAnchorSearch] = useState(null);
+const Header = (props) => {
+	const {
+		order,
+		orderBy,
+		onOutcomeFilter,
+		onCareerAppliedFilter,
+		onCareerSelectedFilter,
+		onRequestSearch,
+		onRequestSort,
+	} = props;
 
 	const [searchValue, setSearchValue] = useState('');
 
-	const openOutcome = Boolean(anchorOutcome);
-	const openCareerSelected = Boolean(anchorCareerSelected);
-	const openCareerApplied = Boolean(anchorCareerApplied);
-	const openSearch = Boolean(anchorSearch);
+	const [anchorElSearch, setAnchorElSearch] = useState(null);
+	const [anchorElOutcome, setAnchorOutcome] = useState(null);
+	const [anchorElCareerApplied, setAnchorCareerApplied] = useState(null);
+	const [anchorElCareerSelected, setAnchorCareerSelected] = useState(null);
+
+	const handleSearchClick = (event) => {
+		setAnchorElSearch(event.currentTarget);
+	};
+	const handleOutcomeClick = (event) => {
+		setAnchorOutcome(event.currentTarget);
+	};
+	const handleCareerAppliedClick = (event) => {
+		setAnchorCareerApplied(event.currentTarget);
+	};
+	const handleCareerSelectedClick = (event) => {
+		setAnchorCareerSelected(event.currentTarget);
+	};
+
+	const handleSearchClose = () => {
+		setAnchorElSearch(null);
+	};
+	const handleOutcomeClose = () => {
+		setAnchorOutcome(null);
+	};
+	const handleCareerAppliedClose = () => {
+		setAnchorCareerApplied(null);
+	};
+	const handleCareerSelectedClose = () => {
+		setAnchorCareerSelected(null);
+	};
+
+	const openSearch = Boolean(anchorElSearch);
+	const openOutcome = Boolean(anchorElOutcome);
+	const openCareerApplied = Boolean(anchorElCareerApplied);
+	const openCareerSelected = Boolean(anchorElCareerSelected);
 
 	const createSortHandler = (property) => (event) => {
 		onRequestSort(event, property);
 	};
 
-	const createAnchorHandler = (property) => (event) => {
-		if (property === 'outcome') {
-			setAnchorOutcome(event.currentTarget);
-		} else if (property === 'careerSelected') {
-			setCareerSelected(event.currentTarget);
-		} else if (property === 'careerApplied') {
-			setCareerApplied(event.currentTarget);
-		} else if (property === 'date') {
-			setAnchorSearch(event.currentTarget);
-		}
-	};
-
 	const createFilterHandler = (property) => (event) => {
-		onRequestFilter(event, property);
-		handleClose();
-		// property === 'outcome' && handleClose();
+		if (property === 'outcome') {
+			onOutcomeFilter(event);
+			handleOutcomeClose();
+		}
+		if (property === 'candidateCareerStageInterviewedFor') {
+			onCareerAppliedFilter(event);
+			handleCareerAppliedClose();
+		}
+		if (property === 'recommendedCareerStage') {
+			onCareerSelectedFilter(event);
+			handleCareerSelectedClose();
+		}
 	};
 
 	const createSearchHandler = (event) => {
 		setSearchValue(event.target.value);
 		onRequestSearch(event.target.value);
-		// handleClose();
-	};
-
-	const handleClose = () => {
-		setAnchorOutcome(null);
-		setCareerSelected(null);
-		setCareerApplied(null);
-		setAnchorSearch(null);
 	};
 
 	return (
 		<TableHead>
-			<TableRow>
+			<TableRowHeader sx={{ border: '1' }}>
 				{HEADERCELLS.map((headcell) => (
-					<StyledTableCell key={headcell.id} align="center" colSpan={4}>
+					<StyledTableCell
+						key={headcell.id}
+						align="center"
+						colSpan={4}
+						sx={{ borderRight: '1px solid white' }}
+					>
 						{headcell.label}
 					</StyledTableCell>
 				))}
-			</TableRow>
-			<TableRow>
+			</TableRowHeader>
+			<TableColumnHeader>
 				{COLUMNCELLS.map((columnCell) => (
 					<StyledTableCell
 						key={columnCell.id}
@@ -109,164 +134,125 @@ const TableHeader = (props) => {
 						)}
 
 						{columnCell.requestSearch && (
-							<>
-								<FilterIconButton
-									aria-describedby={columnCell.id}
-									size="small"
-									onClick={createAnchorHandler(columnCell.id)}
-								>
-									<FilterIcon />
-								</FilterIconButton>
-
-								<SearchPopover
-									id={columnCell.id}
-									open={openSearch}
-									onClose={handleClose}
-									anchorReference="anchorPosition"
-									anchorPosition={{ top: 130, left: 550 }}
-									anchorOrigin={{
-										vertical: 'center',
-										horizontal: 'center',
-									}}
-									transformOrigin={{
-										vertical: 'bottom',
-										horizontal: 'center',
-									}}
-								>
-									<SearchInput
-										label="Search Date"
-										type="search"
-										value={searchValue}
-										startAdornment={
-											<InputAdornment position="start">
-												<SearchIcon />
-											</InputAdornment>
-										}
-										onChange={createSearchHandler}
-									/>
-								</SearchPopover>
-							</>
+							<BasePopover
+								id={columnCell.id}
+								open={openSearch}
+								anchorEl={anchorElSearch}
+								handleClose={handleSearchClose}
+								handleClick={handleSearchClick}
+							>
+								<SearchInput
+									label="Search Date"
+									type="search"
+									value={searchValue}
+									endAdornment={
+										<InputAdornment position="start">
+											<SearchIcon />
+										</InputAdornment>
+									}
+									onChange={createSearchHandler}
+								/>
+							</BasePopover>
 						)}
-
 						{columnCell.requestFilter && (
 							<>
-								<FilterIconButton
-									aria-describedby={columnCell.id}
-									size="small"
-									onClick={createAnchorHandler(columnCell.id)}
-								>
-									<FilterIcon />
-								</FilterIconButton>
 								{columnCell.id === 'outcome' && (
-									<OutcomePopover
+									<BasePopover
 										id={columnCell.id}
 										open={openOutcome}
-										onClose={handleClose}
-										anchorReference="anchorPosition"
-										anchorPosition={{ top: 272, left: 850 }}
-										anchorOrigin={{
-											vertical: 'center',
-											horizontal: 'center',
-										}}
-										transformOrigin={{
-											vertical: 'bottom',
-											horizontal: 'center',
-										}}
+										anchorEl={anchorElOutcome}
+										handleClose={handleOutcomeClose}
+										handleClick={handleOutcomeClick}
 									>
-										<FormControl>
-											<RadioGroup
-												aria-labelledby="outcomes-buttons-group-label"
-												name="outcomes-buttons-group"
-											>
-												{OUTCOMEVALUES.map((item) => (
-													<FormControlLabel
-														key={item.value}
-														value={item.value}
-														control={<Outcomes size="small" />}
-														label={item.value}
-														onClick={createFilterHandler(
-															columnCell.id
-														)}
-														sx={{ padding: '5px 15px ' }}
-													/>
-												))}
-											</RadioGroup>
-										</FormControl>
-									</OutcomePopover>
+										{OUTCOMEVALUES.map((item) => (
+											<StyledList key={item.key}>
+												<StyledMenuItem
+													data-my-value={item.value}
+													onClick={createFilterHandler(
+														columnCell.id
+													)}
+													sx={{ padding: '5px' }}
+												>
+													{item.value}
+												</StyledMenuItem>
+											</StyledList>
+										))}
+									</BasePopover>
 								)}
-
-								{columnCell.id === 'careerApplied' && (
-									<CareerStagePopover
+								{columnCell.id ===
+									'candidateCareerStageInterviewedFor' && (
+									<BasePopover
 										id={columnCell.id}
 										open={openCareerApplied}
-										onClose={handleClose}
-										// anchorReference="anchorPosition"
-										// anchorPosition={{ top: 270, left: 680 }}
-										anchorOrigin={{
-											vertical: 'center',
-											horizontal: 'center',
-										}}
-										transformOrigin={{
-											vertical: 'bottom',
-											horizontal: 'center',
-										}}
+										anchorEl={anchorElCareerApplied}
+										handleClose={handleCareerAppliedClose}
+										handleClick={handleCareerAppliedClick}
 									>
-										<FormControl>
+										<StyledList>
 											{CAREERSTAGES.map((item) => (
-												<CareerStageMenu key={item.key}>
-													<CareerStageCheckBox
-														onChange={createFilterHandler(
-															columnCell.id
-														)}
-														value={item.value}
-														size="small"
-													/>
-													<CareerStageText primary={item.value} />
-												</CareerStageMenu>
+												<StyledListItem
+													key={item.key}
+													disablePadding
+												>
+													<StyledListItemButton>
+														<Checkbox
+															value={item.value}
+															onChange={createFilterHandler(
+																columnCell.id
+															)}
+															disableRipple
+															size="small"
+														/>
+														<StyledListItemText
+															id={item.key}
+															primary={item.value}
+														/>
+													</StyledListItemButton>
+												</StyledListItem>
 											))}
-										</FormControl>
-									</CareerStagePopover>
+										</StyledList>
+									</BasePopover>
 								)}
-
-								{columnCell.id === 'careerSelected' && (
-									<CareerStagePopover
+								{columnCell.id === 'recommendedCareerStage' && (
+									<BasePopover
 										id={columnCell.id}
 										open={openCareerSelected}
-										onClose={handleClose}
-										anchorReference="anchorPosition"
-										anchorPosition={{ top: 270, left: 1030 }}
-										anchorOrigin={{
-											vertical: 'center',
-											horizontal: 'center',
-										}}
-										transformOrigin={{
-											vertical: 'bottom',
-											horizontal: 'center',
-										}}
+										anchorEl={anchorElCareerSelected}
+										handleClose={handleCareerSelectedClose}
+										handleClick={handleCareerSelectedClick}
 									>
-										<FormControl>
+										<StyledList>
 											{CAREERSTAGES.map((item) => (
-												<CareerStageMenu key={item.key}>
-													<CareerStageCheckBox
-														onChange={createFilterHandler(
-															columnCell.id
-														)}
-														value={item.value}
-														size="small"
-													/>
-													<CareerStageText primary={item.value} />
-												</CareerStageMenu>
+												<StyledListItem
+													key={item.key}
+													disablePadding
+												>
+													<StyledListItemButton>
+														<Checkbox
+															value={item.value}
+															onChange={createFilterHandler(
+																columnCell.id
+															)}
+															disableRipple
+															size="small"
+														/>
+														<StyledListItemText
+															id={item.key}
+															primary={item.value}
+														/>
+													</StyledListItemButton>
+												</StyledListItem>
 											))}
-										</FormControl>
-									</CareerStagePopover>
+										</StyledList>
+									</BasePopover>
 								)}
 							</>
 						)}
 					</StyledTableCell>
 				))}
-			</TableRow>
+			</TableColumnHeader>
 		</TableHead>
 	);
 };
 
-export default TableHeader;
+export default Header;

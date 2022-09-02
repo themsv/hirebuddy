@@ -1,27 +1,28 @@
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchCandidates } from '../../store/candidate/candidate.action';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchCandidates } from '../../store/candidate/candidate.action';
+import ListOfInterviews from './listofInterviews';
+import Spinner from '../../components/spinner';
 
-import ListOfInterviews from './table';
 const LandingPage = () => {
-	//TODO - fetch form data
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user.value);
 
-	// const [candidateData, setCandidateData] = useState([]);
-	// const [userData, setUserData] = useState([]);
+	useEffect(() => {
+		dispatch(fetchCandidates());
+	}, []);
 
-	// const dispatch = useDispatch();
-	// const users = useSelector((state) => state.user.value);
-
-	// useEffect(() => {
-	// 	const getCandidates = async () => {
-	// 		const { payload } = await dispatch(fetchCandidates());
-	// 		setCandidateData(payload);
-	// 	};
-	// 	getCandidates();
-	// }, []);
+	const candidates = useSelector((state) => state.candidates);
 
 	return (
 		<>
-			<ListOfInterviews />;
+			{candidates.status === 'pending' && <Spinner />}
+			{candidates.status === 'resolved' && (
+				<ListOfInterviews
+					candidateDetails={candidates.candidates}
+					userDetails={user}
+				/>
+			)}
 		</>
 	);
 };

@@ -54,7 +54,6 @@ const candidatesSlice = createSlice({
 
     builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
       state.submitted = true;
-      state.candidates.push(payload);
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {
