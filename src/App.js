@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import { CANDIDATE_DETAILS, CONDUCT_INTERVIEW } from "./constants/routes";
 import ConductInterview from "./pages/conduct-interview/index";
+import Userdetails from "./pages/candidate-info/CandidateDetail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Authenticate />} />
           <Route path={CONDUCT_INTERVIEW} element={<ConductInterview />} />
           <Route path="/landing" element={<LandingPage />} />
+          <Route path="/candidateinfo/:id" element={<Userdetails />} />
         </Route>
       </Routes>
     </Fragment>
