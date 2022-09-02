@@ -10,7 +10,6 @@ export const initialState = Object.freeze({
   candidates: [],
   candidate: [],
   submitted: false,
-  activeId: "",
 });
 
 const candidatesSlice = createSlice({
@@ -28,7 +27,6 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
-      debugger;
       state.status = "resolved";
       state.candidates.push(payload);
     });
@@ -57,7 +55,6 @@ const candidatesSlice = createSlice({
     builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
       state.submitted = true;
       state.candidates.push(payload);
-      state.activeId = payload.id;
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {

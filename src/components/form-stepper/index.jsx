@@ -12,7 +12,7 @@ import "./styles.css";
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
 import { CheckCircleOutline } from "@mui/icons-material";
-import { CANDIDATE_DETAILS } from "../../constants/routes";
+import { HOME } from "../../constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetIsSubmitted } from "../../store/candidate/canditate.slice";
@@ -136,8 +136,6 @@ const FormStepper = () => {
 
   const [disbaleIcon, setDisableIcon] = useState(true);
 
-  const activeid = useSelector((state) => state.candidates.activeId);
-
   console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
@@ -180,7 +178,7 @@ const FormStepper = () => {
       } else {
         clearInterval(timer);
         dispatch(resetIsSubmitted());
-        navigate(CANDIDATE_DETAILS + activeid);
+        navigate(HOME);
       }
     }, 1000);
   };
