@@ -3,14 +3,17 @@ import {
   fetchCandidate,
   fetchCandidates,
   submitCandidate,
+  fetchCandidateById,
 } from "./candidate.action";
 
 export const initialState = Object.freeze({
   status: "idle",
   candidates: [],
-  candidate: [],
+  candidate: "",
   submitted: false,
   activeId: "",
+  loading: false,
+  candidateById: "",
 });
 
 const candidatesSlice = createSlice({
@@ -62,6 +65,20 @@ const candidatesSlice = createSlice({
 
     builder.addCase(submitCandidate.rejected, (state) => {
       state.status = false;
+    });
+
+    builder.addCase(fetchCandidateById.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchCandidateById.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.candidateById = payload;
+    });
+
+    builder.addCase(fetchCandidateById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
   },
 });
