@@ -12,6 +12,7 @@ import AutoCompleteBox from "../autocomplete/autocomplete-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../store/user/userAction";
 import FormSelect from "../form-select";
+import { CAREERSTAGES } from "../../constants/common";
 
 const InterviewDetail = ({
   onSubmit,
@@ -20,6 +21,7 @@ const InterviewDetail = ({
   handleSubmit,
   control,
   register,
+  candidateData,
 }) => {
   const user = useSelector((state) => {
     return state.user.users;
@@ -28,9 +30,6 @@ const InterviewDetail = ({
   const [reqDate, setReqDate] = useState();
   const [usersList, setUsersList] = React.useState([]);
   const [autovalue, setAutoValue] = React.useState("Search Oracle ID");
-  const [mode, setMode] = React.useState("");
-  const [type, setType] = React.useState("");
-  console.log(mode);
 
   React.useEffect(() => {
     dispatch(fetchUsers());
@@ -90,37 +89,31 @@ const InterviewDetail = ({
                 <p>Mode</p>
               </Grid>
               <Grid item xs={6}>
-                {/* <FormSelect
+                <FormSelect
                   items={[
                     { value: "In Person", key: "1" },
                     { value: "Teams Video", key: "2" },
                   ]}
+                  {...register("interviewMode")}
                   label="Mode"
-                  setItem={setMode}
-                /> */}
-                {/* <BasicSelect
-                  item={mode}
-                  setItem={setMode}
-                  items={[
-                    { value: "In Person", key: "1" },
-                    { value: "Teams Video", key: "2" },
-                  ]}
-                  label="Mode"
-                /> */}
+                  error={!!errors.interviewMode}
+                  helperText={errors?.interviewMode?.message}
+                />
               </Grid>
               <Grid item xs={6}>
                 <p>Type</p>
               </Grid>
               <Grid item xs={6}>
-                {/* <BasicSelect
-                  item={type}
-                  setItem={setType}
+                <FormSelect
                   items={[
                     { key: "3", value: "Core XT" },
                     { key: "4", value: "React JS" },
                   ]}
+                  {...register("interviewType")}
                   label="Type"
-                /> */}
+                  error={!!errors.interviewType}
+                  helperText={errors?.interviewType?.message}
+                />
               </Grid>
             </Grid>
             <Divider />
@@ -204,12 +197,23 @@ const InterviewDetail = ({
               <Grid item xs={6}>
                 <p>Career Stage interviewed for</p>
               </Grid>
-              <Grid item xs={6}></Grid>
+              <Grid item xs={6}>
+                <FormSelect
+                  items={CAREERSTAGES}
+                  {...register("candidateCareerStageInterviewedFor")}
+                  label="Mode"
+                  error={!!errors.candidateCareerStageInterviewedFor}
+                  helperText={
+                    errors?.candidateCareerStageInterviewedFor?.message
+                  }
+                />
+              </Grid>
               <Grid item xs={6}>
                 <p>Resume</p>
               </Grid>
               <Grid item xs={6}>
                 <FormInput
+                  required="true"
                   label="Resume"
                   variant="standard"
                   type="file"

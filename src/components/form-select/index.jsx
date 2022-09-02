@@ -1,9 +1,10 @@
 import Box from "@mui/material/Box";
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import styled from "styled-components";
 
 const ErrorSpan = styled.span`
@@ -19,6 +20,7 @@ const FormSelect = forwardRef(
         <FormControl fullWidth error={!!error}>
           <InputLabel id={`${label}-label`}>{`${label} *`}</InputLabel>
           <Select
+            size="small"
             labelId={`${label}-label`}
             id={label}
             label={`${label}`}
