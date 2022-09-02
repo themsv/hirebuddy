@@ -29,9 +29,8 @@ const candidatesSlice = createSlice({
     });
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
-      // debugger;
       state.status = "resolved";
-      state.candidates = payload;
+      state.candidates.push(payload);
     });
 
     builder.addCase(fetchCandidates.rejected, (state) => {
