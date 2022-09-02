@@ -14,6 +14,24 @@ export const fetchCandidates = createAsyncThunk(
 	}
 );
 
+export const fetchCandidate = createAsyncThunk(
+  "candidates/fetchCandidate",
+  async (id, thunkAPI) => {
+    console.log(id);
+    try {
+      const url = `${process.env.REACT_APP_SERVER_URL}candidates`;
+      const { data } = await axios.get(url);
+
+      const candidateData = data.filter((data) => {
+        return data.interviewData.interviewerOracleId == id;
+      });
+      console.log(candidateData);
+      return candidateData;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
 export const submitCandidate = createAsyncThunk(
 	'candidates/submitCandidate',
 	async (candidateData, thunkAPI) => {
