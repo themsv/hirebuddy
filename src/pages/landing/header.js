@@ -84,11 +84,11 @@ const Header = (props) => {
 			onOutcomeFilter(event);
 			handleOutcomeClose();
 		}
-		if (property === 'careerApplied') {
+		if (property === 'candidateCareerStageInterviewedFor') {
 			onCareerAppliedFilter(event);
 			handleCareerAppliedClose();
 		}
-		if (property === 'careerSelected') {
+		if (property === 'recommendedCareerStage') {
 			onCareerSelectedFilter(event);
 			handleCareerSelectedClose();
 		}
@@ -179,7 +179,8 @@ const Header = (props) => {
 										))}
 									</BasePopover>
 								)}
-								{columnCell.id === 'careerApplied' && (
+								{columnCell.id ===
+									'candidateCareerStageInterviewedFor' && (
 									<BasePopover
 										id={columnCell.id}
 										open={openCareerApplied}
@@ -212,7 +213,7 @@ const Header = (props) => {
 										</StyledList>
 									</BasePopover>
 								)}
-								{columnCell.id === 'careerSelected' && (
+								{columnCell.id === 'recommendedCareerStage' && (
 									<BasePopover
 										id={columnCell.id}
 										open={openCareerSelected}

@@ -39,83 +39,83 @@ export const HEADERCELLS = [
 export const COLUMNCELLS = [
 	//Candidate Fields
 	{
-		id: 'name',
+		id: 'candidateName',
 		label: 'Name',
 		numeric: false,
 		minWidth: 50,
 	},
 	{
-		id: 'email',
+		id: 'candidateEmail',
 		label: 'Email',
-		minWidth: 80,
+		minWidth: 50,
 		disableSorting: true,
 	},
 	{
-		id: 'phone',
+		id: 'candidatePhone',
 		label: 'Phone',
 		minWidth: 50,
 		disableSorting: true,
 	},
 	{
-		id: 'experience',
+		id: 'candidateExperience',
 		label: 'Experience',
 		numeric: true,
-		minWidth: 80,
+		minWidth: 40,
 	},
 
 	//Interview Fields
 	{
-		id: 'date',
+		id: 'interviewDate',
 		label: 'Date',
 		numeric: true,
-		minWidth: 100,
+		minWidth: 50,
 		requestSearch: true,
 	},
 	{
-		id: 'careerApplied',
+		id: 'candidateCareerStageInterviewedFor',
 		label: 'CareerStage Applied',
-		minWidth: 180,
+		minWidth: 165,
 		disableSorting: true,
 		requestFilter: true,
 	},
 	{
 		id: 'outcome',
 		label: 'Outcome',
-		minWidth: 100,
+		minWidth: 90,
 		disableSorting: true,
 		requestFilter: true,
 	},
 	{
-		id: 'careerSelected',
+		id: 'recommendedCareerStage',
 		label: 'CareerStage Selected',
-		minWidth: 180,
+		minWidth: 175,
 		disableSorting: true,
 		requestFilter: true,
 	},
 
 	//Interviewer Fields
 	{
-		id: 'iname',
+		id: 'interviewerName',
 		label: 'Name',
-		minWidth: 80,
+		minWidth: 50,
 		numeric: false,
 	},
 	{
-		id: 'oracleId',
+		id: 'interviewerOracleId',
 		label: 'OracleID',
 		minWidth: 50,
 		numeric: true,
 	},
 	{
-		id: 'iemail',
+		id: 'interviewerEmail',
 		label: 'Email',
 		minWidth: 50,
 		disableSorting: true,
 	},
 	{
-		id: 'careerStage',
+		id: 'interviewerCareerStage',
 		label: 'CareerStage',
-		minWidth: 150,
+		minWidth: 90,
 		disableSorting: true,
 	},
 ];

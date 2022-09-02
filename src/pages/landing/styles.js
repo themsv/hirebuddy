@@ -15,15 +15,13 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
 		backgroundColor: theme.palette.primary.main,
 		color: '#fff',
-		fontSize: 14,
-		fontWeight: 300,
-		padding: '8px',
-		lineHeight: '1.4',
+		fontSize: '14px',
+		padding: '4px 8px',
+		lineHeight: '1.5',
 	},
 	[`&.${tableCellClasses.body}`]: {
-		fontSize: 14,
-		fontWeight: 300,
-		padding: '12px',
+		fontSize: '12.8px',
+		padding: '8px 10px',
 		lineHeight: '1.2',
 		textAlign: 'left',
 	},
@@ -48,6 +46,9 @@ export const StyledTableSortLabel = styled(TableSortLabel)(({ theme }) => ({
 		opacity: 2,
 	},
 	'&.Mui-active': {
+		fontWeight: 'bold',
+	},
+	'&.Mui-selected': {
 		fontWeight: 'bold',
 	},
 }));

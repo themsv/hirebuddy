@@ -1,34 +1,18 @@
-export const createData = (
-	id,
-	candidatename,
-	candidateemail,
-	phone,
-	experience,
-	date,
-	careerApplied,
-	outcome,
-	careerSelected,
-	interviewername,
-	oracleId,
-	intervieweremail,
-	careerStage
-) => {
-	return {
-		id,
-		candidatename,
-		candidateemail,
-		phone,
-		experience,
-		date,
-		careerApplied,
-		outcome,
-		careerSelected,
-		interviewername,
-		oracleId,
-		intervieweremail,
-		careerStage,
-	};
-};
+export function filterCandidates(arr) {
+	let tempObj = [];
+	arr.map((candidate) => {
+		const { interviewData, finalFeedback, id } = candidate;
+		let tempData = {
+			id,
+			...interviewData,
+			...finalFeedback,
+			candidateName: `${interviewData.candidateFirstName} ${interviewData.candidateLastName}`,
+			interviewerName: `${interviewData.interviewerFirstName} ${interviewData.interviewerFirstName}`,
+		};
+		tempObj.push(tempData);
+	});
+	return tempObj;
+}
 
 export const descendingComparator = (a, b, orderBy) => {
 	if (b[orderBy] < a[orderBy]) {

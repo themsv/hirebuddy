@@ -10,96 +10,22 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
 import { StyledTableCell, StyledTableRow, TableText } from './styles';
-import { getComparator, stableSort, createData } from './sorting';
+import { getComparator, stableSort, filterCandidates } from './sorting';
 import Header from './header';
 
-const originalData = [
-	createData(
-		1,
-		'Justin Case',
-		'johnsmith@gmail.com',
-		9876543210,
-		4.4,
-		'17-08-2022',
-		'Junior Associate',
-		'rejected',
-		'Associate L1',
-		'John Doe',
-		176046,
-		'johndoe@publicissapient.com',
-		'Sr. Manager'
-	),
-	createData(
-		2,
-		'Hugh Saturation',
-		'johnsmith@gmail.com',
-		9876543211,
-		6.2,
-		'01-08-2022',
-		'Junior Associate L1',
-		'selected',
-		'Associate L1',
-		'Brain Cumin',
-		176053,
-		'braincumin@publissapient.com',
-		'Sr. Assocaite L1'
-	),
-	createData(
-		3,
-		'Phillip Anthropy',
-		'phillipanthropy@gmail.com',
-		9876543211,
-		5.2,
-		'27-10-2022',
-		'Associate L2',
-		'selected',
-		'Associate L1',
-		'Joss Sticks',
-		176014,
-		'josssticks@publissapient.com',
-		'Sr. Assocaite L2'
-	),
-	createData(
-		4,
-		'Hanson Deck',
-		'hansondeck@gmail.com',
-		9876543211,
-		7.2,
-		'07-09-2022',
-		'Associate L2',
-		'selected',
-		'Sr Associate L1',
-		'Joe Nerk',
-		176009,
-		'joenerk@publissapient.com',
-		'Manager'
-	),
-];
-
 const ListOfInterviews = (props) => {
-	// const originalData = props.candidateDetails.map((candidate) => {
-	// 	const { interviewData, finalFeedback } = candidate;
-	// 	const tempData = {
-	// 		...interviewData,
-	// 		...finalFeedback,
-	// 		candidateName: `${interviewData.candidateFirstName} ${interviewData.candidateLastName}`,
-	// 		interviewerName: `${interviewData.interviewerFirstName} ${interviewData.interviewerFirstName}`,
-	// 	};
-	// 	createData(
-	// 		tempData.candidateName,
-	// 		tempData.candidateEmail,
-	// 		tempData.candidatePhone,
-	// 		tempData.candidateExperience,
-	// 		tempData.interviewDate,
-	// 		tempData.candidateCareerStageInterviewedFor,
-	// 		tempData.outcome,
-	// 		tempData.recommendedCareerStage,
-	// 		tempData.interviewerName,
-	// 		tempData.interviewerOracleId,
-	// 		tempData.interviewerEmail,
-	// 		tempData.interviewerCareerStage
-	// 	);
-	// });
+	const candidateData = props.candidateDetails;
+	const user = props.userDetails;
+
+	const filteredCandidate = user.isAdmin
+		? candidateData
+		: candidateData.filter(
+				(item) => item.interviewData.interviewerOracleId === user.oracleId
+		  );
+	// console.log(filteredCandidate);
+
+	const originalData = filterCandidates(filteredCandidate);
+	// console.log(filterCandidates(filteredCandidate));
 
 	const navigate = useNavigate();
 
@@ -136,7 +62,7 @@ const ListOfInterviews = (props) => {
 	//Searching
 	const handleRequestSearch = (value) => {
 		const filteredData = originalData.filter((item) =>
-			item.date.includes(value)
+			item.interviewDate.includes(value)
 		);
 		setRows(filteredData);
 	};
@@ -154,7 +80,8 @@ const ListOfInterviews = (props) => {
 	const handleCareerAppliedFilter = (event) => {
 		setRows(
 			originalData.filter(
-				(item) => item.careerApplied === event.target.value
+				(item) =>
+					item.candidateCareerStageInterviewedFor === event.target.value
 			)
 		);
 	};
@@ -162,7 +89,7 @@ const ListOfInterviews = (props) => {
 	const handleCareerSelectedFilter = (event) => {
 		setRows(
 			originalData.filter(
-				(item) => item.careerSelected === event.target.value
+				(item) => item.recommendedCareerStage === event.target.value
 			)
 		);
 	};
@@ -174,9 +101,24 @@ const ListOfInterviews = (props) => {
 	};
 
 	return (
-		<Paper sx={{ width: '100%', pt: 4 }}>
+		// <BoxShadow></BoxShadow>
+		<Paper sx={{ width: '100%', pt: 1 }}>
+			<h2
+				style={{
+					textAlign: 'center',
+					fontSize: '22px',
+					margin: '10px',
+					fontWeight: 600,
+				}}
+			>
+				List Of Interview Details
+			</h2>
 			<TableContainer sx={{ maxHeight: 500 }}>
-				<Table stickyHeader aria-label="sticky table">
+				<Table
+					stickyHeader
+					aria-label="sticky table"
+					sx={{ borderSpacing: '0.7px' }}
+				>
 					<Header
 						order={order}
 						orderBy={orderBy}
@@ -198,32 +140,38 @@ const ListOfInterviews = (props) => {
 										onClick={handleCickHandler(row.id)}
 									>
 										<StyledTableCell component="th" scope="row">
-											{row.candidatename}
+											{row.candidateName}
 										</StyledTableCell>
 										<StyledTableCell>
-											{row.candidateemail}
+											{row.candidateEmail}
 										</StyledTableCell>
-										<StyledTableCell>{row.phone}</StyledTableCell>
 										<StyledTableCell>
-											{row.experience}
+											{row.candidatePhone}
 										</StyledTableCell>
-										<StyledTableCell>{row.date}</StyledTableCell>
 										<StyledTableCell>
-											{row.careerApplied}
+											{row.candidateExperience}
+										</StyledTableCell>
+										<StyledTableCell>
+											{row.interviewDate}
+										</StyledTableCell>
+										<StyledTableCell>
+											{row.candidateCareerStageInterviewedFor}
 										</StyledTableCell>
 										<StyledTableCell>{row.outcome}</StyledTableCell>
 										<StyledTableCell>
-											{row.careerSelected}
+											{row.recommendedCareerStage}
 										</StyledTableCell>
 										<StyledTableCell>
-											{row.interviewername}
-										</StyledTableCell>
-										<StyledTableCell>{row.oracleId}</StyledTableCell>
-										<StyledTableCell>
-											{row.intervieweremail}
+											{row.interviewerName}
 										</StyledTableCell>
 										<StyledTableCell>
-											{row.careerStage}
+											{row.interviewerOracleId}
+										</StyledTableCell>
+										<StyledTableCell>
+											{row.interviewerEmail}
+										</StyledTableCell>
+										<StyledTableCell>
+											{row.interviewerCareerStage}
 										</StyledTableCell>
 									</StyledTableRow>
 								);

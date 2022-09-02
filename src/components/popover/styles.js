@@ -9,7 +9,7 @@ export const FilterIcon = styled(FilterListIcon)(({ theme }) => ({
 }));
 
 export const FilterIconButton = styled(BaseButton)(({ theme }) => ({
-	padding: '5px',
+	padding: '3px',
 	minWidth: '30px',
 	boxShadow: 'none',
 	borderRadius: '60%',
