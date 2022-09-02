@@ -147,13 +147,12 @@ const FormStepper = () => {
     setActiveStep((prevActiveStep) => {
       console.log(errors);
       if (prevActiveStep + 1 == 3) {
-        submitCandidateDetails(candidateData);
+        dispatch(submitCandidate(candidateData));
         return prevActiveStep + 1;
       }
 
       if (prevActiveStep + 1 === 1 && Object.keys(errors).length === 0) {
         console.log(Object.keys(errors).length);
-
         return prevActiveStep + 1;
       }
       if (prevActiveStep + 1 === 2) {
@@ -162,11 +161,6 @@ const FormStepper = () => {
 
       return prevActiveStep;
     });
-  };
-
-  const submitCandidateDetails = async () => {
-    const res = await dispatch(submitCandidate(candidateData));
-    console.log(res);
   };
 
   const redirectToCandidatePage = () => {

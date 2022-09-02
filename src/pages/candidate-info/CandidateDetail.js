@@ -6,28 +6,163 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Grid, TextField } from "@mui/material";
 import Card from "@mui/material/Card";
-import { useLocation, useParams } from "react-router-dom";
-import { fetchCandidate } from "../../store/candidate/candidate.action";
+import { useParams } from "react-router-dom";
+import { fetchCandidateById } from "../../store/candidate/candidate.action";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/spinner";
 
-const Userdetails = () => {
+const CandidateDetails = () => {
   const dispatch = useDispatch();
+  const { candidateId } = useParams();
+  useEffect(() => {
+    if (candidateId) dispatch(fetchCandidateById(candidateId));
+    else {
+      console.log("No id");
+    }
+  }, []);
   const candidate = useSelector((state) => {
     return state.candidates;
   });
+  const { candidateById } = candidate;
 
-  const params = useParams();
-
-  useEffect(() => {
-    dispatch(fetchCandidate(params.id));
-  }, [params]);
   return (
     <div>
-      {candidate.status === "loading" ? (
+      {candidate.loading === true ? (
         <Spinner />
       ) : (
         <Card sx={{ maxWidth: 950, margin: "auto", marginTop: 5 }}>
+          <Accordion defaultExpanded>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+              sx={{
+                boxShadow: 9,
+
+                border: "0.5px solid red",
+                background: "#fe414d",
+              }}
+            >
+              <Typography>CandidateInfo:</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>Id</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.interviewerOracleId}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>FirstName</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidateFirstName}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>LastName</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidateLastName}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>Phone</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidatePhone}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>Email</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidateEmail}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>Experience</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidateExperience}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>CareerStageInterviewedFor</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={candidateById?.interviewData?.candidatePhone}
+                    disabled
+                  />
+                </Grid>
+              </Grid>{" "}
+              <Grid container spacing={30}>
+                <Grid item xs={6}>
+                  <p>Resume</p>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="outlined-basic"
+                    variant="standard"
+                    type="text"
+                    value={
+                      candidateById?.interviewData
+                        ?.candidateCareerStageInterviewedFor
+                    }
+                    disabled
+                  />
+                </Grid>
+              </Grid>
+            </AccordionDetails>
+          </Accordion>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -53,7 +188,7 @@ const Userdetails = () => {
                     id="outlined-basic"
                     variant="standard"
                     type="text"
-                    value={candidate.candidate[0]?.interviewData?.interviewDate}
+                    value={candidateById?.interviewData?.interviewDate}
                     disabled
                   />
                 </Grid>
@@ -67,7 +202,7 @@ const Userdetails = () => {
                     id="outlined-basic"
                     variant="standard"
                     type="text"
-                    value={candidate.candidate[0]?.interviewData?.interviewMode}
+                    value={candidateById?.interviewData?.interviewMode}
                     disabled
                   />
                 </Grid>
@@ -81,160 +216,15 @@ const Userdetails = () => {
                     id="outlined-basic"
                     variant="standard"
                     type="text"
-                    value={candidate.candidate[0]?.interviewData?.interviewType}
+                    value={candidateById?.interviewData?.interviewType}
                     disabled
                   />
                 </Grid>
               </Grid>
             </AccordionDetails>
           </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-              sx={{
-                boxShadow: 9,
 
-                border: "0.5px solid red",
-                background: "#fe414d",
-              }}
-            >
-              <Typography>CandidateInfo:</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>Id</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.interviewerOracleId
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>FirstName</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidateFirstName
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>LastName</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidateLastName
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>Phone</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidatePhone
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>Email</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidateEmail
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>Experience</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidateExperience
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>CareerStageInterviewedFor</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData?.candidatePhone
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>{" "}
-              <Grid container spacing={30}>
-                <Grid item xs={6}>
-                  <p>Resume</p>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="outlined-basic"
-                    variant="standard"
-                    type="text"
-                    value={
-                      candidate.candidate[0]?.interviewData
-                        ?.candidateCareerStageInterviewedFor
-                    }
-                    disabled
-                  />
-                </Grid>
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-          {/* <Accordion>
+          <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel3a-content"
@@ -247,7 +237,7 @@ const Userdetails = () => {
             >
               <Typography>FinalFeedback</Typography>
             </AccordionSummary>
-            {data && (
+            {candidateById && (
               <AccordionDetails>
                 <Grid container spacing={30}>
                   <Grid item xs={6}>
@@ -258,7 +248,7 @@ const Userdetails = () => {
                       id="outlined-basic"
                       variant="standard"
                       type="text"
-                      value={data.finalFeedback.feedback}
+                      value={candidateById.finalFeedback.feedback}
                       disabled
                     />
                   </Grid>
@@ -272,7 +262,7 @@ const Userdetails = () => {
                       id="outlined-basic"
                       variant="standard"
                       type="text"
-                      value={data.finalFeedback.outcome}
+                      value={candidateById.finalFeedback.outcome}
                       disabled
                     />
                   </Grid>
@@ -286,7 +276,7 @@ const Userdetails = () => {
                       id="outlined-basic"
                       variant="standard"
                       type="text"
-                      value={data.finalFeedback.interviewedBy}
+                      value={candidateById.finalFeedback.interviewedBy}
                       disabled
                     />
                   </Grid>
@@ -300,7 +290,7 @@ const Userdetails = () => {
                       id="outlined-basic"
                       variant="standard"
                       type="text"
-                      value={data.finalFeedback.relaventExperience}
+                      value={candidateById.finalFeedback.relaventExperience}
                       disabled
                     />
                   </Grid>
@@ -315,18 +305,18 @@ const Userdetails = () => {
                       id="outlined-basic"
                       variant="standard"
                       type="text"
-                      value={data.finalFeedback.recommendedCareerStage}
+                      value={candidateById.finalFeedback.recommendedCareerStage}
                       disabled
                     />
                   </Grid>
                 </Grid>
               </AccordionDetails>
             )}
-          </Accordion> */}
+          </Accordion>
         </Card>
       )}
     </div>
   );
 };
 
-export default Userdetails;
+export default CandidateDetails;

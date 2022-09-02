@@ -5,19 +5,16 @@ export const ShadowBox = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 `;
 
 export const Header = styled(Box)`
-  padding: 5px 10px;
+  padding: 16px 8px;
   display: flex;
   flex-direction: column;
-  background-color: #fe414d;
-  font-size: 20px;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.03);
+  font-size: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   margin: 0px;
-  color: #fff;
+  color: #000;
 `;

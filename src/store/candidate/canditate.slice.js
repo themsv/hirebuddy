@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  fetchCandidate,
   fetchCandidates,
   submitCandidate,
+  fetchCandidateById,
 } from "./candidate.action";
 
 export const initialState = Object.freeze({
   status: "idle",
   candidates: [],
-  candidate: [],
   submitted: false,
+  activeId: "",
+  loading: false,
+  candidateById: "",
 });
 
 const candidatesSlice = createSlice({
@@ -35,29 +37,30 @@ const candidatesSlice = createSlice({
       state.status = "rejected";
     });
 
-    builder.addCase(fetchCandidate.pending, (state) => {
-      state.status = "pending";
-    });
-
-    builder.addCase(fetchCandidate.fulfilled, (state, { payload }) => {
-      state.status = "resolved";
-      state.candidate = payload;
-    });
-
-    builder.addCase(fetchCandidate.rejected, (state) => {
-      state.status = "rejected";
-    });
-
     builder.addCase(submitCandidate.pending, (state) => {
       state.submitted = false;
     });
 
-    builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
+    builder.addCase(submitCandidate.fulfilled, (state) => {
       state.submitted = true;
     });
 
     builder.addCase(submitCandidate.rejected, (state) => {
       state.status = false;
+    });
+
+    builder.addCase(fetchCandidateById.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchCandidateById.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.candidateById = payload;
+    });
+
+    builder.addCase(fetchCandidateById.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
     });
   },
 });
