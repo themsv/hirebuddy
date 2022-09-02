@@ -2,10 +2,11 @@ import { Fragment } from 'react';
 import Authenticate from './pages/authenticate/index';
 import LandingPage from './pages/landing';
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/protected-route';
 import Header from './components/header';
 import { CANDIDATE_DETAILS, CONDUCT_INTERVIEW } from './constants/routes';
 import ConductInterview from './pages/conduct-interview/index';
-import Userdetails from './pages/candidate-info/CandidateDetail';
+import CandidateDetails from './pages/candidate-info/CandidateDetail';
 
 function App() {
 	return (

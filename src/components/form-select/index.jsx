@@ -14,7 +14,6 @@ const ErrorSpan = styled.span`
 `;
 
 const FormSelect = forwardRef(
-<<<<<<< HEAD
 	({ label, value, onChange, items, error, helperText }, ref) => {
 		return (
 			<Box sx={{ minWidth: 120 }}>
@@ -41,33 +40,6 @@ const FormSelect = forwardRef(
 			</Box>
 		);
 	}
-=======
-  ({ label, value, onChange, items, error, helperText }, ref) => {
-    return (
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth error={!!error}>
-          <InputLabel id={`${label}-label`}>{`${label} *`}</InputLabel>
-          <Select
-            size="small"
-            labelId={`${label}-label`}
-            id={label}
-            label={`${label}`}
-            value={value}
-            onChange={onChange}
-            inputRef={ref}
-          >
-            {items?.map((item) => (
-              <MenuItem key={item.key} value={item.value}>
-                {item.value}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {error && <ErrorSpan>{helperText}</ErrorSpan>}
-      </Box>
-    );
-  }
->>>>>>> a649f019727987565cc73cea506bf416cc663c2d
 );
 
 export default FormSelect;
