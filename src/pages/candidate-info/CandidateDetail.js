@@ -22,7 +22,6 @@ const Userdetails = () => {
   useEffect(() => {
     dispatch(fetchCandidate(params.id));
   }, [params]);
-  //console.log(candidate.candidate[0].interviewData);
   return (
     <div>
       {candidate.status === "loading" ? (
