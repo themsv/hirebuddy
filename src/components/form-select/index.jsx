@@ -35,7 +35,6 @@ const FormSelect = forwardRef(
             ))}
           </Select>
         </FormControl>
-
         {error && <ErrorSpan>{helperText}</ErrorSpan>}
       </Box>
     );

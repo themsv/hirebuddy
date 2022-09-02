@@ -3,14 +3,12 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
+import BaseButton from "../button/index";
 import Typography from "@mui/material/Typography";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import InterviewDetail from "../interviewInformation/index";
 import FinalFeedback from "../final-feedback/index";
-
+import "./styles.css";
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
 import { CheckCircleOutline } from "@mui/icons-material";
@@ -102,11 +100,12 @@ const defaultState = {
     relaventExperience: "",
     recommendedCareerStage: "",
     outcome: "",
+    feedback: "",
     trainable: "",
     trainings: [],
-    feedback: "",
   },
 };
+
 const FormStepper = () => {
   const {
     register,
@@ -128,13 +127,15 @@ const FormStepper = () => {
   console.log(errors);
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
   const [candidateData, setCandidateData] = useState(defaultState);
   const [counter, setCounter] = useState(5);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSubmitted = useSelector((state) => state.candidates.submitted);
+
+  const [disbaleIcon, setDisableIcon] = useState(true);
+
   const activeid = useSelector((state) => state.candidates.activeId);
 
   console.log(candidateData);
@@ -144,21 +145,7 @@ const FormStepper = () => {
     }
   }, [isSubmitted]);
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
     setActiveStep((prevActiveStep) => {
       console.log(errors);
       if (prevActiveStep + 1 == 3) {
@@ -177,10 +164,6 @@ const FormStepper = () => {
 
       return prevActiveStep;
     });
-    setSkipped(newSkipped);
-    // activeStep === 3 && submitCandidateDetails();
-    //TODO : submit the details
-    // submitCandidateDetails();
   };
 
   const submitCandidateDetails = async () => {
@@ -201,28 +184,9 @@ const FormStepper = () => {
       }
     }, 1000);
   };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCandidateData(defaultState);
   };
   const handleSteps = (step) => {
     switch (step) {
@@ -273,20 +237,29 @@ const FormStepper = () => {
     setCandidateData(data);
   };
 
+  useEffect(() => {
+    if (activeStep === 2) {
+      const { relaventExperience, recommendedCareerStage, outcome, feedback } =
+        candidateData.finalFeedback;
+
+      if (
+        relaventExperience.length > 0 &&
+        recommendedCareerStage.length > 0 &&
+        outcome.length > 0 &&
+        feedback.length > 50
+      ) {
+        setDisableIcon(false);
+      } else {
+        setDisableIcon(true);
+      }
+    }
+  }, [candidateData.finalFeedback]);
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          // if (isStepOptional(index)) {
-          //   labelProps.optional = (
-          //     <Typography variant="caption">Optional</Typography>
-          //   );
-          // }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -319,34 +292,33 @@ const FormStepper = () => {
               pt: 2,
             }}
           >
-            <Button
+            <button
+              className="icon-warpper"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
-              <ArrowBackIosIcon />
-            </Button>
+              <ion-icon classname="iconstyle" name="chevron-back"></ion-icon>
+            </button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {/* {isStepOptional(activeStep) 
-            && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )
-            } */}
-
-            <Button
-              onClick={() => {
-                handleSubmit(onSubmit);
-                handleNext();
-              }}
-            >
-              {activeStep === steps.length - 1 ? (
-                "Finish"
-              ) : (
-                <ArrowForwardIosIcon />
-              )}
-            </Button>
+            {activeStep === steps.length - 1 ? (
+              <BaseButton
+                onClick={() => {
+                  handleSubmit(onSubmit);
+                  handleNext();
+                }}
+                disabled={disbaleIcon}
+              >
+                Finish
+              </BaseButton>
+            ) : (
+              <button className="icon-warpper" onClick={handleNext}>
+                <ion-icon
+                  classname="iconstyle"
+                  name="chevron-forward"
+                ></ion-icon>
+              </button>
+            )}
           </Box>
         </React.Fragment>
       )}
