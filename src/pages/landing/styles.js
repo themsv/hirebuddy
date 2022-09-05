@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	fontSize: '14px',
@@ -75,4 +76,16 @@ export const TableText = styled('h3')(({ theme }) => ({
 
 export const SearchInput = styled(Input)(({ theme }) => ({
 	width: '200px',
+}));
+
+export const LightTooltip = styled(({ className, ...props }) => (
+	<Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+	[`& .${tooltipClasses.tooltip}`]: {
+		backgroundColor: theme.palette.common.white,
+		color: 'rgba(0, 0, 0, 0.87)',
+		boxShadow: theme.shadows[1],
+		fontSize: 12,
+		padding: '10px 5px',
+	},
 }));

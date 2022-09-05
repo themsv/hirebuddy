@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,7 +9,12 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
-import { StyledTableCell, StyledTableRow, TableText } from './styles';
+import {
+	StyledTableCell,
+	StyledTableRow,
+	TableText,
+	LightTooltip,
+} from './styles';
 import { getComparator, stableSort, filterCandidates } from './sorting';
 import Header from './header';
 
@@ -102,7 +107,7 @@ const ListOfInterviews = (props) => {
 
 	return (
 		// <BoxShadow></BoxShadow>
-		<Paper sx={{ width: '100%', pt: 1 }}>
+		<Paper sx={{ width: '100%', pt: 1, pl: 2, pr: 2, mt: 2 }}>
 			<h2
 				style={{
 					textAlign: 'center',
@@ -135,13 +140,19 @@ const ListOfInterviews = (props) => {
 							handleSortAndPagination().map((row) => {
 								return (
 									<StyledTableRow hover key={row.id}>
-										<StyledTableCell
-											component="th"
-											scope="row"
-											onClick={handleCickHandler(row.id)}
-										>
-											{row.candidateName}
-										</StyledTableCell>
+										<LightTooltip title="View Details">
+											<StyledTableCell
+												component="th"
+												scope="row"
+												style={{
+													cursor: 'pointer',
+													color: '#EB5757',
+												}}
+												onClick={handleCickHandler(row.id)}
+											>
+												{row.candidateName}
+											</StyledTableCell>
+										</LightTooltip>
 										<StyledTableCell>
 											{row.candidateEmail}
 										</StyledTableCell>
