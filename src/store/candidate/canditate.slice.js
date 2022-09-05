@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import {
   fetchCandidates,
   submitCandidate,
@@ -16,13 +17,14 @@ export const initialState = Object.freeze({
 
 const candidatesSlice = createSlice({
   name: "candidates",
+
   initialState,
+
   reducers: {
     resetIsSubmitted: (state) => {
       state.submitted = false;
     },
   },
-
   extraReducers: (builder) => {
     builder.addCase(fetchCandidates.pending, (state) => {
       state.status = "pending";
@@ -30,7 +32,9 @@ const candidatesSlice = createSlice({
 
     builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
       // debugger;
+
       state.status = "resolved";
+
       state.candidates = payload;
     });
 
@@ -56,15 +60,18 @@ const candidatesSlice = createSlice({
 
     builder.addCase(fetchCandidateById.fulfilled, (state, { payload }) => {
       state.loading = false;
+
       state.candidateById = payload;
     });
 
     builder.addCase(fetchCandidateById.rejected, (state, action) => {
       state.loading = false;
+
       state.error = action.error.message;
     });
   },
 });
+
 export const { resetIsSubmitted } = candidatesSlice.actions;
 
 export default candidatesSlice.reducer;

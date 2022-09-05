@@ -14,7 +14,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Authenticate />} />
-
           <Route
             path={CONDUCT_INTERVIEW}
             element={

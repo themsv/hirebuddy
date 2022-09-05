@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -27,7 +27,7 @@ const ListOfInterviews = (props) => {
 		: candidateData.filter(
 				(item) => item.interviewData.interviewerOracleId === user.oracleId
 		  );
-	// console.log(filteredCandidate);
+	console.log('filteredCandidate', filteredCandidate);
 
 	const originalData = filterCandidates(filteredCandidate);
 	// console.log(filterCandidates(filteredCandidate));

@@ -472,7 +472,6 @@
 			},
 			"id": 23
 		},
-
 		{
 			"interviewData": {
 				"interviewerCareerStage": "Sr. Assocaite L2",
@@ -1507,6 +1506,7 @@
 			"id": 31
 		}
 	],
+
 	"careerStage": [
 		"Junior Associate",
 		"Associate L1",
