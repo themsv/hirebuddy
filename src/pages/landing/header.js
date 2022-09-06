@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import TableHead from '@mui/material/TableHead';
 import SearchIcon from '@mui/icons-material/Search';
@@ -38,7 +38,6 @@ const Header = (props) => {
 	} = props;
 
 	const [searchValue, setSearchValue] = useState('');
-
 	const [anchorElSearch, setAnchorElSearch] = useState(null);
 	const [anchorElOutcome, setAnchorOutcome] = useState(null);
 	const [anchorElCareerApplied, setAnchorCareerApplied] = useState(null);
