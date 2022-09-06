@@ -67,7 +67,7 @@ const InterviewDetail = ({
     <React.Fragment>
       <CssBaseline />
       <br></br>
-      <Container maxWidth="md">
+      <Container maxWidth="md" data-testid="step-1">
         <form onSubmit={handleSubmit(onSubmit)}>
           <ShadowBox>
             <Header>Interview Details</Header>

@@ -247,7 +247,7 @@ const FormStepper = () => {
     }
   }, [candidateData.finalFeedback]);
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%" }} data-testid="stepper">
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -261,7 +261,7 @@ const FormStepper = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Box sx={{ textAlign: "center", mt: 4 }} data-testid="success-page">
             <CheckCircleOutline width="30" color="success" />
             <Typography variant="h6" color={"siccess"}>
               Feedback Submitted Successfully !
@@ -285,6 +285,7 @@ const FormStepper = () => {
             }}
           >
             <button
+              data-testid="prev-btn"
               className="icon-warpper"
               disabled={activeStep === 0}
               onClick={handleBack}
@@ -304,7 +305,11 @@ const FormStepper = () => {
                 Finish
               </BaseButton>
             ) : (
-              <button className="icon-warpper" onClick={handleNext}>
+              <button
+                className="icon-warpper"
+                onClick={handleNext}
+                data-testid="next-btn"
+              >
                 <ion-icon
                   classname="iconstyle"
                   name="chevron-forward"
