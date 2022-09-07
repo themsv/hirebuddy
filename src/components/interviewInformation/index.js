@@ -13,7 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../store/user/userAction";
 import FormSelect from "../form-select";
 import { CAREERSTAGES } from "../../constants/common";
+import styled from "@emotion/styled";
 
+const ErrorSpan = styled.span`
+  font-size: 12px;
+  color: #d32f2f;
+  margin: 3px 14px 0;
+`;
 const InterviewDetail = ({
   onSubmit,
   setValue,
@@ -68,246 +74,233 @@ const InterviewDetail = ({
       <CssBaseline />
       <br></br>
       <Container maxWidth="md">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ShadowBox>
-            <Header>Interview Details</Header>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <p>Date</p>
-              </Grid>
-              <Grid item xs={6}>
-                <BasicDatePicker
-                  setreqDate={setReqDate}
-                  control={control}
-                  size="small"
-                  name="interviewDate"
-                  error={!!errors.interviewDate}
-                  helperText={errors?.interviewDate?.message}
-                />
-                <p>{!!errors.interviewDate && "Enter Date"}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <p>Mode</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormSelect
-                  items={[
-                    { value: "In Person", key: "1" },
-                    { value: "Teams Video", key: "2" },
-                  ]}
-                  {...register("interviewMode")}
-                  label="Mode"
-                  error={!!errors.interviewMode}
-                  helperText={errors?.interviewMode?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Type</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormSelect
-                  items={[
-                    { key: "3", value: "Core XT" },
-                    { key: "4", value: "React JS" },
-                  ]}
-                  {...register("interviewType")}
-                  label="Type"
-                  error={!!errors.interviewType}
-                  helperText={errors?.interviewType?.message}
-                />
-              </Grid>
+        <ShadowBox>
+          <Header>Interview Details</Header>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <p>Date</p>
             </Grid>
-            <Divider />
-            <Header> Candidate Information</Header>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <p>First Name</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  label="First Name"
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  name="candidateFirstName"
-                  {...register("candidateFirstName")}
-                  error={!!errors.candidateFirstName}
-                  helperText={errors?.candidateFirstName?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Last Name</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  label="Last Name"
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  name="candidateLastName"
-                  {...register("candidateLastName", { required: true })}
-                  error={!!errors.candidateLastName}
-                  helperText={errors?.candidateLastName?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Phone</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  label="Phone"
-                  variant="outlined"
-                  type="number"
-                  size="small"
-                  name="candidatePhone"
-                  {...register("candidatePhone", { required: true })}
-                  error={!!errors.candidatePhone}
-                  helperText={errors?.candidatePhone?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Email</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  size="small"
-                  name="candidateEmail"
-                  {...register("candidateEmail", { required: true })}
-                  error={!!errors.candidateEmail}
-                  helperText={errors?.candidateEmail?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Experience</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  label="Experience"
-                  variant="outlined"
-                  type="number"
-                  size="small"
-                  name="candidateExperience"
-                  {...register("candidateExperience", { required: true })}
-                  error={!!errors.candidateExperience}
-                  helperText={errors?.candidateExperience?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Career Stage interviewed for</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormSelect
-                  items={CAREERSTAGES}
-                  {...register("candidateCareerStageInterviewedFor")}
-                  label="Mode"
-                  error={!!errors.candidateCareerStageInterviewedFor}
-                  helperText={
-                    errors?.candidateCareerStageInterviewedFor?.message
-                  }
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Resume</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  required="true"
-                  label="Resume"
-                  variant="standard"
-                  type="file"
-                  size="small"
-                  name="candidateResume"
-                  {...register("candidateResume")}
-                  error={!!errors.candidateResume}
-                  helperText={errors?.candidateResume?.message}
-                />
-              </Grid>
+            <Grid item xs={6}>
+              <BasicDatePicker
+                setreqDate={setReqDate}
+                control={control}
+                size="small"
+                name="interviewDate"
+                error={!!errors.interviewDate}
+                helperText={errors?.interviewDate?.message}
+              />
+              <ErrorSpan>{!!errors.interviewDate && "Enter Date"}</ErrorSpan>
             </Grid>
+            <Grid item xs={6}>
+              <p>Mode</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormSelect
+                items={[
+                  { value: "In Person", key: "1" },
+                  { value: "Teams Video", key: "2" },
+                ]}
+                {...register("interviewMode")}
+                label="Mode"
+                error={!!errors.interviewMode}
+                helperText={errors?.interviewMode?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Type</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormSelect
+                items={[
+                  { key: "3", value: "Core XT" },
+                  { key: "4", value: "React JS" },
+                ]}
+                {...register("interviewType")}
+                label="Type"
+                error={!!errors.interviewType}
+                helperText={errors?.interviewType?.message}
+              />
+            </Grid>
+          </Grid>
+          <Divider />
+          <Header> Candidate Information</Header>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <p>First Name</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="First Name *"
+                variant="outlined"
+                type="text"
+                size="small"
+                name="candidateFirstName"
+                {...register("candidateFirstName")}
+                error={!!errors.candidateFirstName}
+                helperText={errors?.candidateFirstName?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Last Name</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="Last Name *"
+                variant="outlined"
+                type="text"
+                size="small"
+                name="candidateLastName"
+                {...register("candidateLastName", { required: true })}
+                error={!!errors.candidateLastName}
+                helperText={errors?.candidateLastName?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Phone</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="Phone *"
+                variant="outlined"
+                type="number"
+                size="small"
+                name="candidatePhone"
+                {...register("candidatePhone", { required: true })}
+                error={!!errors.candidatePhone}
+                helperText={errors?.candidatePhone?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Email</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="Email *"
+                variant="outlined"
+                type="email"
+                size="small"
+                name="candidateEmail"
+                {...register("candidateEmail", { required: true })}
+                error={!!errors.candidateEmail}
+                helperText={errors?.candidateEmail?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Experience</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="Experience *"
+                variant="outlined"
+                type="number"
+                size="small"
+                name="candidateExperience"
+                {...register("candidateExperience", { required: true })}
+                error={!!errors.candidateExperience}
+                helperText={errors?.candidateExperience?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Career Stage interviewed for</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormSelect
+                items={CAREERSTAGES}
+                {...register("candidateCareerStageInterviewedFor")}
+                label="Mode"
+                error={!!errors.candidateCareerStageInterviewedFor}
+                helperText={errors?.candidateCareerStageInterviewedFor?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Resume</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                label="Resume *"
+                variant="standard"
+                type="file"
+                size="small"
+                name="candidateResume"
+                {...register("candidateResume")}
+                error={!!errors.candidateResume}
+                helperText={errors?.candidateResume?.message}
+              />
+            </Grid>
+          </Grid>
 
-            <Divider />
+          <Divider />
 
-            <Header> Interviewer Information</Header>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <p>Oracle ID </p>
-              </Grid>
-              <Grid item xs={6}>
-                <AutoCompleteBox
-                  value={autovalue}
-                  setValue={setAutoValue}
-                  usersList={usersList}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>First Name</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  {...register("interviewerFirstName", { required: true })}
-                  inputProps={{ readOnly: true }}
-                  error={!!errors.interviewerFirstName}
-                  helperText={errors?.interviewerFirstName?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Last Name</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  {...register("interviewerLastName", { required: true })}
-                  inputProps={{ readOnly: true }}
-                  error={!!errors.interviewerLastName}
-                  helperText={errors?.interviewerLastName?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Email</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  {...register("interviewerEmail", { required: true })}
-                  error={!!errors.interviewerEmail}
-                  helperText={errors?.interviewerEmail?.message}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <p>Career Stage</p>
-              </Grid>
-              <Grid item xs={6}>
-                <FormInput
-                  variant="outlined"
-                  type="text"
-                  size="small"
-                  {...register("interviewerCareerStage", { required: true })}
-                  inputProps={{ readOnly: true }}
-                  error={!!errors.interviewerCareerStage}
-                  helperText={errors?.interviewerCareerStage?.message}
-                />
-              </Grid>
+          <Header> Interviewer Information</Header>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <p>Oracle ID </p>
             </Grid>
-            <Divider />
-            <BaseButton type="submit" onClick={() => handleSubmit(onSubmit)}>
-              Submit
-            </BaseButton>
-          </ShadowBox>
-          {/* <Stack alignItems="flex-end">
-          <br></br>
-          <BaseButton variant="contained">Submit</BaseButton>
-          <br></br>
-        </Stack> */}
-        </form>
+            <Grid item xs={6}>
+              <AutoCompleteBox
+                value={autovalue}
+                setValue={setAutoValue}
+                usersList={usersList}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>First Name</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                variant="outlined"
+                type="text"
+                size="small"
+                {...register("interviewerFirstName", { required: true })}
+                inputProps={{ readOnly: true }}
+                error={!!errors.interviewerFirstName}
+                helperText={errors?.interviewerFirstName?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Last Name</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                variant="outlined"
+                type="text"
+                size="small"
+                {...register("interviewerLastName", { required: true })}
+                inputProps={{ readOnly: true }}
+                error={!!errors.interviewerLastName}
+                helperText={errors?.interviewerLastName?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Email</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                variant="outlined"
+                type="text"
+                size="small"
+                {...register("interviewerEmail", { required: true })}
+                error={!!errors.interviewerEmail}
+                helperText={errors?.interviewerEmail?.message}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p>Career Stage</p>
+            </Grid>
+            <Grid item xs={6}>
+              <FormInput
+                variant="outlined"
+                type="text"
+                size="small"
+                {...register("interviewerCareerStage", { required: true })}
+                inputProps={{ readOnly: true }}
+                error={!!errors.interviewerCareerStage}
+                helperText={errors?.interviewerCareerStage?.message}
+              />
+            </Grid>
+          </Grid>
+          <Divider />
+        </ShadowBox>
       </Container>
     </React.Fragment>
   );
