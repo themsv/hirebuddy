@@ -1,49 +1,77 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchCandidates, submitCandidate } from './candidate.action';
+import { createSlice } from "@reduxjs/toolkit";
+
+import {
+  fetchCandidates,
+  submitCandidate,
+  fetchCandidateById,
+} from "./candidate.action";
 
 export const initialState = Object.freeze({
-	status: 'idle',
-	candidates: [],
-	submitted: false,
+  status: "idle",
+  candidates: [],
+  submitted: false,
+  activeId: "",
+  loading: false,
+  candidateById: "",
 });
 
 const candidatesSlice = createSlice({
-	name: 'candidates',
-	initialState,
-	reducers: {
-		resetIsSubmitted: (state) => {
-			state.submitted = false;
-		},
-	},
+  name: "candidates",
 
-	extraReducers: (builder) => {
-		builder.addCase(fetchCandidates.pending, (state) => {
-			state.status = 'pending';
-		});
+  initialState,
 
-		builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
-			state.status = 'resolved';
-			state.candidates.push(payload);
-		});
+  reducers: {
+    resetIsSubmitted: (state) => {
+      state.submitted = false;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCandidates.pending, (state) => {
+      state.status = "pending";
+    });
 
-		builder.addCase(fetchCandidates.rejected, (state) => {
-			state.status = 'rejected';
-		});
+    builder.addCase(fetchCandidates.fulfilled, (state, { payload }) => {
+      // debugger;
 
-		builder.addCase(submitCandidate.pending, (state) => {
-			state.submitted = false;
-		});
+      state.status = "resolved";
 
-		builder.addCase(submitCandidate.fulfilled, (state, { payload }) => {
-			state.submitted = true;
-			state.candidates.push(payload);
-		});
+      state.candidates = payload;
+    });
 
-		builder.addCase(submitCandidate.rejected, (state) => {
-			state.status = false;
-		});
-	},
+    builder.addCase(fetchCandidates.rejected, (state) => {
+      state.status = "rejected";
+    });
+
+    builder.addCase(submitCandidate.pending, (state) => {
+      state.submitted = false;
+    });
+
+    builder.addCase(submitCandidate.fulfilled, (state) => {
+      state.submitted = true;
+    });
+
+    builder.addCase(submitCandidate.rejected, (state) => {
+      state.status = false;
+    });
+
+    builder.addCase(fetchCandidateById.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(fetchCandidateById.fulfilled, (state, { payload }) => {
+      state.loading = false;
+
+      state.candidateById = payload;
+    });
+
+    builder.addCase(fetchCandidateById.rejected, (state, action) => {
+      state.loading = false;
+
+      state.error = action.error.message;
+    });
+  },
 });
+
 export const { resetIsSubmitted } = candidatesSlice.actions;
 
 export default candidatesSlice.reducer;

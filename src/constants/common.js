@@ -29,3 +29,93 @@ export const TRAININGS = [
   { key: "104", value: "Functional JS - Advanced" },
   { key: "105", value: "ReactJS - Advanced" },
 ];
+
+export const HEADERCELLS = [
+  { id: "candidate", label: "Candidate" },
+  { id: "interview", label: "Interview" },
+  { id: "interviewer", label: "Interviewer" },
+];
+
+export const COLUMNCELLS = [
+  //Candidate Fields
+  {
+    id: "candidateName",
+    label: "Name",
+    numeric: false,
+    minWidth: 50,
+  },
+  {
+    id: "candidateEmail",
+    label: "Email",
+    minWidth: 50,
+    disableSorting: true,
+  },
+  {
+    id: "candidatePhone",
+    label: "Phone",
+    minWidth: 50,
+    disableSorting: true,
+  },
+  {
+    id: "candidateExperience",
+    label: "Experience",
+    numeric: true,
+    minWidth: 40,
+  },
+
+  //Interview Fields
+  {
+    id: "interviewDate",
+    label: "Date",
+    numeric: true,
+    minWidth: 50,
+    requestSearch: true,
+  },
+  {
+    id: "candidateCareerStageInterviewedFor",
+    label: "CareerStage Applied",
+    minWidth: 165,
+    disableSorting: true,
+    requestFilter: true,
+  },
+  {
+    id: "outcome",
+    label: "Outcome",
+    minWidth: 90,
+    disableSorting: true,
+    requestFilter: true,
+  },
+  {
+    id: "recommendedCareerStage",
+    label: "CareerStage Selected",
+    minWidth: 175,
+    disableSorting: true,
+    requestFilter: true,
+  },
+
+  //Interviewer Fields
+  {
+    id: "interviewerName",
+    label: "Name",
+    minWidth: 50,
+    numeric: false,
+  },
+  {
+    id: "interviewerOracleId",
+    label: "OracleID",
+    minWidth: 50,
+    numeric: true,
+  },
+  {
+    id: "interviewerEmail",
+    label: "Email",
+    minWidth: 50,
+    disableSorting: true,
+  },
+  {
+    id: "interviewerCareerStage",
+    label: "CareerStage",
+    minWidth: 90,
+    disableSorting: true,
+  },
+];

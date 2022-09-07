@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Topics = styled("div")(({ theme }) => ({
-  flex: 3,
+  flex: 1,
   "& .MuiAccordionSummary-content": {
     display: "flex",
     justifyContent: "space-between",
@@ -20,13 +20,21 @@ export const Topics = styled("div")(({ theme }) => ({
     },
     "& .questions-actions": {
       display: "flex",
-      maxWidth: "25%",
+      maxWidth: "50%",
       "& .feedback-action": {
         display: "flex",
         alignItems: "center",
         fontSize: "13px",
         color: theme.palette.primary.main,
         marginLeft: "5px",
+        "& button": {
+          fontSize: "10px",
+          fontWeight: "600",
+          paddingLeft: "0",
+        },
+        "& svg": {
+          fontSize: "16px",
+        },
       },
     },
   },

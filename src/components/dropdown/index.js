@@ -4,43 +4,34 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Checkbox from "@mui/material/Checkbox";
-import ListItemText from "@mui/material/ListItemText";
 
-export default function BasicSelect({ items, label, isMultiple }) {
-  const [age, setAge] = React.useState("");
-  const [multiOptions, setMultiOptions] = React.useState([]);
+export default function BasicSelect({ items, label, item, setItem }) {
   const handleChange = (event) => {
-    const { value } = event.target;
-    console.log(value);
-    isMultiple ? setMultiOptions(value) : setAge(value);
+    setItem(event.target.value);
   };
+
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+    <Box>
+      <FormControl fullWidth sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+
         <Select
           data-testid="select"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={isMultiple ? multiOptions : age}
-          renderValue={isMultiple && ((multiOptions) => multiOptions.join(","))}
+          value={item}
+          defaultValue={""}
           label={label}
-          multiple={isMultiple}
           onChange={handleChange}
         >
-          {items?.map((item) =>
-            isMultiple ? (
+          {" "}
+          {items?.map((el) => {
+            return (
               <MenuItem key={item.key} value={item.value}>
-                <Checkbox checked={multiOptions.indexOf(item.value) > -1} />
-                <ListItemText primary={item.value} />
-              </MenuItem>
-            ) : (
-              <MenuItem key={item.key} value={item.key}>
                 {item.value}
               </MenuItem>
-            )
-          )}
+            );
+          })}
         </Select>
       </FormControl>
     </Box>

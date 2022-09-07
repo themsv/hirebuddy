@@ -15,6 +15,13 @@ import { Logout, VideoCall } from "@mui/icons-material";
 import { CONDUCT_INTERVIEW, HOME } from "../../constants/routes";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../../store/user/userSlice";
+import styled from "styled-components";
+
+const LogoLink = styled(Link)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const pages = [
   {
@@ -51,17 +58,28 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="static" color="transparent">
+      <AppBar position="static" color="transparent" data-testid="page-header">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Link to={HOME}>
-              <img
-                src="/assets/images/logo.png"
-                alt="Hire buddy logo"
-                style={{ display: "flex" }}
-                height={35}
-              />
-            </Link>
+            {user.value.email ? (
+              <LogoLink to="/landing">
+                <img
+                  src="/assets/images/logo.png"
+                  alt="Hire buddy logo"
+                  style={{ display: "flex" }}
+                  height={35}
+                />
+              </LogoLink>
+            ) : (
+              <LogoLink to={HOME}>
+                <img
+                  src="/assets/images/logo.png"
+                  alt="Hire buddy logo"
+                  style={{ display: "flex" }}
+                  height={35}
+                />
+              </LogoLink>
+            )}
 
             {user?.value?.email ? (
               <>
@@ -102,6 +120,7 @@ const Header = () => {
                   <Tooltip title="Open settings">
                     <IconButton
                       size="small"
+                      data-testid="menu-appbar"
                       onClick={handleOpenUserMenu}
                       sx={{ p: 0 }}
                     >

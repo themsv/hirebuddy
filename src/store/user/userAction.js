@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async (userData, thunkAPI) => {
@@ -14,6 +13,19 @@ export const fetchUser = createAsyncThunk(
       if (user.length === 1) {
         return user.reduce((acc, val) => acc);
       }
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async (_, thunkAPI) => {
+    try {
+      const res = await axios(`${process.env.REACT_APP_SERVER_URL}users`);
+      const users = await res.data;
+      return users;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data.message);
     }

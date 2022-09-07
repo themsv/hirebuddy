@@ -19,6 +19,7 @@ export const themeOptions = createTheme({
     },
   },
   typography: {
+    fontFamily: "hind",
     button: {
       fontSize: "1rem",
     },
