@@ -27,7 +27,7 @@ const FinalFeedback = ({ candidateData, setCandidateData }) => {
     <Fragment>
       <CssBaseline />
       <br></br>
-      <Container maxWidth="md">
+      <Container maxWidth="md" data-testid="step-3">
         <form autoComplete="off">
           <ShadowBox>
             <Header>Final Feedback</Header>
