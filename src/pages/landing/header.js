@@ -14,6 +14,8 @@ import {
 } from '../../constants/common';
 
 import {
+	FilterIcon,
+	FilterIconButton,
 	TableRowHeader,
 	TableColumnHeader,
 	StyledTableCell,
@@ -99,8 +101,11 @@ const Header = (props) => {
 	};
 
 	return (
-		<TableHead>
-			<TableRowHeader sx={{ border: '1' }}>
+		<TableHead data-testid="table-header">
+			<TableRowHeader
+				sx={{ border: '1' }}
+				data-testid="table-header-row-primary"
+			>
 				{HEADERCELLS.map((headcell) => (
 					<StyledTableCell
 						key={headcell.id}
@@ -112,7 +117,7 @@ const Header = (props) => {
 					</StyledTableCell>
 				))}
 			</TableRowHeader>
-			<TableColumnHeader>
+			<TableColumnHeader data-testid="table-header-row-secondary">
 				{COLUMNCELLS.map((columnCell) => (
 					<StyledTableCell
 						key={columnCell.id}
@@ -133,117 +138,156 @@ const Header = (props) => {
 						)}
 
 						{columnCell.requestSearch && (
-							<BasePopover
-								id={columnCell.id}
-								open={openSearch}
-								anchorEl={anchorElSearch}
-								handleClose={handleSearchClose}
-								handleClick={handleSearchClick}
-							>
-								<SearchInput
-									label="Search Date"
-									type="search"
-									value={searchValue}
-									endAdornment={
-										<InputAdornment position="start">
-											<SearchIcon />
-										</InputAdornment>
-									}
-									onChange={createSearchHandler}
-								/>
-							</BasePopover>
+							<>
+								<FilterIconButton
+									aria-describedby={columnCell.id}
+									size="small"
+									onClick={handleSearchClick}
+								>
+									<FilterIcon />
+								</FilterIconButton>
+
+								<BasePopover
+									id={columnCell.id}
+									open={openSearch}
+									anchorEl={anchorElSearch}
+									onClick={handleSearchClose}
+								>
+									<SearchInput
+										label="Search Date"
+										placeholder="Search Date"
+										type="search"
+										data-testid="open-search"
+										value={searchValue}
+										endAdornment={
+											<InputAdornment position="start">
+												<SearchIcon />
+											</InputAdornment>
+										}
+										sx={{ fontSize: '12px' }}
+										onChange={createSearchHandler}
+									/>
+								</BasePopover>
+							</>
 						)}
 						{columnCell.requestFilter && (
 							<>
 								{columnCell.id === 'outcome' && (
-									<BasePopover
-										id={columnCell.id}
-										open={openOutcome}
-										anchorEl={anchorElOutcome}
-										handleClose={handleOutcomeClose}
-										handleClick={handleOutcomeClick}
-									>
-										{OUTCOMEVALUES.map((item) => (
-											<StyledList key={item.key}>
-												<StyledMenuItem
-													data-my-value={item.value}
-													onClick={createFilterHandler(
-														columnCell.id
-													)}
-													sx={{ padding: '5px' }}
+									<>
+										<FilterIconButton
+											aria-describedby={columnCell.id}
+											size="small"
+											onClick={handleOutcomeClick}
+										>
+											<FilterIcon />
+										</FilterIconButton>
+										<BasePopover
+											id={columnCell.id}
+											open={openOutcome}
+											anchorEl={anchorElOutcome}
+											onClick={handleOutcomeClose}
+										>
+											{OUTCOMEVALUES.map((item) => (
+												<StyledList
+													key={item.key}
+													data-testid="outcome"
 												>
-													{item.value}
-												</StyledMenuItem>
-											</StyledList>
-										))}
-									</BasePopover>
+													<StyledMenuItem
+														data-my-value={item.value}
+														onClick={createFilterHandler(
+															columnCell.id
+														)}
+														sx={{ padding: '5px' }}
+													>
+														{item.value}
+													</StyledMenuItem>
+												</StyledList>
+											))}
+										</BasePopover>
+									</>
 								)}
 								{columnCell.id ===
 									'candidateCareerStageInterviewedFor' && (
-									<BasePopover
-										id={columnCell.id}
-										open={openCareerApplied}
-										anchorEl={anchorElCareerApplied}
-										handleClose={handleCareerAppliedClose}
-										handleClick={handleCareerAppliedClick}
-									>
-										<StyledList>
-											{CAREERSTAGES.map((item) => (
-												<StyledListItem
-													key={item.key}
-													disablePadding
-												>
-													<StyledListItemButton>
-														<Checkbox
-															value={item.value}
-															onChange={createFilterHandler(
-																columnCell.id
-															)}
-															disableRipple
-															size="small"
-														/>
-														<StyledListItemText
-															id={item.key}
-															primary={item.value}
-														/>
-													</StyledListItemButton>
-												</StyledListItem>
-											))}
-										</StyledList>
-									</BasePopover>
+									<>
+										<FilterIconButton
+											aria-describedby={columnCell.id}
+											size="small"
+											onClick={handleCareerAppliedClick}
+										>
+											<FilterIcon />
+										</FilterIconButton>
+										<BasePopover
+											id={columnCell.id}
+											open={openCareerApplied}
+											anchorEl={anchorElCareerApplied}
+											onClick={handleCareerAppliedClose}
+										>
+											<StyledList>
+												{CAREERSTAGES.map((item) => (
+													<StyledListItem
+														key={item.key}
+														disablePadding
+													>
+														<StyledListItemButton>
+															<Checkbox
+																value={item.value}
+																onChange={createFilterHandler(
+																	columnCell.id
+																)}
+																disableRipple
+																size="small"
+															/>
+															<StyledListItemText
+																id={item.key}
+																primary={item.value}
+															/>
+														</StyledListItemButton>
+													</StyledListItem>
+												))}
+											</StyledList>
+										</BasePopover>
+									</>
 								)}
 								{columnCell.id === 'recommendedCareerStage' && (
-									<BasePopover
-										id={columnCell.id}
-										open={openCareerSelected}
-										anchorEl={anchorElCareerSelected}
-										handleClose={handleCareerSelectedClose}
-										handleClick={handleCareerSelectedClick}
-									>
-										<StyledList>
-											{CAREERSTAGES.map((item) => (
-												<StyledListItem
-													key={item.key}
-													disablePadding
-												>
-													<StyledListItemButton>
-														<Checkbox
-															value={item.value}
-															onChange={createFilterHandler(
-																columnCell.id
-															)}
-															disableRipple
-															size="small"
-														/>
-														<StyledListItemText
-															id={item.key}
-															primary={item.value}
-														/>
-													</StyledListItemButton>
-												</StyledListItem>
-											))}
-										</StyledList>
-									</BasePopover>
+									<>
+										<FilterIconButton
+											aria-describedby={columnCell.id}
+											size="small"
+											onClick={handleCareerSelectedClick}
+										>
+											<FilterIcon />
+										</FilterIconButton>
+										<BasePopover
+											id={columnCell.id}
+											open={openCareerSelected}
+											anchorEl={anchorElCareerSelected}
+											onClick={handleCareerSelectedClose}
+										>
+											<StyledList>
+												{CAREERSTAGES.map((item) => (
+													<StyledListItem
+														key={item.key}
+														disablePadding
+													>
+														<StyledListItemButton>
+															<Checkbox
+																value={item.value}
+																onChange={createFilterHandler(
+																	columnCell.id
+																)}
+																disableRipple
+																size="small"
+															/>
+															<StyledListItemText
+																id={item.key}
+																primary={item.value}
+															/>
+														</StyledListItemButton>
+													</StyledListItem>
+												))}
+											</StyledList>
+										</BasePopover>
+									</>
 								)}
 							</>
 						)}

@@ -1,36 +1,20 @@
 import Popover from '@mui/material/Popover';
-import { FilterIcon, FilterIconButton } from './styles';
 
-const BasePopover = ({
-	id,
-	open,
-	anchorEl,
-	handleClick,
-	handleClose,
-	children,
-}) => {
+const BasePopover = ({ id, open, anchorEl, onClick, children }) => {
 	return (
-		<>
-			<FilterIconButton
-				aria-describedby={id}
-				size="small"
-				onClick={handleClick}
-			>
-				<FilterIcon />
-			</FilterIconButton>
-			<Popover
-				id={id}
-				open={open}
-				anchorEl={anchorEl}
-				onClose={handleClose}
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'left',
-				}}
-			>
-				{children}
-			</Popover>
-		</>
+		<Popover
+			data-testid="pop-over"
+			id={id}
+			open={open}
+			anchorEl={anchorEl}
+			onClick={onClick}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'left',
+			}}
+		>
+			{children}
+		</Popover>
 	);
 };
 

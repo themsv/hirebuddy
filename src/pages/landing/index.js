@@ -15,7 +15,7 @@ const LandingPage = () => {
 	const candidates = useSelector((state) => state.candidates);
 
 	return (
-		<>
+		<div data-testid="landing">
 			{candidates.status === 'pending' && <Spinner />}
 			{candidates.status === 'resolved' && (
 				<ListOfInterviews
@@ -23,7 +23,7 @@ const LandingPage = () => {
 					userDetails={user}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
 

@@ -18,15 +18,17 @@ import {
 import { getComparator, stableSort, filterCandidates } from "./sorting";
 import Header from "./header";
 
-const ListOfInterviews = (props) => {
-  const candidateData = props.candidateDetails;
-  const user = props.userDetails;
+const ListOfInterviews = ({ candidateDetails, userDetails }) => {
+  // const candidateData = props.candidateDetails;
+  // const user = props.userDetails;
 
-  const filteredCandidate = user.isAdmin
-    ? candidateData
-    : candidateData.filter(
-        (item) => item.interviewData.interviewerOracleId === user.oracleId
+  const filteredCandidate = userDetails.isAdmin
+    ? candidateDetails
+    : candidateDetails.filter(
+        (item) =>
+          item.interviewData.interviewerOracleId === userDetails.oracleId
       );
+  // console.log('filteredCandidate', filteredCandidate);
 
   const originalData = filterCandidates(filteredCandidate);
 
@@ -104,8 +106,12 @@ const ListOfInterviews = (props) => {
 
   return (
     // <BoxShadow></BoxShadow>
-    <Paper sx={{ width: "100%", pt: 1, pl: 2, pr: 2, mt: 2 }}>
+    <Paper
+      sx={{ width: "100%", pt: 1, pl: 2, pr: 2, mt: 2 }}
+      data-testid="list-of-interviews"
+    >
       <h2
+        data-testid="list-of-interviews-text"
         style={{
           textAlign: "center",
           fontSize: "22px",
@@ -120,6 +126,7 @@ const ListOfInterviews = (props) => {
           stickyHeader
           aria-label="sticky table"
           sx={{ borderSpacing: "0.7px" }}
+          data-testid="list-of-interviews-table"
         >
           <Header
             order={order}
