@@ -21,7 +21,7 @@ export default function BasicDatePicker({ control, setreqDate, name }) {
       render={({ field: { onChange, ...restField } }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
-            label="Request Date"
+            label="Request Date *"
             inputFormat="MM/dd/yyyy"
             onChange={(event) => {
               onChange(event);
