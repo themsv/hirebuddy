@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material";
 import { themeOptions } from "../../Theming";
-import { MOCKED_QUESTIONS } from "./mockData";
 import FormDialog from "../../components/technical-round/components/dialog";
 
 describe("Dialog ", () => {

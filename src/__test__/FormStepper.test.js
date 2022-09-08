@@ -4,9 +4,10 @@ import { BrowserRouter } from "react-router-dom";
 import FormStepper from "../components/form-stepper";
 import { store } from "../store/store";
 import configureMockStore from "redux-mock-store";
-import { removeUser } from "../store/user/userSlice";
+import axios from "axios";
+import { submitCandidate } from "../store/candidate/candidate.action";
 
-const mockStore = configureMockStore();
+jest.mock("axios");
 
 describe("Stepper", () => {
   test("it should render correctly", () => {
@@ -21,7 +22,7 @@ describe("Stepper", () => {
   });
 
   test("it should not display step 2 if type is not selected", async () => {
-    render(
+    const { container } = render(
       <BrowserRouter>
         <Provider store={store}>
           <FormStepper />
@@ -30,8 +31,9 @@ describe("Stepper", () => {
     );
 
     fireEvent.click(screen.getByTestId("next-btn"));
+    const step1 = container.querySelector(`div[data-testid="step-1"]`);
     await waitFor(() => {
-      expect(screen.getByTestId("category-list")).not.toBeInTheDocument();
+      expect(step1).not.toBeTruthy();
     });
   });
 
@@ -71,35 +73,62 @@ describe("Stepper", () => {
     });
   });
 
-  test("it should take to step 2 if prev button is clicked", async () => {
+  test("it should complete the step 2 and display success message", async () => {
+    const mockStore = configureMockStore();
+    const storeWithUser = mockStore({
+      candidates: {
+        submitted: true,
+      },
+      user: {
+        users: [
+          {
+            value: {
+              email: "sample@gmail.com",
+              firstName: "john",
+              lastName: "Deo",
+            },
+          },
+        ],
+      },
+    });
+    storeWithUser.dispatch = jest.fn();
+
     const { container } = render(
       <BrowserRouter>
-        <Provider store={store}>
+        <Provider store={storeWithUser}>
           <FormStepper />
         </Provider>
       </BrowserRouter>
     );
 
-    fireEvent.click(screen.getByTestId("next-btn"));
-    fireEvent.click(screen.getByTestId("next-btn"));
+    const mockedAxios = axios;
+    let res = { data: {} };
+    mockedAxios.post.mockReturnValueOnce(res);
 
+    fireEvent.click(screen.getByTestId("next-btn"));
+    fireEvent.click(screen.getByTestId("next-btn"));
     const inputEl = container.querySelector(`input[name="relaventExperience"]`);
-    inputEl.value = "4";
+    fireEvent.change(inputEl, { target: { value: "4" } });
 
     const inputE2 = container.querySelector(`textarea[name="feedback"]`);
-    inputEl.value =
+    const text =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+    fireEvent.change(inputE2, { target: { value: text } });
 
-    container.querySelector(`input[name="recommendedCareerStage"]`).value =
-      "Associate L1";
-
-    container.querySelector(`input[name="outcome"]`).value = "rejected";
+    const el3 = container.querySelector(`input[name="recommendedCareerStage"]`);
+    fireEvent.change(el3, { target: { value: "Associate L1" } });
+    const el4 = container.querySelector(`input[name="outcome"]`);
+    fireEvent.change(el4, { target: { value: "rejected" } });
     fireEvent.click(screen.getByText("Finish"));
 
     await waitFor(() => {
-      //   expect(inputEl.value).toBe("4");
-      expect(screen.getByText("Finish")).toHaveClass("Mui-disabled");
-      //   expect(screen.getByTestId("success-page")).toBeInTheDocument();
+      expect(inputEl.value).toBe("4");
+      expect(inputE2.value).toContain("Lorem ipsum dolor sit");
+      expect(el3.value).toBe("Associate L1");
+      expect(el4.value).toBe("rejected");
+
+      expect(screen.getByTestId("success-page")).toBeInTheDocument();
+      expect(storeWithUser.dispatch).toHaveBeenCalledTimes(2);
     });
   });
 });

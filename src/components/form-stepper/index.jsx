@@ -117,14 +117,8 @@ const FormStepper = () => {
 
   const onSubmit = (data) => {
     alert();
-
-    console.log(errors);
-
     setCandidateData({ ...candidateData, interviewData: { ...data } });
-    console.log(candidateData);
   };
-
-  console.log(errors);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [candidateData, setCandidateData] = useState(defaultState);
@@ -136,7 +130,6 @@ const FormStepper = () => {
 
   const [disbaleIcon, setDisableIcon] = useState(true);
 
-  console.log(candidateData);
   useEffect(() => {
     if (isSubmitted) {
       redirectToCandidatePage();
@@ -145,14 +138,12 @@ const FormStepper = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => {
-      console.log(errors);
       if (prevActiveStep + 1 == 3) {
         dispatch(submitCandidate(candidateData));
         return prevActiveStep + 1;
       }
 
       if (prevActiveStep + 1 === 1 && Object.keys(errors).length === 0) {
-        console.log(Object.keys(errors).length);
         return prevActiveStep + 1;
       }
       if (prevActiveStep + 1 === 2) {
@@ -233,7 +224,10 @@ const FormStepper = () => {
     if (activeStep === 2) {
       const { relaventExperience, recommendedCareerStage, outcome, feedback } =
         candidateData.finalFeedback;
-
+      console.log(
+        "------------------------------------------------final data---------------------------------------------",
+        candidateData.finalFeedback
+      );
       if (
         relaventExperience.length > 0 &&
         recommendedCareerStage.length > 0 &&
