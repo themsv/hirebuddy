@@ -266,9 +266,7 @@
         "recommendedCareerStage": "Associate L1",
         "outcome": "selected",
         "trainable": "Yes",
-        "trainings": [
-          "CSS"
-        ],
+        "trainings": ["CSS"],
         "feedback": "kyfiuahlifhiah"
       },
       "id": 14
@@ -1509,28 +1507,28 @@
     },
     {
       "interviewData": {
-        "interviewDate": "",
-        "interviewMode": "",
-        "interviewType": "",
-        "candidateFirstName": "",
-        "candidateLastName": "",
-        "candidatePhone": "",
-        "candidateEmail": "",
-        "candidateExperience": "",
-        "candidateCareerStageInterviewedFor": "",
-        "candidateResume": "",
-        "interviewerOracleId": "",
-        "interviewerFirstName": "",
-        "interviewerLastName": "",
-        "interviewerEmail": "",
-        "interviewerCareerStage": ""
+        "interviewerCareerStage": "Sr. Assocaite L2",
+        "interviewerEmail": "josssticks@publissapient.com",
+        "interviewerLastName": "Sticks",
+        "interviewerFirstName": "Joss",
+        "candidateResume": "[object FileList]",
+        "candidateCareerStageInterviewedFor": "Manager",
+        "candidateExperience": 12,
+        "candidateEmail": "Sachinkbcm@gmail.com",
+        "candidatePhone": 7022190600,
+        "candidateLastName": "Charanthimath K B",
+        "candidateFirstName": "Sachin",
+        "interviewType": "React JS",
+        "interviewMode": "Teams Video",
+        "interviewDate": "2022-09-06T18:30:00.000Z",
+        "interviewerOracleId": 176014
       },
       "score": {},
       "finalFeedback": {
-        "relaventExperience": "4",
-        "recommendedCareerStage": "Associate L1",
+        "relaventExperience": "12",
+        "recommendedCareerStage": "Associate L2",
         "outcome": "rejected",
-        "feedback": "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+        "feedback": "sddfvdsdsssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         "trainable": "",
         "trainings": [],
         "formSubmitted": false,
@@ -1696,9 +1694,7 @@
             },
             {
               "title": "Routing",
-              "questions": [
-                "POV on SPA and MPA., React Router, Next Router"
-              ]
+              "questions": ["POV on SPA and MPA., React Router, Next Router"]
             },
             {
               "title": "SSR and SSG",
@@ -1714,9 +1710,7 @@
             },
             {
               "title": "Testing ",
-              "questions": [
-                "Unit and Integration testing"
-              ]
+              "questions": ["Unit and Integration testing"]
             },
             {
               "title": "Tooling ",
@@ -1726,22 +1720,15 @@
             },
             {
               "title": "Error Handling ",
-              "questions": [
-                "Unit and Integration testing"
-              ]
+              "questions": ["Unit and Integration testing"]
             },
             {
               "title": "Code Splitting ",
-              "questions": [
-                "React Suspense and Lazy"
-              ]
+              "questions": ["React Suspense and Lazy"]
             },
             {
               "title": "Type Checking and handling props",
-              "questions": [
-                "Proptypes, Flow, TS",
-                "Default Props"
-              ]
+              "questions": ["Proptypes, Flow, TS", "Default Props"]
             },
             {
               "title": "React Component Performance ",

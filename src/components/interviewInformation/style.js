@@ -1,6 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 export const ShadowBox = styled(Box)`
+  font-family: "Hind", sans-serif;
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -9,12 +10,13 @@ export const ShadowBox = styled(Box)`
 `;
 
 export const Header = styled(Box)`
-  padding: 16px 8px;
+  padding: 8px 8px;
   display: flex;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.03);
-  font-size: 18px;
+  font-size: 1.5em;
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin: 0px;
   color: #000;
+  font-weight: bold;
 `;

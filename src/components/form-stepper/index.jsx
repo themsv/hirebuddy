@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -116,13 +116,13 @@ const FormStepper = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
-    alert();
     setCandidateData({ ...candidateData, interviewData: { ...data } });
   };
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [candidateData, setCandidateData] = useState(defaultState);
   const [counter, setCounter] = useState(5);
+  const [flag, setFlag] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -175,16 +175,18 @@ const FormStepper = () => {
     switch (step) {
       case 0:
         return (
-          <InterviewDetail
-            candidateData={candidateData}
-            setCandidateData={setCandidateData}
-            onSubmit={onSubmit}
-            setValue={setValue}
-            errors={errors}
-            handleSubmit={handleSubmit}
-            control={control}
-            register={register}
-          />
+          <>
+            <InterviewDetail
+              candidateData={candidateData}
+              setCandidateData={setCandidateData}
+              onSubmit={onSubmit}
+              setValue={setValue}
+              errors={errors}
+              handleSubmit={handleSubmit}
+              control={control}
+              register={register}
+            />
+          </>
         );
       case 1:
         return (
@@ -241,79 +243,99 @@ const FormStepper = () => {
     }
   }, [candidateData.finalFeedback]);
   return (
-    <Box sx={{ width: "100%" }} data-testid="stepper">
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Box sx={{ textAlign: "center", mt: 4 }} data-testid="success-page">
-            <CheckCircleOutline width="30" color="success" />
-            <Typography variant="h6" color={"siccess"}>
-              Feedback Submitted Successfully !
-            </Typography>
-            <Typography variant="body-2" type="body">
-              It will redirected to candidate details page in {counter} seconds.
-            </Typography>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            {/* Step {activeStep + 1} */}
-          </Typography>
-          {handleSteps(activeStep)}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              pt: 2,
-            }}
-          >
-            <button
-              data-testid="prev-btn"
-              className="icon-warpper"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              <ion-icon classname="iconstyle" name="chevron-back"></ion-icon>
-            </button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            {activeStep === steps.length - 1 ? (
-              <BaseButton
-                onClick={() => {
-                  handleSubmit(onSubmit);
-                  handleNext();
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={{ width: "100%" }} data-testid="stepper">
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+          {activeStep === steps.length ? (
+            <React.Fragment>
+              <Box
+                sx={{ textAlign: "center", mt: 4 }}
+                data-testid="success-page"
+              >
+                <CheckCircleOutline width="30" color="success" />
+                <Typography variant="h6" color={"siccess"}>
+                  Feedback Submitted Successfully !
+                </Typography>
+                <Typography variant="body-2" type="body">
+                  It will redirected to candidate details page in {counter}{" "}
+                  seconds.
+                </Typography>
+              </Box>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Typography sx={{ mt: 2, mb: 1 }}>
+                {/* Step {activeStep + 1} */}
+              </Typography>
+              {handleSteps(activeStep)}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  pt: 2,
                 }}
-                disabled={disbaleIcon}
               >
-                Finish
-              </BaseButton>
-            ) : (
-              <button
-                className="icon-warpper"
-                onClick={handleNext}
-                data-testid="next-btn"
-              >
-                <ion-icon
-                  classname="iconstyle"
-                  name="chevron-forward"
-                ></ion-icon>
-              </button>
-            )}
-          </Box>
-        </React.Fragment>
-      )}
-    </Box>
+                <button
+                  className="icon-warpper"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  data-testid="prev-btn"
+                  sx={{ mr: 1 }}
+                >
+                  <ion-icon
+                    classname="iconstyle"
+                    name="chevron-back"
+                  ></ion-icon>
+                </button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                {activeStep === steps.length - 1 ? (
+                  <BaseButton
+                    type="submit"
+                    onClick={() => {
+                      handleNext();
+                    }}
+                    disabled={disbaleIcon}
+                  >
+                    Finish
+                  </BaseButton>
+                ) : (
+                  <>
+                    <button
+                      type="submit"
+                      className="icon-warpper"
+                      data-testid="next-btn"
+                      onClick={(e) => {
+                        handleSubmit(onSubmit);
+                        if (flag) {
+                          handleNext();
+                        }
+                        setFlag(true);
+                      }}
+                    >
+                      <ion-icon
+                        classname="iconstyle"
+                        name="chevron-forward"
+                      ></ion-icon>
+                    </button>
+                  </>
+                )}
+              </Box>
+            </React.Fragment>
+          )}
+        </Box>
+      </form>
+    </>
   );
 };
 
