@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import FormStepper from "../components/form-stepper";
@@ -107,19 +113,7 @@ describe("Stepper", () => {
 
     fireEvent.click(screen.getByTestId("next-btn"));
     fireEvent.click(screen.getByTestId("next-btn"));
-    const inputEl = container.querySelector(`input[name="relaventExperience"]`);
-    fireEvent.change(inputEl, { target: { value: "4" } });
-
-    const inputE2 = container.querySelector(`textarea[name="feedback"]`);
-    const text =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-    fireEvent.change(inputE2, { target: { value: text } });
-
-    const el3 = container.querySelector(`input[name="recommendedCareerStage"]`);
-    fireEvent.change(el3, { target: { value: "Associate L1" } });
-    const el4 = container.querySelector(`input[name="outcome"]`);
-    fireEvent.change(el4, { target: { value: "rejected" } });
-    fireEvent.click(screen.getByText("Finish"));
+    act(() => {});
 
     await waitFor(() => {
       expect(inputEl.value).toBe("4");

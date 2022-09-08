@@ -8,10 +8,19 @@ export const Topics = styled("div")(({ theme }) => ({
   },
   "& .questions-list": {
     padding: 0,
+
     "& li": {
       listStyleType: "none",
       "& p": {
         margin: 0,
+      },
+    },
+    "& .readonly-row": {
+      "& .feedback-action": {
+        flex: "1",
+      },
+      "& .questions-actions > div": {
+        minWidth: "50%",
       },
     },
     "& .MuiFormLabel-root": {

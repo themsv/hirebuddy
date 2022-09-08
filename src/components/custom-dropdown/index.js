@@ -6,7 +6,13 @@ import Select from "@mui/material/Select";
 import { CircleOutlined } from "@mui/icons-material";
 import { CustomSelectBox } from "./style";
 
-export default function CustomSelect({ items, label, value, onChange }) {
+export default function CustomSelect({
+  items,
+  label,
+  value,
+  readonly,
+  onChange,
+}) {
   const [val, setVal] = React.useState("");
 
   React.useEffect(() => {
@@ -31,6 +37,8 @@ export default function CustomSelect({ items, label, value, onChange }) {
           id="demo-simple-select"
           value={val}
           label={"Rating"}
+          readOnly={readonly ? readonly : false}
+          disabled={readonly ? readonly : false}
           onChange={handleChange}
         >
           {items?.map((item) => {
