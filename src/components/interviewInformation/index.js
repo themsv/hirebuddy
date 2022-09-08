@@ -38,7 +38,6 @@ const InterviewDetail = ({
   const [autovalue, setAutoValue] = React.useState("Search Oracle ID");
 
   React.useEffect(() => {
-    console.log("In useEffect");
     dispatch(fetchUsers());
   }, []);
 
@@ -58,7 +57,6 @@ const InterviewDetail = ({
       let selectedUserData = user.filter((eachuser) => {
         return eachuser.oracleId == autovalue.label;
       });
-      console.log(selectedUserData);
       if (selectedUserData.length > 0) {
         setValue("interviewerOracleId", selectedUserData[0].oracleId);
         setValue("interviewerFirstName", selectedUserData[0].firstName);
@@ -73,7 +71,7 @@ const InterviewDetail = ({
     <React.Fragment>
       <CssBaseline />
       <br></br>
-      <Container maxWidth="md">
+      <Container maxWidth="md" data-testid="step-1">
         <ShadowBox>
           <Header>Interview Details</Header>
           <Grid container spacing={2}>

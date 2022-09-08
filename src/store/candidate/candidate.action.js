@@ -31,7 +31,6 @@ export const submitCandidate = createAsyncThunk(
 export const fetchCandidateById = createAsyncThunk(
   "candidates/fetchCandidateById",
   async (id, thunkAPI) => {
-    console.log(id);
     try {
       const url = `${process.env.REACT_APP_SERVER_URL}candidates/${id}`;
       const { data } = await axios.get(url);

@@ -9,6 +9,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import BaseButton from '../../components/button';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	fontSize: '14px',
@@ -88,4 +90,16 @@ export const LightTooltip = styled(({ className, ...props }) => (
 		fontSize: 12,
 		padding: '10px 5px',
 	},
+}));
+
+export const FilterIcon = styled(FilterListIcon)(({ theme }) => ({
+	fontSize: 'medium',
+	color: '#fff',
+}));
+
+export const FilterIconButton = styled(BaseButton)(({ theme }) => ({
+	padding: '3px',
+	minWidth: '30px',
+	boxShadow: 'none',
+	borderRadius: '60%',
 }));

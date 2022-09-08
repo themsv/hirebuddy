@@ -1,13 +1,11 @@
 import {
   fireEvent,
-  prettyDOM,
   render,
   screen,
   within,
   waitFor,
 } from "@testing-library/react";
 import BasicSelect from "../components/dropdown";
-import FormInput from "../components/form-input";
 
 describe("BasicSelect", () => {
   test("it should render correctly", () => {
