@@ -5,17 +5,17 @@ import {
   within,
   waitFor,
 } from "@testing-library/react";
-import BasicSelect from "../components/dropdown";
+import FormSelect from "../components/form-select";
 
-describe("BasicSelect", () => {
+describe("FormSelect", () => {
   test("it should render correctly", () => {
-    render(<BasicSelect />);
+    render(<FormSelect />);
     expect(screen.getByTestId("select")).toBeTruthy();
   });
 
   it("should correctly when option selected", async () => {
     render(
-      <BasicSelect
+      <FormSelect
         items={[
           { key: "1", value: "Hire buddy 1" },
           { key: "2", value: "Hire buddy 2" },
@@ -33,7 +33,7 @@ describe("BasicSelect", () => {
 
   test("it should have equal list elements as prop", async () => {
     render(
-      <BasicSelect
+      <FormSelect
         items={[
           { key: "1", value: "Hire buddy 1" },
           { key: "2", value: "Hire buddy 2" },

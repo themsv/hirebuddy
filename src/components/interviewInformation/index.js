@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import BasicSelect from "../../components/dropdown";
 import BasicDatePicker from "../../components/date-picker";
 import { Header, ShadowBox } from "./style";
-import BaseButton from "../../components/button";
 import Divider from "@mui/material/Divider";
 import FormInput from "../form-input";
 import AutoCompleteBox from "../autocomplete/autocomplete-dropdown";
@@ -84,10 +82,10 @@ const InterviewDetail = ({
                 control={control}
                 size="small"
                 name="interviewDate"
-                error={!!errors.interviewDate}
+                error={!!errors?.interviewDate}
                 helperText={errors?.interviewDate?.message}
               />
-              <ErrorSpan>{!!errors.interviewDate && "Enter Date"}</ErrorSpan>
+              <ErrorSpan>{!!errors?.interviewDate && "Enter Date"}</ErrorSpan>
             </Grid>
             <Grid item xs={6}>
               <p>Mode</p>
@@ -100,7 +98,7 @@ const InterviewDetail = ({
                 ]}
                 {...register("interviewMode")}
                 label="Mode"
-                error={!!errors.interviewMode}
+                error={!!errors?.interviewMode}
                 helperText={errors?.interviewMode?.message}
               />
             </Grid>
@@ -115,7 +113,7 @@ const InterviewDetail = ({
                 ]}
                 {...register("interviewType")}
                 label="Type"
-                error={!!errors.interviewType}
+                error={!!errors?.interviewType}
                 helperText={errors?.interviewType?.message}
               />
             </Grid>
@@ -134,7 +132,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidateFirstName"
                 {...register("candidateFirstName")}
-                error={!!errors.candidateFirstName}
+                error={!!errors?.candidateFirstName}
                 helperText={errors?.candidateFirstName?.message}
               />
             </Grid>
@@ -149,7 +147,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidateLastName"
                 {...register("candidateLastName", { required: true })}
-                error={!!errors.candidateLastName}
+                error={!!errors?.candidateLastName}
                 helperText={errors?.candidateLastName?.message}
               />
             </Grid>
@@ -164,7 +162,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidatePhone"
                 {...register("candidatePhone", { required: true })}
-                error={!!errors.candidatePhone}
+                error={!!errors?.candidatePhone}
                 helperText={errors?.candidatePhone?.message}
               />
             </Grid>
@@ -179,7 +177,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidateEmail"
                 {...register("candidateEmail", { required: true })}
-                error={!!errors.candidateEmail}
+                error={!!errors?.candidateEmail}
                 helperText={errors?.candidateEmail?.message}
               />
             </Grid>
@@ -194,7 +192,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidateExperience"
                 {...register("candidateExperience", { required: true })}
-                error={!!errors.candidateExperience}
+                error={!!errors?.candidateExperience}
                 helperText={errors?.candidateExperience?.message}
               />
             </Grid>
@@ -206,7 +204,7 @@ const InterviewDetail = ({
                 items={CAREERSTAGES}
                 {...register("candidateCareerStageInterviewedFor")}
                 label="Mode"
-                error={!!errors.candidateCareerStageInterviewedFor}
+                error={!!errors?.candidateCareerStageInterviewedFor}
                 helperText={errors?.candidateCareerStageInterviewedFor?.message}
               />
             </Grid>
@@ -221,7 +219,7 @@ const InterviewDetail = ({
                 size="small"
                 name="candidateResume"
                 {...register("candidateResume")}
-                error={!!errors.candidateResume}
+                error={!!errors?.candidateResume}
                 helperText={errors?.candidateResume?.message}
               />
             </Grid>
@@ -246,12 +244,12 @@ const InterviewDetail = ({
             </Grid>
             <Grid item xs={6}>
               <FormInput
+                data-testid="firstname"
                 variant="outlined"
                 type="text"
                 size="small"
                 {...register("interviewerFirstName", { required: true })}
-                inputProps={{ readOnly: true }}
-                error={!!errors.interviewerFirstName}
+                error={!!errors?.interviewerFirstName}
                 helperText={errors?.interviewerFirstName?.message}
               />
             </Grid>
@@ -265,7 +263,7 @@ const InterviewDetail = ({
                 size="small"
                 {...register("interviewerLastName", { required: true })}
                 inputProps={{ readOnly: true }}
-                error={!!errors.interviewerLastName}
+                error={!!errors?.interviewerLastName}
                 helperText={errors?.interviewerLastName?.message}
               />
             </Grid>
@@ -278,7 +276,7 @@ const InterviewDetail = ({
                 type="text"
                 size="small"
                 {...register("interviewerEmail", { required: true })}
-                error={!!errors.interviewerEmail}
+                error={!!errors?.interviewerEmail}
                 helperText={errors?.interviewerEmail?.message}
               />
             </Grid>
@@ -292,7 +290,7 @@ const InterviewDetail = ({
                 size="small"
                 {...register("interviewerCareerStage", { required: true })}
                 inputProps={{ readOnly: true }}
-                error={!!errors.interviewerCareerStage}
+                error={!!errors?.interviewerCareerStage}
                 helperText={errors?.interviewerCareerStage?.message}
               />
             </Grid>
