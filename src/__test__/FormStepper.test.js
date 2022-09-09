@@ -11,7 +11,6 @@ import FormStepper from "../components/form-stepper";
 import { store } from "../store/store";
 import configureMockStore from "redux-mock-store";
 import axios from "axios";
-import { submitCandidate } from "../store/candidate/candidate.action";
 
 jest.mock("axios");
 
@@ -114,6 +113,19 @@ describe("Stepper", () => {
     fireEvent.click(screen.getByTestId("next-btn"));
     fireEvent.click(screen.getByTestId("next-btn"));
     act(() => {});
+    const inputEl = container.querySelector(`input[name="relaventExperience"]`);
+    fireEvent.change(inputEl, { target: { value: "4" } });
+
+    const inputE2 = container.querySelector(`textarea[name="feedback"]`);
+    const text =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+    fireEvent.change(inputE2, { target: { value: text } });
+
+    const el3 = container.querySelector(`input[name="recommendedCareerStage"]`);
+    fireEvent.change(el3, { target: { value: "Associate L1" } });
+    const el4 = container.querySelector(`input[name="outcome"]`);
+    fireEvent.change(el4, { target: { value: "rejected" } });
+    fireEvent.click(screen.getByText("Finish"));
 
     await waitFor(() => {
       expect(inputEl.value).toBe("4");
