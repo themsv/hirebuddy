@@ -27,6 +27,7 @@ const FormSelect = forwardRef(
             value={value}
             onChange={onChange}
             inputRef={ref}
+            data-testid="select"
           >
             {items?.map((item) => (
               <MenuItem key={item.key} value={item.value}>

@@ -516,3 +516,42 @@ export const MOCKED_API_QUESTIONS = {
     ],
   },
 };
+
+export const MOCKED_USERS = [
+  {
+    oracleId: 176046,
+    firstName: "John",
+    lastName: "Doe",
+    email: "johndoe@publissapient.com",
+    carrerStage: "Sr. Manager",
+    isAdmin: true,
+    otp: 12345,
+  },
+  {
+    oracleId: 176009,
+    firstName: "Joe",
+    lastName: "Nerk",
+    email: "joenerk@publissapient.com",
+    carrerStage: "Manager",
+    isAdmin: true,
+    otp: 12345,
+  },
+  {
+    oracleId: 176014,
+    firstName: "Joss",
+    lastName: "Sticks",
+    email: "josssticks@publissapient.com",
+    carrerStage: "Sr. Assocaite L2",
+    isAdmin: false,
+    otp: 54321,
+  },
+  {
+    oracleId: 176053,
+    firstName: "Brain",
+    lastName: "Cumin",
+    email: "braincumin@publissapient.com",
+    carrerStage: "Sr. Assocaite L1",
+    isAdmin: false,
+    otp: 54321,
+  },
+];

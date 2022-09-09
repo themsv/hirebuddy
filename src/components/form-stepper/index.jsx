@@ -24,7 +24,7 @@ const steps = [
   "Technical Round Data",
   "Final Feedback",
 ];
-const schema = yup.object().shape({
+export const schema = yup.object().shape({
   interviewDate: yup.date().required(),
   interviewMode: yup.string().typeError("Enter Mode").required("Enter Mode"),
   interviewType: yup.string().required("Enter Type"),
@@ -118,7 +118,7 @@ const FormStepper = () => {
   const onSubmit = (data) => {
     setCandidateData({ ...candidateData, interviewData: { ...data } });
   };
-
+  console.log(control);
   const [activeStep, setActiveStep] = React.useState(0);
   const [candidateData, setCandidateData] = useState(defaultState);
   const [counter, setCounter] = useState(5);
