@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import ListOfInterviews from '../../pages/landing/listofInterviews';
+import Header from '../../pages/landing/header';
 import configureMockStore from 'redux-mock-store';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
@@ -51,5 +52,34 @@ describe('List Of Interviews', () => {
 			</ThemeProvider>
 		);
 		expect(screen.getByTestId('list-of-interviews-table')).toBeTruthy();
+	});
+
+	test('it should render table data correctly', () => {
+		render(
+			<ThemeProvider theme={themeOptions}>
+				<BrowserRouter>
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+				</BrowserRouter>
+			</ThemeProvider>
+		);
+		console.log(screen.getByTestId('table-body'));
+		expect(screen.getByTestId('table-body')).toBeTruthy();
+	});
+
+	test('it should render table pagination correctly', () => {
+		render(
+			<ThemeProvider theme={themeOptions}>
+				<BrowserRouter>
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+				</BrowserRouter>
+			</ThemeProvider>
+		);
+		expect(screen.getByTestId('table-pagination')).toBeTruthy();
 	});
 });
