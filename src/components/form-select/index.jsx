@@ -19,22 +19,23 @@ const FormSelect = forwardRef(
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth error={!!error}>
           <InputLabel id={`${label}-label`}>{`${label} *`}</InputLabel>
-          <Select
-            size="small"
-            labelId={`${label}-label`}
-            id={label}
-            label={`${label}`}
-            value={value}
-            onChange={onChange}
-            inputRef={ref}
-            data-testid="select"
-          >
-            {items?.map((item) => (
-              <MenuItem key={item.key} value={item.value}>
-                {item.value}
-              </MenuItem>
-            ))}
-          </Select>
+          {ref && (
+            <Select
+              size="small"
+              labelId={`${label}-label`}
+              id={label}
+              label={`${label}`}
+              value={value}
+              onChange={onChange}
+              inputRef={ref}
+            >
+              {items?.map((item) => (
+                <MenuItem key={item.key} value={item.value}>
+                  {item.value}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
         </FormControl>
 
         {error && <ErrorSpan>{helperText}</ErrorSpan>}
