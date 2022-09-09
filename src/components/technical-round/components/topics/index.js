@@ -51,7 +51,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const TopicsList = ({ selectedCategory, onScoreChange }) => {
+const TopicsList = ({ selectedCategory, readonly, onScoreChange }) => {
   const [expanded, setExpanded] = React.useState(0);
   const [isFeedbackFormOpen, setIsFeedbackForm] = React.useState(false);
   const [questionId, setQuestionId] = React.useState();
@@ -151,7 +151,11 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
                     questions.length > 0 &&
                     questions.map((question, i) => {
                       return (
-                        <li key={i} data-testid="questions-list-item">
+                        <li
+                          key={i}
+                          data-testid="questions-list-item"
+                          className={readonly ? "readonly-row" : ""}
+                        >
                           <Box
                             p={1}
                             sx={{
@@ -168,11 +172,18 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
                                 items={RATINGS}
                                 label={"Rating"}
                                 value={question.score}
+                                readonly={readonly}
                                 onChange={(e) =>
                                   handleSelectChange(index, i, e)
                                 }
                               />
-                              {question.feedback ? (
+                              {question.feedback && readonly && (
+                                <span className="feedback-action">
+                                  {question.feedback}
+                                </span>
+                              )}
+
+                              {question.feedback && !readonly && (
                                 <span className="feedback-action">
                                   <Check color="success" />
                                   <Button
@@ -183,7 +194,8 @@ const TopicsList = ({ selectedCategory, onScoreChange }) => {
                                     Update
                                   </Button>
                                 </span>
-                              ) : (
+                              )}
+                              {!question.feedback && !readonly && (
                                 <span className="feedback-action">
                                   <AddCircleRounded />
                                   <Button

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import TableHead from '@mui/material/TableHead';
 import SearchIcon from '@mui/icons-material/Search';
@@ -32,9 +32,9 @@ const Header = (props) => {
 	const {
 		order,
 		orderBy,
-		onOutcomeFilter,
-		onCareerAppliedFilter,
-		onCareerSelectedFilter,
+		onRequestOutcome,
+		onRequestCareerApplied,
+		onRequestCareerSelected,
 		onRequestSearch,
 		onRequestSort,
 	} = props;
@@ -80,19 +80,19 @@ const Header = (props) => {
 		onRequestSort(event, property);
 	};
 
-	const createFilterHandler = (property) => (event) => {
-		if (property === 'outcome') {
-			onOutcomeFilter(event);
-			handleOutcomeClose();
-		}
-		if (property === 'candidateCareerStageInterviewedFor') {
-			onCareerAppliedFilter(event);
-			handleCareerAppliedClose();
-		}
-		if (property === 'recommendedCareerStage') {
-			onCareerSelectedFilter(event);
-			handleCareerSelectedClose();
-		}
+	const createOutcomeFilter = (event) => {
+		onRequestOutcome(event.target.dataset.myValue);
+		handleOutcomeClose();
+	};
+
+	const createCareerAppliedFilter = (event) => {
+		onRequestCareerApplied(event.target.value);
+		handleCareerAppliedClose();
+	};
+
+	const createCareerSelectedFilter = (event) => {
+		onRequestCareerSelected(event.target.value);
+		handleCareerSelectedClose();
 	};
 
 	const createSearchHandler = (event) => {
@@ -190,13 +190,14 @@ const Header = (props) => {
 											{OUTCOMEVALUES.map((item) => (
 												<StyledList
 													key={item.key}
-													data-testid="outcome"
+													data-testid="outcome-list"
 												>
 													<StyledMenuItem
+														data-testid="outcome-list-values"
 														data-my-value={item.value}
-														onClick={createFilterHandler(
-															columnCell.id
-														)}
+														id={item.value}
+														onClick={createOutcomeFilter}
+														aria-describedby={item.value}
 														sx={{ padding: '5px' }}
 													>
 														{item.value}
@@ -227,15 +228,18 @@ const Header = (props) => {
 													<StyledListItem
 														key={item.key}
 														disablePadding
+														data-testid="career-stage-list"
 													>
-														<StyledListItemButton>
+														<StyledListItemButton data-testid="career-stage-btn">
 															<Checkbox
 																value={item.value}
-																onChange={createFilterHandler(
-																	columnCell.id
-																)}
+																onChange={
+																	createCareerAppliedFilter
+																}
+																id={item.value}
 																disableRipple
 																size="small"
+																data-testid="career-stage-item"
 															/>
 															<StyledListItemText
 																id={item.key}
@@ -272,9 +276,9 @@ const Header = (props) => {
 														<StyledListItemButton>
 															<Checkbox
 																value={item.value}
-																onChange={createFilterHandler(
-																	columnCell.id
-																)}
+																onChange={
+																	createCareerSelectedFilter
+																}
 																disableRipple
 																size="small"
 															/>

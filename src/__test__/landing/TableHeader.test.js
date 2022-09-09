@@ -19,6 +19,7 @@ import userEvent from '@testing-library/user-event';
 const mockStore = configureMockStore();
 const mockedStore = mockStore({ candidates: MOCKED_CANDIDATES });
 mockedStore.dispatch = jest.fn();
+// const listofInterviews = jest.mock('../../pages/landing/listofInterviews');
 
 describe('Table Header', () => {
 	test('it should render correctly', () => {
@@ -53,6 +54,7 @@ describe('Table Header', () => {
 			</ThemeProvider>
 		);
 		const Secondaryheaders = screen.getByTestId('table-header-row-secondary');
+		// console.log(Secondaryheaders.accessKeyLabel);
 		expect(Secondaryheaders.childElementCount).toEqual(COLUMNCELLS.length);
 	});
 
@@ -66,7 +68,7 @@ describe('Table Header', () => {
 		);
 		const myBtn = screen.getAllByTestId('button');
 		myBtn.map((item) => {
-			act(() => fireEvent.click(item));
+			act(() => userEvent.click(item));
 			waitFor(() => expect(screen.getAllByTestId('pop-over')).toBeTruthy());
 		});
 	});
@@ -81,12 +83,12 @@ describe('Table Header', () => {
 		);
 		const myBtn = screen.getAllByTestId('button');
 		myBtn.map((item) => {
-			act(() => fireEvent.click(item));
+			act(() => userEvent.click(item));
 			waitFor(() => {
 				const popovers = screen.getAllByTestId('pop-over');
 				popovers.map((popover) => {
 					// console.log(popover);
-					act(() => fireEvent.click(popover));
+					act(() => userEvent.click(popover));
 					waitFor(() => expect(popover).toBeFalsy());
 				});
 			});
@@ -114,7 +116,7 @@ describe('Table Header', () => {
 		});
 	});
 
-	test('it should close SearchInput and execute handler function', () => {
+	test('it should execute Search handler function', () => {
 		render(
 			<ThemeProvider theme={themeOptions}>
 				<BrowserRouter>
@@ -129,43 +131,121 @@ describe('Table Header', () => {
 		const myBtn = screen.getAllByTestId('button');
 
 		act(() => userEvent.click(myBtn[0]));
-		act(() => {
-			const input = screen.getByPlaceholderText('Search Date');
-			fireEvent.change(input, { target: { value: '09-99-1313' } });
-			const button = screen.getAllByTestId('pop-over')[0];
-			fireEvent.click(button);
-		});
 		waitFor(() => {
-			expect(screen.getAllByTestId('pop-over')[0]).not.toContainElement(
-				screen.getByPlaceholderText('Search Date')
-			);
+			const input = screen.getByPlaceholderText('Search Date');
+			const value = fireEvent.change(input, {
+				target: { value: '09-99-1313' },
+			});
+			// console.log({listofInterviews});
+			expect(
+				<ListOfInterviews
+					candidateDetails={MOCKED_CANDIDATES}
+					userDetails={MOCKED_USERS}
+				/>
+			).toBeCalledWith({
+				onRequestSearch: value,
+			});
 		});
 	});
 
-	// test('it should open MenuListItems when button is clicked', () => {
-	// 	render(
-	// 		<ThemeProvider theme={themeOptions}>
-	// 			<BrowserRouter>
-	// 				<ListOfInterviews
-	// 					candidateDetails={MOCKED_CANDIDATES}
-	// 					userDetails={MOCKED_USERS}
-	// 				/>
-	// 				<Header />
-	// 			</BrowserRouter>
-	// 		</ThemeProvider>
-	// 	);
-	// 	const myBtn = screen.getAllByTestId('button');
-	// 	console.log(myBtn[6]);
-	// 	act(() => userEvent.click(myBtn[6]));
-	// 	waitFor(() => {
-	// 		const popovers = screen.getAllByTestId('pop-over');
-	// 		popovers.map((popover) => {
-	// 			act(() => fireEvent.click(popover));
-	// 			waitFor(() => {
-	// 				const outcome = screen.getByTestId('outcome');
-	// 				console.log(outcome.children);
-	// 			});
-	// 		});
-	// 	});
-	// });
+	test('it should execute OutcomeFilter function ', () => {
+		render(
+			<ThemeProvider theme={themeOptions}>
+				<BrowserRouter>
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+					<Header />
+				</BrowserRouter>
+			</ThemeProvider>
+		);
+		const myBtn = screen.getAllByTestId('button');
+		act(() => userEvent.click(myBtn[6]));
+		// console.log(myBtn[6].children);
+		waitFor(() => {
+			const list = screen.getAllByRole('menuitem');
+			const selectedItem = list[0].id;
+
+			act(() => userEvent.click(selectedItem));
+			waitFor(() => {
+				expect(
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+				).toBeCalledWith({
+					onRequestOutcome: userEvent.click(selectedItem),
+				});
+				expect({ selectedItem }).toBeInTheDocument();
+			});
+		});
+	});
+
+	test('it should execute Career Applied Filter function', () => {
+		render(
+			<ThemeProvider theme={themeOptions}>
+				<BrowserRouter>
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+					<Header />
+				</BrowserRouter>
+			</ThemeProvider>
+		);
+		const myBtn = screen.getAllByTestId('button');
+		act(() => userEvent.click(myBtn[5]));
+		waitFor(() => {
+			const list = screen.getAllByRole('checkbox');
+			const selectedItem = list[0].id;
+			// console.log(list[0]);
+			act(() => userEvent.change(selectedItem));
+			waitFor(() => {
+				expect(
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+				).toBeCalledWith({
+					onRequestCareerApplied: userEvent.change(selectedItem),
+				});
+				expect({ selectedItem }).toBeInTheDocument();
+			});
+		});
+	});
+
+	test('it should execute Career Selected Filter function', () => {
+		render(
+			<ThemeProvider theme={themeOptions}>
+				<BrowserRouter>
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+					<Header />
+				</BrowserRouter>
+			</ThemeProvider>
+		);
+		const myBtn = screen.getAllByTestId('button');
+		// console.log(myBtn);
+		act(() => userEvent.click(myBtn[7]));
+		waitFor(() => {
+			const list = screen.getAllByRole('checkbox');
+			const selectedItem = list[2].id;
+			// console.log(list[0]);
+			act(() => userEvent.change(selectedItem));
+			waitFor(() => {
+				expect(
+					<ListOfInterviews
+						candidateDetails={MOCKED_CANDIDATES}
+						userDetails={MOCKED_USERS}
+					/>
+				).toBeCalledWith({
+					onRequestCareerSelected: userEvent.change(selectedItem),
+				});
+				expect({ selectedItem }).toBeInTheDocument();
+			});
+		});
+	});
 });
