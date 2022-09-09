@@ -22,6 +22,7 @@ export default function BasicDatePicker({ control, setreqDate, name }) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="Request Date *"
+            data-testid="datepicker"
             inputFormat="MM/dd/yyyy"
             onChange={(event) => {
               onChange(event);
