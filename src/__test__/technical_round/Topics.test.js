@@ -66,7 +66,7 @@ describe("Topics List", () => {
     const selectedItem = listbox.getByText(/Theoretical Knowledge/i);
     await act(async () => userEvent.click(selectedItem));
 
-    await waitFor(() => {
+    await (() => {
       expect(myButton).toHaveTextContent(/Theoretical Knowledge/i);
     });
 

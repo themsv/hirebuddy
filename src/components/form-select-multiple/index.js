@@ -13,7 +13,7 @@ export default function FormSelectMultiple({
   ...remaining
 }) {
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 120 }} data-testid="multi-select">
       <FormControl fullWidth>
         <InputLabel id={`${label}-label`}>{label}</InputLabel>
         <Select

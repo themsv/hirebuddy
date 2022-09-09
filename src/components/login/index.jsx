@@ -15,8 +15,8 @@ const Login = () => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("joenerk@publissapient.com");
-  const [otp, setOTP] = useState("12345");
+  const [email, setEmail] = useState("");
+  const [otp, setOTP] = useState("");
   const [errorMsg, setErrorMsg] = useState({
     errorMsgEmail: "",
     errorMsgOTP: "",
@@ -48,13 +48,15 @@ const Login = () => {
   };
 
   return (
-    <LoginContainer>
+    <LoginContainer data-testid="loginPage">
       <FormBox component="form" autoComplete="off">
         {typeof user.value !== "object" && <p>Invalid Credentials</p>}
         <FormInput
           type="email"
           label="Email"
           value={email}
+          name="email"
+          data-testid="email"
           onChange={emailHandler}
           {...(errorMsg.errorMsgEmail && {
             error: true,
@@ -65,6 +67,8 @@ const Login = () => {
           type="text"
           label="OTP"
           value={otp}
+          name="otp"
+          data-testid="otp"
           onChange={otpHandler}
           {...(errorMsg.errorMsgOTP && {
             error: true,
@@ -72,7 +76,7 @@ const Login = () => {
           })}
         />
         <BaseButton variant="contained" onClick={loginClickHandler}>
-          {user.loading ? <Spinner /> : "Login"}
+          {user.loading ? <Spinner data-testid="test-spinner" /> : "Login"}
         </BaseButton>
       </FormBox>
     </LoginContainer>

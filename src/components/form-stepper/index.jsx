@@ -77,7 +77,7 @@ export const schema = yup.object().shape({
     .max(30, "Maximum 30 character allowed")
     .required("Enter Career Stage"),
 });
-const defaultState = {
+export const defaultState = {
   interviewData: {
     interviewDate: "",
     interviewMode: "",
