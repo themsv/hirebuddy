@@ -18,6 +18,7 @@ const mockedStore = mockStore({
   otp: "12345",
 });
 mockedStore.dispatch = jest.fn();
+
 describe("Login", () => {
   test("renders Login component", () => {
     render(
@@ -64,7 +65,7 @@ describe("Login", () => {
   });
 
   test("Login button click", async () => {
-    render(
+    const { container } = render(
       <BrowserRouter>
         <Provider store={store}>
           <Login />
@@ -73,11 +74,13 @@ describe("Login", () => {
     );
 
     const loginBtn = screen.getByTestId("button");
-    await fireEvent.click(loginBtn);
-    // await act(async () => userEvent.click(loginBtn));
-    await waitFor(() => {
-      const spinnerEl = screen.getByTestId("test-spinner");
-      expect(spinnerEl).toBeInTheDocument();
+    const emailEl = container.querySelector(`input[name="email"]`);
+    const otpEl = container.querySelector(`input[name="otp"]`);
+    fireEvent.change(emailEl, {
+      target: { value: "johndoe@publissapient.com" },
     });
+    fireEvent.change(otpEl, { target: { value: "12347" } });
+    await fireEvent.click(loginBtn);
+    await waitFor(() => expect(screen.getByText(/Invalid Credentials/i)));
   });
 });

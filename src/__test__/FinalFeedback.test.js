@@ -16,7 +16,7 @@ import userEvent from "@testing-library/user-event";
 
 const setCandidateData = jest.fn();
 
-describe("Final Feedback Component", () => {
+describe("Final Feedback", () => {
   test("it should render correctly", () => {
     render(
       <BrowserRouter>

@@ -42,15 +42,20 @@ const Login = () => {
     });
     if (!errorValue.email && !errorValue.otp) {
       await dispatch(fetchUser({ email, otp }));
-      typeof user.value === "object" && validUser();
-      navigate("/landing");
+
+      if (user.value.email !== "") {
+        validUser();
+        navigate("/landing");
+      } else {
+        validUser();
+      }
     }
   };
 
   return (
     <LoginContainer data-testid="loginPage">
       <FormBox component="form" autoComplete="off">
-        {typeof user.value !== "object" && <p>Invalid Credentials</p>}
+        {user.error === "Invalid user" && <p>Invalid Credentials</p>}
         <FormInput
           type="email"
           label="Email"

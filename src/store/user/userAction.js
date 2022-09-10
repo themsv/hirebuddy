@@ -12,9 +12,11 @@ export const fetchUser = createAsyncThunk(
       );
       if (user.length === 1) {
         return user.reduce((acc, val) => acc);
+      } else {
+        throw new Error("Invalid user");
       }
     } catch (err) {
-      thunkAPI.rejectWithValue(err.response.data.message);
+      return thunkAPI.rejectWithValue(err.message);
     }
   }
 );

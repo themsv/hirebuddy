@@ -45,7 +45,7 @@ const CandidateDetails = () => {
     setOpenModal(false);
   };
   return (
-    <div>
+    <div data-testid="test-CandidateDetails">
       {candidate.loading === true ? (
         <Spinner />
       ) : (
