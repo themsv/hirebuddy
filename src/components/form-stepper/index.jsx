@@ -12,7 +12,7 @@ import "./styles.css";
 import TechnicalRound from "../technical-round";
 import { submitCandidate } from "../../store/candidate/candidate.action";
 import { CheckCircleOutline } from "@mui/icons-material";
-import { HOME } from "../../constants/routes";
+import { HOME, LANDING_PAGE } from "../../constants/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetIsSubmitted } from "../../store/candidate/canditate.slice";
@@ -162,7 +162,7 @@ const FormStepper = () => {
       } else {
         clearInterval(timer);
         dispatch(resetIsSubmitted());
-        navigate(HOME);
+        navigate(LANDING_PAGE);
       }
     }, 1000);
   };
