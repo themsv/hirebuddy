@@ -163,7 +163,7 @@ const FinalFeedback = ({ candidateData, setCandidateData }) => {
                     helperText: errors["feedback"],
                   })}
                   minRows={3}
-                  placeholder="Minimum 200 characters"
+                  placeholder="Minimum 50 characters"
                   value={values.feedback}
                   name="feedback"
                 />

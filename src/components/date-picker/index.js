@@ -23,7 +23,7 @@ export default function BasicDatePicker({ control, setreqDate, name }) {
           <DatePicker
             label="Request Date *"
             data-testid="datepicker"
-            inputFormat="MM/dd/yyyy"
+            inputFormat="dd/MM/yyyy"
             onChange={(event) => {
               onChange(event);
               setreqDate(event);

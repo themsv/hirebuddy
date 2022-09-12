@@ -30,7 +30,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path={CANDIDATE_DETAILS} element={<CandidateDetails />} />
+          <Route
+            path={CANDIDATE_DETAILS}
+            element={
+              <ProtectedRoute>
+                <CandidateDetails />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Fragment>

@@ -168,7 +168,7 @@ const CandidateDetails = () => {
                       />
                     </Grid>
                   </Grid>
-                  <Grid container spacing={30}>
+                  {/* <Grid container spacing={30}>
                     <Grid item xs={6}>
                       <p>Resume:</p>
                     </Grid>
@@ -182,7 +182,7 @@ const CandidateDetails = () => {
                         disabled
                       />
                     </Grid>
-                  </Grid>
+                  </Grid> */}
                 </AccordionDetails>
               </Accordion>
               <Accordion>
@@ -211,7 +211,9 @@ const CandidateDetails = () => {
                         variant="standard"
                         fullWidth
                         type="text"
-                        value={candidateById?.interviewData?.interviewDate}
+                        value={new Date(
+                          candidateById?.interviewData?.interviewDate
+                        ).toLocaleDateString()}
                         disabled
                       />
                     </Grid>

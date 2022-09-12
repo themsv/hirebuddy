@@ -116,7 +116,12 @@ const FormStepper = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data) => {
-    setCandidateData({ ...candidateData, interviewData: { ...data } });
+    setCandidateData({
+      ...candidateData,
+      interviewData: {
+        ...data,
+      },
+    });
   };
   const [activeStep, setActiveStep] = React.useState(0);
   const [candidateData, setCandidateData] = useState(defaultState);
