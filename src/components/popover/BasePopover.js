@@ -7,7 +7,7 @@ const BasePopover = ({ id, open, anchorEl, onClick, children }) => {
 			id={id}
 			open={open}
 			anchorEl={anchorEl}
-			onClick={onClick}
+			onClose={onClick}
 			anchorOrigin={{
 				vertical: 'bottom',
 				horizontal: 'left',
