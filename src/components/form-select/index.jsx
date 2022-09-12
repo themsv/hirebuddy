@@ -14,7 +14,7 @@ const ErrorSpan = styled.span`
 `;
 
 const FormSelect = forwardRef(
-  ({ label, value, onChange, items, error, helperText }, ref) => {
+  ({ label, value, onChange, items, name, error, helperText }, ref) => {
     return (
       <Box sx={{ minWidth: 120 }} data-testid="select">
         <FormControl fullWidth error={!!error}>
@@ -24,6 +24,7 @@ const FormSelect = forwardRef(
               size="small"
               labelId={`${label}-label`}
               id={label}
+              name={name}
               label={`${label}`}
               value={value}
               onChange={onChange}

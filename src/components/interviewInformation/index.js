@@ -55,6 +55,7 @@ const InterviewDetail = ({
       let selectedUserData = user.filter((eachuser) => {
         return eachuser.oracleId == autovalue.label;
       });
+
       if (selectedUserData.length > 0) {
         setValue("interviewerOracleId", selectedUserData[0].oracleId);
         setValue("interviewerFirstName", selectedUserData[0].firstName);
@@ -98,6 +99,7 @@ const InterviewDetail = ({
                 ]}
                 {...register("interviewMode")}
                 label="Mode"
+                name="mode"
                 error={!!errors?.interviewMode}
                 helperText={errors?.interviewMode?.message}
               />
@@ -113,6 +115,7 @@ const InterviewDetail = ({
                 ]}
                 {...register("interviewType")}
                 label="Type"
+                name="type"
                 error={!!errors?.interviewType}
                 helperText={errors?.interviewType?.message}
               />
@@ -204,6 +207,7 @@ const InterviewDetail = ({
                 items={CAREERSTAGES}
                 {...register("candidateCareerStageInterviewedFor")}
                 label="Mode"
+                name="stage"
                 error={!!errors?.candidateCareerStageInterviewedFor}
                 helperText={errors?.candidateCareerStageInterviewedFor?.message}
               />
@@ -235,6 +239,7 @@ const InterviewDetail = ({
             <Grid item xs={6}>
               <AutoCompleteBox
                 value={autovalue}
+                name="oracleid"
                 setValue={setAutoValue}
                 usersList={usersList}
               />

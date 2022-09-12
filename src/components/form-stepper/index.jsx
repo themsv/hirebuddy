@@ -118,7 +118,6 @@ const FormStepper = () => {
   const onSubmit = (data) => {
     setCandidateData({ ...candidateData, interviewData: { ...data } });
   };
-  console.log(control);
   const [activeStep, setActiveStep] = React.useState(0);
   const [candidateData, setCandidateData] = useState(defaultState);
   const [counter, setCounter] = useState(5);

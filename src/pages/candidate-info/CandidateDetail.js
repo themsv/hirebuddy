@@ -490,7 +490,9 @@ const CandidateDetails = () => {
               </Accordion>
             </>
           )}
-          {!candidateById && <h6>No Data found for the given id</h6>}
+          {!candidateById && (
+            <h6 data-testid="data-not-found">No Data found for the given id</h6>
+          )}
         </Card>
       )}
       <Dialog
