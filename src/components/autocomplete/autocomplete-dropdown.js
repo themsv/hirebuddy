@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../store/user/userAction";
 
-export default function AutoCompleteBox({ value, setValue, usersList }) {
+export default function AutoCompleteBox({ value, name, setValue, usersList }) {
   const [inputValue, setInputValue] = React.useState("");
 
   return (
@@ -26,7 +26,7 @@ export default function AutoCompleteBox({ value, setValue, usersList }) {
       options={usersList}
       sx={{ width: 300 }}
       renderInput={(params) => (
-        <TextField {...params} label="Search Oracle Id" />
+        <TextField {...params} name={name} label="Search Oracle Id" />
       )}
     />
   );
