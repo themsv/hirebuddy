@@ -57,6 +57,8 @@ const TopicsList = ({ selectedCategory, readonly, onScoreChange }) => {
   const [questionId, setQuestionId] = React.useState();
   const [selected, setSelected] = React.useState(null);
 
+  console.log(selectedCategory);
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };

@@ -266,7 +266,9 @@
         "recommendedCareerStage": "Associate L1",
         "outcome": "selected",
         "trainable": "Yes",
-        "trainings": ["CSS"],
+        "trainings": [
+          "CSS"
+        ],
         "feedback": "kyfiuahlifhiah"
       },
       "id": 14
@@ -1507,34 +1509,298 @@
     },
     {
       "interviewData": {
-        "interviewerCareerStage": "Sr. Assocaite L2",
-        "interviewerEmail": "josssticks@publissapient.com",
-        "interviewerLastName": "Sticks",
-        "interviewerFirstName": "Joss",
-        "candidateResume": "[object FileList]",
-        "candidateCareerStageInterviewedFor": "Manager",
-        "candidateExperience": 12,
-        "candidateEmail": "Sachinkbcm@gmail.com",
-        "candidatePhone": 7022190600,
-        "candidateLastName": "Charanthimath K B",
-        "candidateFirstName": "Sachin",
-        "interviewType": "React JS",
-        "interviewMode": "Teams Video",
-        "interviewDate": "2022-09-06T18:30:00.000Z",
-        "interviewerOracleId": 176014
+        "interviewDate": "",
+        "interviewMode": "",
+        "interviewType": "",
+        "candidateFirstName": "",
+        "candidateLastName": "",
+        "candidatePhone": "",
+        "candidateEmail": "",
+        "candidateExperience": "",
+        "candidateCareerStageInterviewedFor": "",
+        "candidateResume": "",
+        "interviewerOracleId": "",
+        "interviewerFirstName": "",
+        "interviewerLastName": "",
+        "interviewerEmail": "",
+        "interviewerCareerStage": ""
       },
       "score": {},
       "finalFeedback": {
-        "relaventExperience": "12",
-        "recommendedCareerStage": "Associate L2",
+        "relaventExperience": "4",
+        "recommendedCareerStage": "Associate L1",
         "outcome": "rejected",
-        "feedback": "sddfvdsdsssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "feedback": "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
         "trainable": "",
         "trainings": [],
         "formSubmitted": false,
         "success": false
       },
       "id": 32
+    },
+    {
+      "interviewData": {
+        "interviewerCareerStage": "Manager",
+        "interviewerEmail": "joenerk@publissapient.com",
+        "interviewerLastName": "Nerk",
+        "interviewerFirstName": "Joe",
+        "candidateResume": "[object FileList]",
+        "candidateCareerStageInterviewedFor": "Associate L1",
+        "candidateExperience": 1,
+        "candidateEmail": "sayedmahejabeen@gmail.com",
+        "candidatePhone": 9482558237,
+        "candidateLastName": "Naib",
+        "candidateFirstName": "Ali",
+        "interviewType": "Core XT",
+        "interviewMode": "Teams Video",
+        "interviewDate": "2022-09-11T18:30:00.000Z",
+        "interviewerOracleId": 176009
+      },
+      "score": [
+        {
+          "title": "HTML / CSS",
+          "topics": [
+            {
+              "title": "HTML | Templating",
+              "questions": [
+                {
+                  "title": "Request lifecycle, DOM and CSSOM",
+                  "score": 2
+                },
+                {
+                  "title": "Sementic HTML and accessibility guidelines",
+                  "score": 2
+                },
+                {
+                  "title": "Forms and Validations",
+                  "score": 1
+                },
+                {
+                  "title": "Media - Responsive Images, Audio and Video",
+                  "score": 2
+                },
+                {
+                  "title": "Browser Side Storage, Workers, and Caching- Local, Session, Cookies, IndexDb, WebSQL Service Workers, Web Workers",
+                  "score": 1
+                },
+                {
+                  "title": "SEO basics",
+                  "score": 1
+                }
+              ],
+              "score": "1.50"
+            },
+            {
+              "title": "CSS / processors & Responsive",
+              "questions": [
+                {
+                  "title": "Rules, Selectors and Property values, Cascading, Inheritance, Specificity",
+                  "score": 2
+                },
+                {
+                  "title": "Responsive Design (Mobile and Desktop first), Media Queries",
+                  "score": ""
+                },
+                {
+                  "title": "Layout - [float, flex, grid], display, postitioning",
+                  "score": ""
+                },
+                {
+                  "title": "Animations and transalations- Basics, SVG",
+                  "score": ""
+                },
+                {
+                  "title": "Processors / Preprocessors, Frameworks, CSS-in-JS",
+                  "score": ""
+                }
+              ],
+              "score": "2.00"
+            }
+          ],
+          "score": "0.80"
+        },
+        {
+          "title": "HTML / CSS",
+          "topics": [
+            {
+              "title": "HTML | Templating",
+              "questions": [
+                {
+                  "title": "Request lifecycle, DOM and CSSOM",
+                  "score": 2
+                },
+                {
+                  "title": "Sementic HTML and accessibility guidelines",
+                  "score": 2
+                },
+                {
+                  "title": "Forms and Validations",
+                  "score": 1
+                },
+                {
+                  "title": "Media - Responsive Images, Audio and Video",
+                  "score": 2
+                },
+                {
+                  "title": "Browser Side Storage, Workers, and Caching- Local, Session, Cookies, IndexDb, WebSQL Service Workers, Web Workers",
+                  "score": 1
+                },
+                {
+                  "title": "SEO basics",
+                  "score": 1
+                }
+              ],
+              "score": "1.50"
+            },
+            {
+              "title": "CSS / processors & Responsive",
+              "questions": [
+                {
+                  "title": "Rules, Selectors and Property values, Cascading, Inheritance, Specificity",
+                  "score": 2
+                },
+                {
+                  "title": "Responsive Design (Mobile and Desktop first), Media Queries",
+                  "score": ""
+                },
+                {
+                  "title": "Layout - [float, flex, grid], display, postitioning",
+                  "score": ""
+                },
+                {
+                  "title": "Animations and transalations- Basics, SVG",
+                  "score": ""
+                },
+                {
+                  "title": "Processors / Preprocessors, Frameworks, CSS-in-JS",
+                  "score": ""
+                }
+              ],
+              "score": "2.00"
+            }
+          ],
+          "score": "0.75"
+        },
+        {
+          "title": "NFR's",
+          "topics": [
+            {
+              "title": " Performance",
+              "questions": [
+                {
+                  "title": "Compression,Caching / CDN / Expirations, HTTP Headers, JS Profiling (CPU/MEM),HTTP2,Universal View State,Perf Analysis / Log monitoring tools. Basic perf testing: lighthouse, webpagetests. Awareness of metrices like TTFB, TTI and their possible high no. causes",
+                  "score": 2
+                }
+              ],
+              "score": "2.00"
+            },
+            {
+              "title": " Security ",
+              "questions": [
+                {
+                  "title": " SSL/TLS, CORS, XSS, CSRF, Access / Refresh Tokens / Encryptions, Validations / Encoding, HTTP Cookies / Sec. Headers, Sessions / Authentication / Authorization / protect user data, RBAC, ABAC",
+                  "score": 2
+                }
+              ],
+              "score": "2.00"
+            },
+            {
+              "title": " Accessibility ",
+              "questions": [
+                {
+                  "title": "Understands A/ AA / AAA accessibility guidelines and write code adhering to meet the accessibility benchmarks, Has a fair understanding to make dynamic content accessible with ARIA, Uses enhanced techniques to meet accessibility standards viz: skip navigation, no js etc. Creating accesible forms, content and best practices",
+                  "score": 2
+                }
+              ],
+              "score": "2.00"
+            },
+            {
+              "title": " DevOps ",
+              "questions": [
+                {
+                  "title": "Gulp/Grunt - create tasks / custom scripts,Webpack / Parcel / Rollup - config from-ground setup, Code Splitting, Loaders and plugins,Understands GIT hooks and can use them,Code bundling/minification/production ready assets using Webpack etc, Test Case runners,Docker, Vagrant and the differences,Integrate plugins like sitespeed.io to ensure performance related checks on the pages,Logging Standards: Can customize logging framework to extend to create own formats with additional data like session id, hostname for log statements",
+                  "score": ""
+                }
+              ],
+              "score": 0
+            }
+          ],
+          "score": "0.50"
+        },
+        {
+          "title": "HTML / CSS",
+          "topics": [
+            {
+              "title": "HTML | Templating",
+              "questions": [
+                {
+                  "title": "Request lifecycle, DOM and CSSOM",
+                  "score": 2
+                },
+                {
+                  "title": "Sementic HTML and accessibility guidelines",
+                  "score": 2
+                },
+                {
+                  "title": "Forms and Validations",
+                  "score": 1
+                },
+                {
+                  "title": "Media - Responsive Images, Audio and Video",
+                  "score": 2
+                },
+                {
+                  "title": "Browser Side Storage, Workers, and Caching- Local, Session, Cookies, IndexDb, WebSQL Service Workers, Web Workers",
+                  "score": 1
+                },
+                {
+                  "title": "SEO basics",
+                  "score": 1
+                }
+              ],
+              "score": "1.50"
+            },
+            {
+              "title": "CSS / processors & Responsive",
+              "questions": [
+                {
+                  "title": "Rules, Selectors and Property values, Cascading, Inheritance, Specificity",
+                  "score": 2
+                },
+                {
+                  "title": "Responsive Design (Mobile and Desktop first), Media Queries",
+                  "score": ""
+                },
+                {
+                  "title": "Layout - [float, flex, grid], display, postitioning",
+                  "score": ""
+                },
+                {
+                  "title": "Animations and transalations- Basics, SVG",
+                  "score": ""
+                },
+                {
+                  "title": "Processors / Preprocessors, Frameworks, CSS-in-JS",
+                  "score": ""
+                }
+              ],
+              "score": "2.00"
+            }
+          ],
+          "score": "0.80"
+        }
+      ],
+      "finalFeedback": {
+        "relaventExperience": "9",
+        "recommendedCareerStage": "Associate L1",
+        "outcome": "selected",
+        "feedback": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+        "trainable": "No",
+        "trainings": [],
+        "formSubmitted": false,
+        "success": false
+      },
+      "id": 33
     }
   ],
   "careerStage": [
@@ -1694,7 +1960,9 @@
             },
             {
               "title": "Routing",
-              "questions": ["POV on SPA and MPA., React Router, Next Router"]
+              "questions": [
+                "POV on SPA and MPA., React Router, Next Router"
+              ]
             },
             {
               "title": "SSR and SSG",
@@ -1710,7 +1978,9 @@
             },
             {
               "title": "Testing ",
-              "questions": ["Unit and Integration testing"]
+              "questions": [
+                "Unit and Integration testing"
+              ]
             },
             {
               "title": "Tooling ",
@@ -1720,15 +1990,22 @@
             },
             {
               "title": "Error Handling ",
-              "questions": ["Unit and Integration testing"]
+              "questions": [
+                "Unit and Integration testing"
+              ]
             },
             {
               "title": "Code Splitting ",
-              "questions": ["React Suspense and Lazy"]
+              "questions": [
+                "React Suspense and Lazy"
+              ]
             },
             {
               "title": "Type Checking and handling props",
-              "questions": ["Proptypes, Flow, TS", "Default Props"]
+              "questions": [
+                "Proptypes, Flow, TS",
+                "Default Props"
+              ]
             },
             {
               "title": "React Component Performance ",
