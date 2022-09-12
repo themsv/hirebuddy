@@ -22,9 +22,10 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
   }, []);
 
   useEffect(() => {
+    debugger;
     if (score && score.length > 0) {
       setDataList(score);
-      setSelectedCategory(score[0]);
+      setSelectedCategory(score[currentIndex]);
     } else {
       if (result?.data?.areas?.length > 0) {
         addScoreToTheObject(result?.data?.areas);
@@ -82,6 +83,7 @@ const TechnicalRound = ({ type, score, onScoreChange }) => {
 
   const handleScoreChange = (topic) => {
     let data = [...dataList];
+    debugger;
     data[currentIndex] = topic;
     setSelectedCategory(data[currentIndex]);
     setDataList(data);
