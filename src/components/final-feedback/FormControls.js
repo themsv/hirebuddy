@@ -7,19 +7,8 @@ const PostContactForm = async (values, successCallback, errorCallback) => {
   else errorCallback();
 };
 
-const initialFormValues = {
-  relaventExperience: "",
-  recommendedCareerStage: "",
-  outcome: "",
-  feedback: "",
-  trainable: "",
-  trainings: [],
-  formSubmitted: false,
-  success: false,
-};
-
-export const useFormControls = () => {
-  const [values, setValues] = useState(initialFormValues);
+export const useFormControls = (props) => {
+  const [values, setValues] = useState(props);
   const [errors, setErrors] = useState({});
 
   const validate = (fieldValues = values) => {
@@ -62,17 +51,18 @@ export const useFormControls = () => {
 
   const handleInputValue = (e) => {
     const { name, value } = e.target;
-
+    const _value =
+      name === "feedback" ? value.replace(/[^\w.\s]/gi, "") : value;
     setValues({
       ...values,
-      [name]: value.replace(/[^\w\s]/gi, ""),
+      [name]: _value,
     });
-    validate({ [name]: value });
+    validate({ [name]: _value });
   };
 
   const handleSuccess = () => {
     setValues({
-      ...initialFormValues,
+      ...values,
       formSubmitted: true,
       success: true,
     });
@@ -80,7 +70,7 @@ export const useFormControls = () => {
 
   const handleError = () => {
     setValues({
-      ...initialFormValues,
+      ...values,
       formSubmitted: true,
       success: false,
     });

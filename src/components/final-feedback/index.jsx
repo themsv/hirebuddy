@@ -18,7 +18,11 @@ import {
 } from "../../constants/common";
 
 const FinalFeedback = ({ candidateData, setCandidateData }) => {
-  const { handleInputValue, errors, values } = useFormControls();
+  const { handleInputValue, errors, values } = useFormControls({
+    ...candidateData.finalFeedback,
+    formSubmitted: false,
+    success: false,
+  });
 
   useEffect(() => {
     setCandidateData({ ...candidateData, finalFeedback: { ...values } });
