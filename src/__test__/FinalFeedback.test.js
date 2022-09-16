@@ -1,18 +1,11 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "../store/store";
 import FinalFeedback from "../components/final-feedback";
-import useFormControls from "../components/final-feedback/FormControls";
 
 import { defaultState } from "../components/form-stepper";
-import userEvent from "@testing-library/user-event";
 
 const setCandidateData = jest.fn();
 
@@ -31,8 +24,8 @@ describe("Final Feedback", () => {
     expect(screen.getByTestId("step-3")).toBeTruthy();
   });
 
-  test("Validate relaventExperience", async () => {
-    const { container } = render(
+  test("relaventExperience validation on empty", async () => {
+    render(
       <BrowserRouter>
         <Provider store={store}>
           <FinalFeedback
@@ -43,22 +36,36 @@ describe("Final Feedback", () => {
       </BrowserRouter>
     );
 
-    const inputEl = container.querySelector(`input[name="relaventExperience"]`);
-
-    act(() => fireEvent.change(inputEl, { target: { value: "" } }));
+    const inputExp = screen.getByLabelText(/Relevant Experience/i);
+    expect(inputExp).toBeInTheDocument();
+    await fireEvent.change(inputExp, { target: { value: "20" } });
+    await fireEvent.change(inputExp, { target: { value: "" } });
     await waitFor(() => {
-      expect(inputEl.value).toBe("");
       screen.getByText(/This field is required./i);
     });
-    act(() => fireEvent.change(inputEl, { target: { value: "200" } }));
+  });
+  test("relaventExperience validation on 99>value<0", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <FinalFeedback
+            candidateData={defaultState}
+            setCandidateData={setCandidateData}
+          />
+        </Provider>
+      </BrowserRouter>
+    );
+
+    const inputExp = screen.getByLabelText(/Relevant Experience/i);
+    expect(inputExp).toBeInTheDocument();
+    await fireEvent.change(inputExp, { target: { value: "1000" } });
     await waitFor(() => {
-      expect(inputEl.value).toBe("200");
       screen.getByText(/Experience must be within 0 and 99/i);
     });
   });
 
-  test("Validate recommendedCareerStage", async () => {
-    const { container } = render(
+  test("feedback on empty", async () => {
+    render(
       <BrowserRouter>
         <Provider store={store}>
           <FinalFeedback
@@ -69,52 +76,48 @@ describe("Final Feedback", () => {
       </BrowserRouter>
     );
 
-    const inputEl = container.querySelector(
-      `input[name="recommendedCareerStage"]`
-    );
-    act(() => fireEvent.change(inputEl, { target: { value: "" } }));
+    const inputExp = screen.getByLabelText(/Feedback/i);
+    expect(inputExp).toBeInTheDocument();
+    await fireEvent.change(inputExp, { target: { value: "ABC" } });
+    await fireEvent.change(inputExp, { target: { value: "" } });
     await waitFor(() => {
-      expect(inputEl.value).toBe("");
-      screen.getByText(/This field is required./i);
-    });
-  });
-
-  test("Validate outcome", async () => {
-    const { container } = render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <FinalFeedback
-            candidateData={defaultState}
-            setCandidateData={setCandidateData}
-          />
-        </Provider>
-      </BrowserRouter>
-    );
-
-    const inputEl = container.querySelector(`input[name="outcome"]`);
-    act(() => fireEvent.change(inputEl, { target: { value: "" } }));
-    await waitFor(() => {
-      expect(inputEl.value).toBe("");
-      screen.getByText(/Please select outcome/i);
-    });
-  });
-  test("Validate feedback", async () => {
-    const { container } = render(
-      <BrowserRouter>
-        <Provider store={store}>
-          <FinalFeedback
-            candidateData={defaultState}
-            setCandidateData={setCandidateData}
-          />
-        </Provider>
-      </BrowserRouter>
-    );
-
-    const inputEl = container.querySelector(`input[name="feedback"]`);
-    fireEvent.change(inputEl, { target: { value: "" } });
-    await waitFor(() => {
-      expect(inputEl.value).toBe("");
       screen.getByText(/Please provide feedback/i);
     });
+  });
+  test("feedback must of min 50chars", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <FinalFeedback
+            candidateData={defaultState}
+            setCandidateData={setCandidateData}
+          />
+        </Provider>
+      </BrowserRouter>
+    );
+
+    const inputExp = screen.getByLabelText(/Feedback/i);
+    expect(inputExp).toBeInTheDocument();
+    await fireEvent.change(inputExp, { target: { value: "Hello World!" } });
+    await waitFor(() => {
+      screen.getByText(/Feedback must be minimum of 50 characters/i);
+    });
+  });
+
+  test.only("Check Recommended Career Stage options are loaded correctly", () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <FinalFeedback
+            candidateData={defaultState}
+            setCandidateData={setCandidateData}
+          />
+        </Provider>
+      </BrowserRouter>
+    );
+    const inputExp = screen.getByLabelText(/Recommended Career Stage/i);
+    console.log(inputExp);
+    expect(inputExp).toBeInTheDocument();
+    fireEvent.change(inputExp, { target: { value: "Junior Associate" } });
   });
 });
